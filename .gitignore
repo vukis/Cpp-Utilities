@@ -41,3 +41,17 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+*.pdb
+*.obj
+*.log
+*.tlog
+*.exe
+*.ilk
+*.iobj
+*.ipdb
+*.idb
+*.ipch
+*.db
+*.suo
+*.opendb

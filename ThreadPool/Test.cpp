@@ -80,7 +80,7 @@ void TestAllocateDeallocateHeavyData(TaskSystemT&& taskSystem = TaskSystemT{})
 
 int main()
 {
-    const size_t NumOfRuns = 20;
+    constexpr size_t NumOfRuns = 20;
 
     std::cout << "=========================================" << std::endl;
     std::cout << "Benchmark with random task execution time" << std::endl;
