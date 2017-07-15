@@ -11,10 +11,10 @@ public:
     explicit SingleQueueThreadPool(size_t threadCount = std::max(2u, std::thread::hardware_concurrency()));
     ~SingleQueueThreadPool();
 
-    template<typename TTask>
-    auto ExecuteAsync(TTask&& task)
+    template<typename TaskT>
+    auto ExecuteAsync(TaskT&& task)
     {
-        return m_queue.Push(std::forward<TTask>(task));
+        return m_queue.Push(std::forward<TaskT>(task));
     }
 
 private:
