@@ -11,11 +11,11 @@ public:
     explicit MultiQueueThreadPool(size_t threadCount = std::max(2u, std::thread::hardware_concurrency()));
     ~MultiQueueThreadPool();
 
-    template<typename TTask>
-    auto ExecuteAsync(TTask&& task)
+    template<typename TaskT>
+    auto ExecuteAsync(TaskT&& task)
     {
         const auto index = m_queueIndex++;
-        return m_queues[index % m_queueCount].Push(std::forward<TTask>(task));
+        return m_queues[index % m_queueCount].Push(std::forward<TaskT>(task));
     }
 
 private:

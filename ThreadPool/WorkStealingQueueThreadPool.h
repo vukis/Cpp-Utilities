@@ -11,18 +11,18 @@ public:
     explicit WorkStealingQueueThreadPool(size_t threadCount = std::max(2u, std::thread::hardware_concurrency()));
     ~WorkStealingQueueThreadPool();
 
-    template<typename TTask>
-    auto ExecuteAsync(TTask&& task)
+    template<typename TaskT>
+    auto ExecuteAsync(TaskT&& task)
     {
         const auto index = m_queueIndex++;
         for (size_t n = 0; n != m_queueCount*m_tryoutCount; ++n)
         {
-            auto result = m_queues[(index + n) % m_queueCount].TryPush(std::forward<TTask>(task));
+            auto result = m_queues[(index + n) % m_queueCount].TryPush(std::forward<TaskT>(task));
 
             if (result.has_value())
                 return std::move(*result);
         }
-        return m_queues[index % m_queueCount].Push(std::forward<TTask>(task));
+        return m_queues[index % m_queueCount].Push(std::forward<TaskT>(task));
     }
 
 private:
