@@ -33,7 +33,7 @@ private:
     void Run();
 
     boost::asio::io_service m_ioService;
-    std::unique_ptr<boost::asio::io_service::work> m_work;
+    std::unique_ptr<boost::asio::io_service::work> m_work{ std::make_unique<boost::asio::io_service::work>(m_ioService) };
     std::vector<std::thread> m_threads;
 
     AsioThreadPool(const AsioThreadPool&) = delete;
@@ -53,8 +53,6 @@ AsioThreadPool::~AsioThreadPool()
 
 void AsioThreadPool::Start()
 {
-    m_work.reset(new boost::asio::io_service::work(m_ioService));
-
     for (auto& thread : m_threads)
         thread = std::thread(&AsioThreadPool::Run, this);
 }
