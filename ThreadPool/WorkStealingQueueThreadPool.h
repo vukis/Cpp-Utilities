@@ -48,7 +48,7 @@ WorkStealingQueueThreadPool::WorkStealingQueueThreadPool(size_t threadCount)
 WorkStealingQueueThreadPool::~WorkStealingQueueThreadPool()
 {
     for (auto& queue : m_queues)
-        queue.SetDone(true); // TODO: tagged_bool
+        queue.SetDone(true);
 
     for (auto& thread : m_threads)
         thread.join();
