@@ -1,4 +1,8 @@
-# Thread pool
+# Utilities
+
+Repository with useful utilitiy classes.
+
+## Thread pool
 
 Header only library. Contains following thread pools:
 - Thread pool with single task queue
@@ -9,7 +13,8 @@ Header only library. Contains following thread pools:
 
 Inspired by Sean Parent's talk ([presentation](http://sean-parent.stlab.cc/presentations/2016-11-16-concurrency/2016-11-16-concurrency.pdf)) and this [lib](https://github.com/topcpporg/thread-pool-cpp).
 
-#TODO
+### TODO
+
 - Lock free task queue
 - Custom task with support move only types
 - Google Test/Benchmark
