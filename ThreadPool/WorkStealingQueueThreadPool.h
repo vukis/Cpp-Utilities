@@ -17,7 +17,11 @@ public:
         const auto index = m_queueIndex++;
         for (size_t n = 0; n != m_queues.size()*m_tryoutCount; ++n)
         {
-            auto result = m_queues[(index + n) % m_queues.size()].TryPush(std::forward<TaskT>(task));
+            auto result = m_queues[(index + n) % m_queues.size()].TryPush(task); 
+            // Here we need not to std::forward just copy task.
+            // Because if the universal reference of task has bound to an r-value reference 
+            // then std::forward will have the same effect as std::move and thus task is not required to contain a valid task. 
+            // Universal reference must only be std::forward'ed a exactly zero or one times.
 
             if (result.has_value())
                 return std::move(*result);
