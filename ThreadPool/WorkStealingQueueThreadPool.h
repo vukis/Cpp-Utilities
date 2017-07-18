@@ -8,21 +8,21 @@ class WorkStealingQueueThreadPool
 {
 public:
 
-    explicit WorkStealingQueueThreadPool(size_t threadCount = std::max(2u, std::thread::hardware_concurrency()));
+    explicit WorkStealingQueueThreadPool(size_t threadCount = std::max(1u, std::thread::hardware_concurrency()));
     ~WorkStealingQueueThreadPool();
 
     template<typename TaskT>
     auto ExecuteAsync(TaskT&& task)
     {
         const auto index = m_queueIndex++;
-        for (size_t n = 0; n != m_queueCount*m_tryoutCount; ++n)
+        for (size_t n = 0; n != m_queues.size()*m_tryoutCount; ++n)
         {
-            auto result = m_queues[(index + n) % m_queueCount].TryPush(std::forward<TaskT>(task));
+            auto result = m_queues[(index + n) % m_queues.size()].TryPush(std::forward<TaskT>(task));
 
             if (result.has_value())
                 return std::move(*result);
         }
-        return m_queues[index % m_queueCount].Push(std::forward<TaskT>(task));
+        return m_queues[index % m_queues.size()].Push(std::forward<TaskT>(task));
     }
 
 private:
@@ -30,8 +30,7 @@ private:
     void Run(size_t queueIndex);
 
     std::vector<TaskQueue> m_queues;
-    size_t       m_queueIndex{ 0 };
-    const size_t m_queueCount;
+    std::atomic<size_t>    m_queueIndex{ 0 };
     const size_t m_tryoutCount{ 1 };
 
     std::vector<std::thread> m_threads;
@@ -39,7 +38,6 @@ private:
 
 WorkStealingQueueThreadPool::WorkStealingQueueThreadPool(size_t threadCount)
     : m_queues{ threadCount }
-    , m_queueCount{ threadCount }
 {
     for (size_t index = 0; index != threadCount; ++index)
         m_threads.emplace_back([this, index] { Run(index); });
@@ -59,9 +57,9 @@ void WorkStealingQueueThreadPool::Run(size_t queueIndex)
     while (m_queues[queueIndex].IsEnabled())
     {
         TaskQueue::TaskType task;
-        for (size_t n = 0; n != m_queueCount*m_tryoutCount; ++n)
+        for (size_t n = 0; n != m_queues.size()*m_tryoutCount; ++n)
         {
-            if (m_queues[(queueIndex + n) % m_queueCount].TryPop(task))
+            if (m_queues[(queueIndex + n) % m_queues.size()].TryPop(task))
                 break;
         }
 

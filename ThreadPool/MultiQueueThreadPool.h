@@ -8,29 +8,26 @@ class MultiQueueThreadPool
 {
 public:
 
-    explicit MultiQueueThreadPool(size_t threadCount = std::max(2u, std::thread::hardware_concurrency()));
+    explicit MultiQueueThreadPool(size_t threadCount = std::max(1u, std::thread::hardware_concurrency()));
     ~MultiQueueThreadPool();
 
     template<typename TaskT>
     auto ExecuteAsync(TaskT&& task)
     {
         const auto index = m_queueIndex++;
-        return m_queues[index % m_queueCount].Push(std::forward<TaskT>(task));
+        return m_queues[index % m_queues.size()].Push(std::forward<TaskT>(task));
     }
 
 private:
     void Run(size_t queueIndex);
 
     std::vector<TaskQueue> m_queues;
-    size_t       m_queueIndex{ 0 };
-    const size_t m_queueCount;
-
+    std::atomic<size_t>    m_queueIndex{ 0 };
     std::vector<std::thread> m_threads;
 };
 
 MultiQueueThreadPool::MultiQueueThreadPool(size_t threadCount)
     : m_queues{ threadCount }
-    , m_queueCount{ threadCount }
 {
     for (size_t index = 0; index != threadCount; ++index)
         m_threads.emplace_back([this, index] { Run(index); });

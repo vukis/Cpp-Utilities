@@ -8,7 +8,7 @@ class SingleQueueThreadPool
 {
 public:
 
-    explicit SingleQueueThreadPool(size_t threadCount = std::max(2u, std::thread::hardware_concurrency()));
+    explicit SingleQueueThreadPool(size_t threadCount = std::max(1u, std::thread::hardware_concurrency()));
     ~SingleQueueThreadPool();
 
     template<typename TaskT>
