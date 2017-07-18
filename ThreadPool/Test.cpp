@@ -1,6 +1,6 @@
 #include "SingleQueueThreadPool.h"
 #include "MultiQueueThreadPool.h"
-#include "WorkStealingQueueThreadPool.h"
+#include "WorkStealingThreadPool.h"
 #include "AsioThreadPool.h"
 #include "PplThreadPool.h"
 #include "TestUtilities.h"

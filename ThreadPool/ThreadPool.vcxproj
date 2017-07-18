@@ -142,7 +142,7 @@
     <ClInclude Include="SingleQueueThreadPool.h" />
     <ClInclude Include="TaskQueue.h" />
     <ClInclude Include="TestUtilities.h" />
-    <ClInclude Include="WorkStealingQueueThreadPool.h" />
+    <ClInclude Include="WorkStealingThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp" />
