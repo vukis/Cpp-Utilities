@@ -4,12 +4,12 @@
 #include <algorithm>
 #include <thread>
 
-class WorkStealingQueueThreadPool
+class WorkStealingThreadPool
 {
 public:
 
-    explicit WorkStealingQueueThreadPool(size_t threadCount = std::max(1u, std::thread::hardware_concurrency()));
-    ~WorkStealingQueueThreadPool();
+    explicit WorkStealingThreadPool(size_t threadCount = std::max(1u, std::thread::hardware_concurrency()));
+    ~WorkStealingThreadPool();
 
     template<typename TaskT>
     auto ExecuteAsync(TaskT&& task)
@@ -40,14 +40,14 @@ private:
     std::vector<std::thread> m_threads;
 };
 
-WorkStealingQueueThreadPool::WorkStealingQueueThreadPool(size_t threadCount)
+WorkStealingThreadPool::WorkStealingThreadPool(size_t threadCount)
     : m_queues{ threadCount }
 {
     for (size_t index = 0; index != threadCount; ++index)
         m_threads.emplace_back([this, index] { Run(index); });
 }
 
-WorkStealingQueueThreadPool::~WorkStealingQueueThreadPool()
+WorkStealingThreadPool::~WorkStealingThreadPool()
 {
     for (auto& queue : m_queues)
         queue.SetEnabled(false);
@@ -56,7 +56,7 @@ WorkStealingQueueThreadPool::~WorkStealingQueueThreadPool()
         thread.join();
 }
 
-void WorkStealingQueueThreadPool::Run(size_t queueIndex)
+void WorkStealingThreadPool::Run(size_t queueIndex)
 {
     while (m_queues[queueIndex].IsEnabled())
     {
