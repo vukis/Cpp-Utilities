@@ -32,7 +32,7 @@ SingleQueueThreadPool::SingleQueueThreadPool(size_t threadCount)
 
 SingleQueueThreadPool::~SingleQueueThreadPool()
 {
-    m_queue.SetDone(true);
+    m_queue.SetEnabled(false);
 
     for (auto& thread : m_threads)
         thread.join();
@@ -40,7 +40,7 @@ SingleQueueThreadPool::~SingleQueueThreadPool()
 
 void SingleQueueThreadPool::Run()
 {
-    while (!m_queue.IsDone())
+    while (m_queue.IsEnabled())
     {
         TaskQueue::TaskType task;
         if (m_queue.WaitAndPop(task))

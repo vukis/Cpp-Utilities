@@ -39,7 +39,7 @@ MultiQueueThreadPool::MultiQueueThreadPool(size_t threadCount)
 MultiQueueThreadPool::~MultiQueueThreadPool()
 {
     for (auto& queue : m_queues)
-        queue.SetDone(true);
+        queue.SetEnabled(false);
 
     for (auto& thread : m_threads)
         thread.join();
@@ -47,7 +47,7 @@ MultiQueueThreadPool::~MultiQueueThreadPool()
 
 void MultiQueueThreadPool::Run(size_t queueIndex)
 {
-    while (!m_queues[queueIndex].IsDone())
+    while (m_queues[queueIndex].IsEnabled())
     {
         TaskQueue::TaskType task;
         if (m_queues[queueIndex].WaitAndPop(task))

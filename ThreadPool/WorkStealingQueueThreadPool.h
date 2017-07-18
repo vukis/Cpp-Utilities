@@ -48,7 +48,7 @@ WorkStealingQueueThreadPool::WorkStealingQueueThreadPool(size_t threadCount)
 WorkStealingQueueThreadPool::~WorkStealingQueueThreadPool()
 {
     for (auto& queue : m_queues)
-        queue.SetDone(true);
+        queue.SetEnabled(false);
 
     for (auto& thread : m_threads)
         thread.join();
@@ -56,7 +56,7 @@ WorkStealingQueueThreadPool::~WorkStealingQueueThreadPool()
 
 void WorkStealingQueueThreadPool::Run(size_t queueIndex)
 {
-    while (!m_queues[queueIndex].IsDone())
+    while (m_queues[queueIndex].IsEnabled())
     {
         TaskQueue::TaskType task;
         for (size_t n = 0; n != m_queueCount*m_tryoutCount; ++n)

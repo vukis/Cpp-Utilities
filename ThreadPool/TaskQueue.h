@@ -18,31 +18,30 @@ public:
     TaskQueue(TaskQueue&&) = default;
     TaskQueue& operator=(TaskQueue&&) = default;
 
-    void SetDone(bool done)
+    void SetEnabled(bool enabled)
     {
         {
             LockType lock{ m_mutex };
-            m_done = done;
+            m_enabled = enabled;
         }
 
-        if (done)
+        if (!enabled)
             m_ready.notify_all();
     }
 
-    auto IsDone() const
+    auto IsEnabled() const
     {
         LockType lock{ m_mutex };
-        return m_done;
+        return m_enabled;
     }
 
     auto WaitAndPop(TaskType& task)
     {
         LockType lock{ m_mutex };
 
-        while (m_queue.empty() && !m_done)
-            m_ready.wait(lock);
+        m_ready.wait(lock, [this] { return !m_enabled || !m_queue.empty(); });
 
-        if (!m_queue.empty() && !m_done)
+        if (m_enabled && !m_queue.empty())
         {
             task = std::move(m_queue.front());
             m_queue.pop_front();
@@ -52,14 +51,14 @@ public:
         return false;
     }
 
-    template<typename TTask>
-    auto Push(TTask&& task) // -> std::future<decltype(task())>
+    template<typename TaskT>
+    auto Push(TaskT&& task) // -> std::future<decltype(task())>
     {
         using TaskReturnType = decltype(task());
 
         // std::packaged_task<> is move only type.
         // We need to wrap it in a shared_ptr:
-        auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TTask>(task));
+        auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TaskT>(task));
         auto future = packagedTask->get_future();
 
         {
@@ -75,22 +74,22 @@ public:
     {
         LockType lock{ m_mutex, std::try_to_lock };
 
-        if (!lock || m_queue.empty())
+        if (!lock || m_enabled || m_queue.empty())
             return false;
 
-        task = move(m_queue.front());
+        task = std::move(m_queue.front());
         m_queue.pop_front();
         return true;
     }
 
-    template<typename TTask>
-    auto TryPush(TTask&& task) -> std::optional<std::future<decltype(task())>>
+    template<typename TaskT>
+    auto TryPush(TaskT&& task) -> std::optional<std::future<decltype(task())>>
     {
         using TaskReturnType = decltype(task());
 
         // std::packaged_task<void()> is not movable
         // We need to wrap it in a shared_ptr:
-        auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TTask>(task));
+        auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TaskT>(task));
         auto future = packagedTask->get_future();
 
         {
@@ -111,7 +110,7 @@ private:
     using LockType = std::unique_lock<std::mutex>;
 
     std::deque<TaskType> m_queue;
-    bool                 m_done{ false };
+    bool                 m_enabled{ true };
     mutable std::mutex      m_mutex;
     std::condition_variable m_ready;
 
