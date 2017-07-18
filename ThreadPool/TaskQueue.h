@@ -87,16 +87,17 @@ public:
     {
         using TaskReturnType = decltype(task());
 
-        // std::packaged_task<void()> is not movable
-        // We need to wrap it in a shared_ptr:
-        auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TaskT>(task));
-        auto future = packagedTask->get_future();
-
+        std::future<TaskReturnType> future;
         {
             LockType lock{ m_mutex, std::try_to_lock };
 
             if (!lock)
                 return {};
+
+            // std::packaged_task<void()> is not movable
+            // We need to wrap it in a shared_ptr:
+            auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TaskT>(task));
+            future = packagedTask->get_future();
 
             m_queue.emplace_back([packagedTask]() { (*packagedTask)(); });
         }
