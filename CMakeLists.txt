@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.2)
 project(ThreadPool)
 
 # Set binaries path
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${PROJECT_NAME}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/bin)
 
 # Boost
 find_package(Boost REQUIRED)
@@ -20,5 +20,5 @@ if(WIN32)
     endif()
 endif()
 
-set(SOURCE_FILES ${PROJECT_NAME}/Test.cpp)
-add_executable(Test${PROJECT_NAME} ${SOURCE_FILES})
+set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
+add_executable(Test${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
