@@ -54,15 +54,17 @@ public:
     template<typename TaskT>
     auto Push(TaskT&& task) // -> std::future<decltype(task())>
     {
-        using TaskReturnType = decltype(task());
+        using TaskRetType = decltype(task());
 
-        // std::packaged_task<> is move only type.
-        // We need to wrap it in a shared_ptr:
-        auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TaskT>(task));
-        auto future = packagedTask->get_future();
-
+        std::future<TaskRetType> future;
         {
             LockType lock{ m_mutex };
+
+            // std::packaged_task<> is move only type.
+            // We need to wrap it in a shared_ptr:
+            auto packagedTask = std::make_shared<std::packaged_task<TaskRetType()>>(std::forward<TaskT>(task));
+            future = packagedTask->get_future();
+
             m_queue.emplace_back([packagedTask] { (*packagedTask)(); });
         }
 
@@ -83,11 +85,11 @@ public:
     }
 
     template<typename TaskT>
-    auto TryPush(TaskT&& task) -> std::optional<std::future<decltype(task())>>
+    auto TryPush(TaskT&& task) -> std::optional<std::future<decltype(task())>> // std::optional is supported only in C++17
     {
-        using TaskReturnType = decltype(task());
+        using TaskRetType = decltype(task());
 
-        std::future<TaskReturnType> future;
+        std::future<TaskRetType> future;
         {
             LockType lock{ m_mutex, std::try_to_lock };
 
@@ -96,7 +98,7 @@ public:
 
             // std::packaged_task<void()> is not movable
             // We need to wrap it in a shared_ptr:
-            auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TaskT>(task));
+            auto packagedTask = std::make_shared<std::packaged_task<TaskRetType()>>(std::forward<TaskT>(task));
             future = packagedTask->get_future();
 
             m_queue.emplace_back([packagedTask]() { (*packagedTask)(); });
@@ -107,6 +109,8 @@ public:
     }
 
 private:
+    TaskQueue(const TaskQueue&) = delete;
+    TaskQueue& operator=(const TaskQueue&) = delete;
 
     using LockType = std::unique_lock<std::mutex>;
 
@@ -114,7 +118,4 @@ private:
     bool                 m_enabled{ true };
     mutable std::mutex      m_mutex;
     std::condition_variable m_ready;
-
-    TaskQueue(const TaskQueue&) = delete;
-    TaskQueue& operator=(const TaskQueue&) = delete;
 };

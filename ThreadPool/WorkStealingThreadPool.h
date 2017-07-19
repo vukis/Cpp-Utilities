@@ -23,7 +23,7 @@ public:
             // Universal reference must only be std::forward'ed a exactly zero or one times.
             auto result = m_queues[(index + n) % m_queues.size()].TryPush(task); 
 
-            if (result.has_value())
+            if (result)
                 return std::move(*result);
         }
         return m_queues[index % m_queues.size()].Push(std::forward<TaskT>(task));
