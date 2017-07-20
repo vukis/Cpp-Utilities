@@ -18,10 +18,10 @@ env:
     - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
     - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
  
-matrix:
-    exclude:
-        - os:       osx
-          compiler: gcc
+#matrix:
+#    exclude:
+#        - os:       osx
+#          compiler: gcc
 
 #        - os:  osx
 #          env: TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
