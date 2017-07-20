@@ -105,7 +105,7 @@ public:
         }
 
         m_ready.notify_one();
-        return std::make_unique<< std::future<TaskRetType>>(future);
+        return future;
     }
 
 private:
