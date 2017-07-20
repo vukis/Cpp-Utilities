@@ -40,7 +40,7 @@ install:
   # C++17
   - if [ "$CXX" == "g++" ]; then sudo apt-get install -qq g++-7; fi
   #- if [ "$CXX" == "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90; fi
-  - if [ "$CXX" == "clang++" ]; then sudo apt-get install -qq clang-5; fi
+  - if [ "$CXX" == "clang++" ]; then sudo apt-get install -qq clang-4; fi
   # cppcheck
   # - sudo apt-get install -qq cppcheck  
   
