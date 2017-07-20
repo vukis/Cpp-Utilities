@@ -1,5 +1,7 @@
 # Utilities
 
+[![Build Status](https://travis-ci.org/vukis/Utilities.svg?branch=master)
+
 Repository with useful utilitiy classes.
 
 ## Thread pool
