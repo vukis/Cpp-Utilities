@@ -21,8 +21,16 @@ void AllocateDeallocateHeavyData()
 
 void SleepForRandomTime()
 {
-    using namespace std::chrono_literals;
-	std::this_thread::sleep_for(std::chrono::nanoseconds(rand() % int(1e+09)));
+    // Sleeping the thread isn't good as it doesn't tie up the
+    // CPU resource in the same way as actual work on a thread would do,
+    // The OS is free to schedule work on the CPU while the thread is
+    // sleeping. Hence we do some busy work. Note that volatile keyword
+    // is necessary to prevent compiler from removing the below code.
+    srand(0);
+    volatile auto delay = rand();
+    while (delay != 0) {
+        delay--;
+    };
 }
 
 template<class TaskSystemT>
