@@ -21,9 +21,9 @@ endif()
 
 if(CMAKE_COMPILER_IS_MSVC)
     add_compile_options("/std:c++latest") # C++17
-	target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread)
 else()
     add_compile_options("-std=c++1z")
+	target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread)
 endif()
 
 add_executable(Test${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
