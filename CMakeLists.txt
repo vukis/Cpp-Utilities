@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.2)
 
 project(ThreadPool)
 
-# Set binaries path
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/bin)
+set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 
 find_package(Threads REQUIRED)
 
@@ -21,12 +21,9 @@ endif()
 
 if(CMAKE_COMPILER_IS_MSVC)
     add_compile_options("/std:c++latest") # C++17
+	target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread)
 else()
     add_compile_options("-std=c++1z")
 endif()
 
-set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 add_executable(Test${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
-if(NOT CMAKE_COMPILER_IS_MSVC)
-    target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread)
-endif()
