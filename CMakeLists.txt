@@ -15,9 +15,12 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 if(WIN32)
     add_compile_options("-D_WIN32_WINNT=0x0501") # Supress warning
-    if(MSVC)
-        add_compile_options("/std:c++latest") # C++17
-    endif()
+endif()
+
+if(CMAKE_COMPILER_IS_MSVC)
+    add_compile_options("/std:c++latest") # C++17
+else()
+    add_compile_options("-std=c++17")
 endif()
 
 set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
