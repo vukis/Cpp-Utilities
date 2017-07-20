@@ -27,3 +27,6 @@ endif()
 
 set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 add_executable(Test${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
+if(!CMAKE_COMPILER_IS_MSVC)
+    target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread)
+endif()
