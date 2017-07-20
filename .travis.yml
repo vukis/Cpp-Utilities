@@ -63,7 +63,7 @@ before_install:
   #- sudo add-apt-repository -y ppa:h-rayflood/llvm
   
   
-  - sudo apt-add-repository --allow-unauthenticated "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.9 main"
+  - sudo apt-add-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.9 main"
   - sudo apt-get update --allow-unauthenticated -qq
   - sudo apt-get install --allow-unauthenticated -qq clang-3.9 
   #lldb-3.8
