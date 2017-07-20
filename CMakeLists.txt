@@ -13,6 +13,11 @@ set(Boost_USE_MULTITHREAD ON)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
+target_link_libraries(Test${CMAKE_PROJECT_NAME}
+  ${Boost_FILESYSTEM_LIBRARY}
+  ${Boost_SYSTEM_LIBRARY}
+)
+
 if(WIN32)
     add_compile_options("-D_WIN32_WINNT=0x0501") # Supress warning
 endif()
@@ -20,15 +25,9 @@ endif()
 if(CMAKE_COMPILER_IS_MSVC)
     add_compile_options("/std:c++latest") # C++17
 else()
-    add_compile_options("-std=c++1z")
+    add_compile_options("-std=c++14")
+	find_package(Threads REQUIRED)
+	target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread)
 endif()
 
 add_executable(Test${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
-if(NOT CMAKE_COMPILER_IS_MSVC)
-	find_package(Threads REQUIRED)
-	target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread boost_system)
-endif()
-target_link_libraries(Test${CMAKE_PROJECT_NAME}
-  ${Boost_FILESYSTEM_LIBRARY}
-  ${Boost_SYSTEM_LIBRARY}
-)
