@@ -6,13 +6,13 @@ addons:
   apt:
     source: &sources
      - llvm-toolchain-precise-4.0.1
-     - ubuntu-toolchain-r/test
+     - ubuntu-toolchain-r-test
     packages: &base_build
      - libboost-all-dev
 #     - libcppunit-dev
     packages: &base_build_gpp_latest
-     - *base_build
-     - g++-7
+ #    - *base_build
+     - g++-4.9
 #    packages: &base_build_clang_latest
 #     - *base_build
 #     - clang-4.0.1
