@@ -1,7 +1,7 @@
 #pragma once
 
 #include <deque>
-#include <optional>
+// #include <optional>
 #include <functional>
 #include <condition_variable>
 #include <future>
@@ -85,7 +85,7 @@ public:
     }
 
     template<typename TaskT>
-    auto TryPush(TaskT&& task) -> std::optional<std::future<decltype(task())>> // std::optional is supported only in C++17
+    auto TryPush(TaskT&& task) -> std::unique_ptr<std::future<decltype(task())>> // std::optional is supported only in C++17
     {
         using TaskRetType = decltype(task());
 
@@ -105,7 +105,7 @@ public:
         }
 
         m_ready.notify_one();
-        return future;
+        return std::make_unique<std::future<TaskRetType>>(std::move(future));
     }
 
 private:
