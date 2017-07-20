@@ -1,25 +1,37 @@
 #pragma once
 
-#include <deque>
- #include <optional>
-#include <functional>
 #include <condition_variable>
+#include <experimental/optional>
+#include <functional>
 #include <future>
+#include <queue>
 
-class TaskQueue
-{
+class TaskBase {
 public:
+    virtual ~TaskBase() = default;
+    virtual void exec() = 0;
+    void operator()() { exec(); }
+};
 
-    using TaskType = std::function<void()>;
+template <typename T> class Task : public TaskBase {
+public:
+    Task(T &&t) : task(std::move(t)) {}
+    void exec() override { task(); }
+
+    T task;
+};
+
+class TaskQueue {
+public:
+    using TaskPtrType = std::unique_ptr<TaskBase>;
 
     TaskQueue() = default;
     ~TaskQueue() = default;
 
-    TaskQueue(TaskQueue&&) = default;
-    TaskQueue& operator=(TaskQueue&&) = default;
+    TaskQueue(TaskQueue &&) = default;
+    TaskQueue &operator=(TaskQueue &&) = default;
 
-    void SetEnabled(bool enabled)
-    {
+    void SetEnabled(bool enabled) {
         {
             LockType lock{ m_mutex };
             m_enabled = enabled;
@@ -29,79 +41,67 @@ public:
             m_ready.notify_all();
     }
 
-    auto IsEnabled() const
-    {
+    auto IsEnabled() const {
         LockType lock{ m_mutex };
         return m_enabled;
     }
 
-    auto WaitAndPop(TaskType& task)
-    {
+    auto WaitAndPop(TaskPtrType &task) {
         LockType lock{ m_mutex };
-
         m_ready.wait(lock, [this] { return !m_enabled || !m_queue.empty(); });
-
-        if (m_enabled && !m_queue.empty())
-        {
+        if (m_enabled && !m_queue.empty()) {
             task = std::move(m_queue.front());
-            m_queue.pop_front();
+            m_queue.pop();
             return true;
         }
-
         return false;
     }
 
-    template<typename TaskT>
-    auto Push(TaskT&& task) // -> std::future<decltype(task())>
+    template <typename TaskT>
+    auto Push(TaskT &&task) // -> std::future<decltype(task())>
     {
         using TaskRetType = decltype(task());
+        using PkgTask = std::packaged_task<TaskRetType()>;
+        auto job =
+            std::make_unique<Task<PkgTask>>(PkgTask(std::forward<TaskT>(task)));
+        auto future = job->task.get_future();
 
-        std::future<TaskRetType> future;
         {
             LockType lock{ m_mutex };
-
-            // std::packaged_task<> is move only type.
-            // We need to wrap it in a shared_ptr:
-            auto packagedTask = std::make_shared<std::packaged_task<TaskRetType()>>(std::forward<TaskT>(task));
-            future = packagedTask->get_future();
-
-            m_queue.emplace_back([packagedTask] { (*packagedTask)(); });
+            m_queue.emplace(std::move(job));
         }
 
         m_ready.notify_one();
         return future;
     }
 
-    auto TryPop(TaskType& task)
-    {
+    auto TryPop(TaskPtrType &task) {
         LockType lock{ m_mutex, std::try_to_lock };
 
         if (!lock || m_enabled || m_queue.empty())
             return false;
 
         task = std::move(m_queue.front());
-        m_queue.pop_front();
+        m_queue.pop();
         return true;
     }
 
-    template<typename TaskT>
-    auto TryPush(TaskT&& task) // -> std::optional<std::future<decltype(task())>>
+    template <typename TaskT>
+    auto TryPush(TaskT &&task) // -> std::optional<std::future<decltype(task())>>
     {
         using TaskRetType = decltype(task());
 
-        std::optional<std::future<TaskRetType>> future;
+        std::experimental::optional<std::future<TaskRetType>> future;
         {
             LockType lock{ m_mutex, std::try_to_lock };
-
             if (!lock)
                 return future;
 
-            // std::packaged_task<void()> is not movable
-            // We need to wrap it in a shared_ptr:
-            auto packagedTask = std::make_shared<std::packaged_task<TaskRetType()>>(std::forward<TaskT>(task));
-            future = packagedTask->get_future();
-
-            m_queue.emplace_back([packagedTask]() { (*packagedTask)(); });
+            using PkgTask = std::packaged_task<TaskRetType()>;
+            auto job =
+                std::make_unique<Task<PkgTask>>(PkgTask(std::forward<TaskT>(task)));
+            auto future = job->task.get_future();
+            m_queue.emplace(std::move(job));
         }
 
         m_ready.notify_one();
@@ -109,13 +109,13 @@ public:
     }
 
 private:
-    TaskQueue(const TaskQueue&) = delete;
-    TaskQueue& operator=(const TaskQueue&) = delete;
+    TaskQueue(const TaskQueue &) = delete;
+    TaskQueue &operator=(const TaskQueue &) = delete;
 
     using LockType = std::unique_lock<std::mutex>;
 
-    std::deque<TaskType> m_queue;
-    bool                 m_enabled{ true };
-    mutable std::mutex      m_mutex;
+    std::queue<TaskPtrType> m_queue;
+    bool m_enabled{ true };
+    mutable std::mutex m_mutex;
     std::condition_variable m_ready;
 };

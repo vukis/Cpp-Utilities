@@ -60,7 +60,7 @@ void WorkStealingThreadPool::Run(size_t queueIndex)
 {
     while (m_queues[queueIndex].IsEnabled())
     {
-        TaskQueue::TaskType task;
+        TaskQueue::TaskPtrType task;
         for (size_t n = 0; n != m_queues.size()*m_tryoutCount; ++n)
         {
             if (m_queues[(queueIndex + n) % m_queues.size()].TryPop(task))
@@ -70,6 +70,6 @@ void WorkStealingThreadPool::Run(size_t queueIndex)
         if (!task && !m_queues[queueIndex].WaitAndPop(task))
             return;
 
-        task();
+        (*task)();
     }
 }

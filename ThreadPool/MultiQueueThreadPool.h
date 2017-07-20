@@ -46,8 +46,8 @@ void MultiQueueThreadPool::Run(size_t queueIndex)
 {
     while (m_queues[queueIndex].IsEnabled())
     {
-        TaskQueue::TaskType task;
+        TaskQueue::TaskPtrType task;
         if (m_queues[queueIndex].WaitAndPop(task))
-            task();
+            (*task)();
     }
 }

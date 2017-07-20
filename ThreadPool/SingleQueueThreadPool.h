@@ -42,8 +42,8 @@ void SingleQueueThreadPool::Run()
 {
     while (m_queue.IsEnabled())
     {
-        TaskQueue::TaskType task;
+        TaskQueue::TaskPtrType task;
         if (m_queue.WaitAndPop(task))
-            task();
+            (*task)();
     }
 }
