@@ -2,8 +2,10 @@
 #include "MultiQueueThreadPool.h"
 #include "WorkStealingThreadPool.h"
 #include "AsioThreadPool.h"
-#include "PplThreadPool.h"
 #include "TestUtilities.h"
+#ifdef _MSC_VER
+#include "PplThreadPool.h"
+#endif
 
 void AllocateDeallocateLightWeightData()
 {
@@ -90,7 +92,9 @@ int main()
     FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<MultiQueueThreadPool>());
     FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<WorkStealingThreadPool>());
     FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<AsioThreadPool>());
+#ifdef _MSC_VER
     FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<PplThreadPool>());
+#endif
     std::cout << std::endl;
 
     std::cout << "=========================================" << std::endl;
@@ -100,7 +104,9 @@ int main()
     FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, TestWithEmptyTask<MultiQueueThreadPool>());
     FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, TestWithEmptyTask<WorkStealingThreadPool>());
     FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, TestWithEmptyTask<AsioThreadPool>());
+#ifdef _MSC_VER
     FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestWithEmptyTask<PplThreadPool>());
+#endif
     std::cout << std::endl;
 
     std::cout << "=========================================" << std::endl;
@@ -110,7 +116,9 @@ int main()
     FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<MultiQueueThreadPool>());
     FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<WorkStealingThreadPool>());
     FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<AsioThreadPool>());
+#ifdef _MSC_VER
     FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<PplThreadPool>());
+#endif
     std::cout << std::endl;
 
     std::cout << "=========================================" << std::endl;
@@ -120,7 +128,9 @@ int main()
     FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<MultiQueueThreadPool>());
     FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<WorkStealingThreadPool>());
     FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<AsioThreadPool>());
+#ifdef _MSC_VER
     FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<PplThreadPool>());
+#endif
     std::cout << std::endl;
 
     return 0;
