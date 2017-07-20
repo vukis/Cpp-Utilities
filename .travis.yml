@@ -12,7 +12,7 @@ addons:
      - g++-6
     packages: &base_build_clang_latest
      - *base_build
-     - clang-5.0
+     - clang-4.0
 
 os:
     - linux
