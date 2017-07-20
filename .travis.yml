@@ -6,6 +6,7 @@ addons:
   apt:
     source: &sources
      - llvm-toolchain-precise-4.0.1
+     - ubuntu-toolchain-r/test
     packages: &base_build
      - libboost-all-dev
 #     - libcppunit-dev
