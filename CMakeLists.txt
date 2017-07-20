@@ -20,7 +20,7 @@ endif()
 if(CMAKE_COMPILER_IS_MSVC)
     add_compile_options("/std:c++latest") # C++17
 else()
-    add_compile_options("-std=c++17")
+    add_compile_options("-std=c++1z")
 endif()
 
 set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
