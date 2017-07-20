@@ -16,11 +16,11 @@ env: &configurations
     - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
  
 before_install:  
-  - sudo apt-add-repository --allow-unauthenticated "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
+  - sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
   - sudo apt-get update -qq
   
 install: 
-  - sudo apt-get install -qq clang-4.0
+  - sudo apt-get install --allow-unauthenticated -qq clang-4.0
   
 script:
     - mkdir build
