@@ -52,7 +52,7 @@ before_install:
   #- sudo apt-get install libboost-all-dev
   
   #- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  #- sudo apt-get update -qq
+  - sudo apt-get update -qq
   - sudo apt-get install libboost-all-dev
   #- if [ "$CXX" == "g++" ]; then sudo apt-get install -qq g++-7; fi
   #- if [ "$CXX" == "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90; fi
