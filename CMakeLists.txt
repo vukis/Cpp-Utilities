@@ -23,6 +23,8 @@ else()
     add_compile_options("-std=c++1z")
 endif()
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
+
 add_executable(Test${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 
 target_link_libraries(Test${CMAKE_PROJECT_NAME}
