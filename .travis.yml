@@ -32,7 +32,7 @@ addons:
     sources:
       - boost-latest
     packages:
-      - libboost-asio-dev
+      - libboost-asio
 
 before_install:
   # C++17
