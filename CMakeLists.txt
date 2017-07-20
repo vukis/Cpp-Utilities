@@ -17,14 +17,11 @@ if(WIN32)
     add_compile_options("-D_WIN32_WINNT=0x0501") # Supress warning
 endif()
 
-# Need to manually set compiler flags for Travis CI & Appveyor
 if(MSVC)
- #   add_compile_options("/std:c++latest") # C++17
+    add_compile_options("/std:c++latest") # C++17
 else()
- #   add_compile_options("-std=c++1z")
+    add_compile_options("-std=c++1z")
 endif()
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z")
 
 add_executable(Test${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
 
