@@ -12,7 +12,7 @@ addons:
 #     - libcppunit-dev
     packages: &base_build_gpp_latest
      - *base_build
-     - g++-6
+     - g++-7
 #    packages: &base_build_clang_latest
 #     - *base_build
 #     - clang-4.0.1
@@ -48,7 +48,7 @@ before_install:
   # C++17
   #- if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
   #- if [ "$CXX" == "clang++" ]; then sudo add-apt-repository -y ppa:h-rayflood/llvm; fi
-  #- sudo apt-get update -qq
+  - sudo apt-get update -qq
   #- sudo apt-get install libboost-all-dev
   
 install: 
