@@ -22,8 +22,8 @@ os:
 #    - osx
 
 compiler:
-    #- gcc
-    - clang
+    - gcc
+    #- clang
 
 env:
     - TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
