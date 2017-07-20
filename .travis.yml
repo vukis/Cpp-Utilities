@@ -27,6 +27,13 @@ env:
 #        - os:  osx
 #          env: TARGET_CPU=x86 BUILD_CONFIGURATION=Release
 
+addons:
+  apt:
+    sources:
+      - boost-latest
+    packages:
+      - libboost-asio-dev
+
 before_install:
   # C++17
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
