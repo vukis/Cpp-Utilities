@@ -5,7 +5,7 @@ sudo: required
 addons:
   apt:
     source: &sources
-     - llvm-toolchain-precise-4.0.1
+     - llvm-toolchain-precise-4.0.0
      - ubuntu-toolchain-r-test
     packages: &base_build
      - libboost-all-dev
@@ -60,7 +60,7 @@ before_install:
  # - if [ "$CXX" == "clang++" ]; then sudo apt-get install -qq libstdc++-7-dev; fi
   
   - if [ "$CXX" == "clang++" ]; then sudo add-apt-repository -y ppa:h-rayflood/llvm; fi
-  
+  - sudo add-apt-repository -y ppa:h-rayflood/llvm
  # - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi  
   
 install: 
@@ -68,6 +68,7 @@ install:
   #- if [ "$CXX" == "g++" ]; then sudo apt-get install -qq g++-7; fi
   #- if [ "$CXX" == "g++" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90; fi
   #- if [ "$CXX" == "clang++" ]; then sudo apt-get install -qq clang-4.0.1; fi
+  - sudo apt-get install -qq clang-4.0.0;
   # cppcheck
   # - sudo apt-get install -qq cppcheck  
   
