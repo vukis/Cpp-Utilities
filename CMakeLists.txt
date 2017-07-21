@@ -14,7 +14,9 @@ set(Boost_USE_MULTITHREAD ON)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
-find_package(Threads)
+if(NOT MSVC)
+    find_package(Threads REQUIRED)
+endif()	
 
 if(WIN32)
     add_compile_options("-D_WIN32_WINNT=0x0501") # Supress warning
@@ -28,9 +30,7 @@ endif()
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${EXECUTABLE_NAME}
-  ${Boost_FILESYSTEM_LIBRARY}
-  ${Boost_SYSTEM_LIBRARY})
+target_link_libraries(${EXECUTABLE_NAME} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 
 if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
