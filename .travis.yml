@@ -26,7 +26,7 @@ env:
 
 before_install:
   #- sudo apt-get install libboost-all-dev
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test #-y
   # http://ppa.launchpad.net/banshee-team/ppa/ubuntu/dists/
   - sudo apt-get update #-qq
 
