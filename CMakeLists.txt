@@ -30,8 +30,11 @@ endif()
 
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${EXECUTABLE_NAME} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
-
 if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
+
+target_link_libraries(${EXECUTABLE_NAME}
+    ${Boost_FILESYSTEM_LIBRARY}
+    ${Boost_SYSTEM_LIBRARY})
+	
