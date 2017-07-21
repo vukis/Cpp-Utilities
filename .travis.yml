@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: precise # trusty
+dist: trusty
 
 os:
     - linux
