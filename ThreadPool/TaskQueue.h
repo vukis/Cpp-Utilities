@@ -1,7 +1,7 @@
 #pragma once
 
 #include <condition_variable>
-// #include <optional>
+#include <optional>
 #include <functional>
 #include <future>
 #include <queue>
@@ -87,11 +87,11 @@ public:
     }
 
     template <typename TaskT>
-    auto TryPush(TaskT &&task) // -> std::optional<std::future<decltype(task())>> is supported only in C++17
+    auto TryPush(TaskT &&task) // -> std::optional<std::future<decltype(task())>>
     {
         using TaskRetType = decltype(task());
 
-        std::unique_ptr<std::future<TaskRetType>> future;
+        std::optional<std::future<TaskRetType>> future;
         {
             LockType lock{ m_mutex, std::try_to_lock };
             if (!lock)

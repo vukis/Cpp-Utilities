@@ -29,6 +29,7 @@ target_link_libraries(Test${CMAKE_PROJECT_NAME}
   ${Boost_FILESYSTEM_LIBRARY}
   ${Boost_SYSTEM_LIBRARY}
 )
+target_link_libraries(Test${CMAKE_PROJECT_NAME} regex system filesystem)
 if(NOT CMAKE_COMPILER_IS_MSVC)
 	target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread)
 endif()
