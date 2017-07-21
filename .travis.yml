@@ -11,7 +11,7 @@ addons:
   apt:
     sources:
       - boost-latest
-      - ubuntu-toolchain-r-test
+      #- ubuntu-toolchain-r-test
     packages:
       - libboost1.55-all    
 
