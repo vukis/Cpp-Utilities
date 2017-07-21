@@ -14,7 +14,7 @@ addons:
       - boost-latest
       #- ubuntu-toolchain-r-test
     packages:
-      - libboost1.59-all    
+      - libboost1.60-all    
 
 env:
     - TARGET_CPU=x86 BUILD_CONFIGURATION=Debug
