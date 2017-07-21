@@ -17,7 +17,9 @@ env:
  
 before_install:  
   # sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
+  
   - if [ "$CXX" == "g++" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
+  
   - sudo apt-get update -qq
   
 install: 

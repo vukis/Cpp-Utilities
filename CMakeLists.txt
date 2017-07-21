@@ -14,6 +14,8 @@ set(Boost_USE_MULTITHREAD ON)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
+find_package(Threads)
+
 if(WIN32)
     add_compile_options("-D_WIN32_WINNT=0x0501") # Supress warning
 endif()
