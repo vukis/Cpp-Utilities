@@ -17,7 +17,6 @@ env:
 
 before_install:
   #- sudo apt-get install libboost-all-dev
-  - sudo apt-get install libboost-dev=1.64.0
 
 install: 
   #- sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
@@ -29,6 +28,9 @@ install:
 
   - sudo apt-get install -qq g++-7
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-7"; fi
+  
+  - sudo apt-get install libboost-dev=1.60
   
 script:
     - mkdir build
