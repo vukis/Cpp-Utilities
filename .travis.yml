@@ -30,7 +30,7 @@ install:
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   - if [ "$CXX" = "g++" ]; then export CXX="g++-7"; fi
   
-  - sudo apt-get install libboost-dev=1.60
+  - sudo apt-get install libboost-all-dev
   
 script:
     - mkdir build
