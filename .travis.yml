@@ -18,15 +18,14 @@ env:
 before_install:  
   # sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -qq
   - sudo apt-get install -qq g++-7
+  - sudo apt-get install libboost-all-dev
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   
 install: 
   #- sudo apt-get install --allow-unauthenticated -qq clang++-4.0
   #- export CXX="clang++-4.0"
-
-  - sudo apt-get update -qq
-  - sudo apt-get install libboost-all-dev
 
 script:
     - mkdir build
