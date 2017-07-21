@@ -22,7 +22,7 @@ before_install:
   
   - sudo apt-get update -qq
   - sudo apt-get install libboost-all-dev
-	
+
 install: 
   #- sudo apt-get install --allow-unauthenticated -qq clang++-4.0
   #- export CXX="clang++-4.0"
