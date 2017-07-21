@@ -26,8 +26,9 @@ env:
 
 before_install:
   #- sudo apt-get install libboost-all-dev
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  # http://ppa.launchpad.net/banshee-team/ppa/ubuntu/dists/
+  - sudo apt-get update #-qq
 
 install: 
   #- sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
