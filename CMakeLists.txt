@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
 project(ThreadPool)
+set(EXECUTABLE_NAME Test${CMAKE_PROJECT_NAME})
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/bin)
@@ -23,13 +24,12 @@ else()
     add_compile_options("-std=c++1z")
 endif()
 
-add_executable(Test${CMAKE_PROJECT_NAME} ${SOURCE_FILES})
+add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 
-target_link_libraries(Test${CMAKE_PROJECT_NAME}
+target_link_libraries(${EXECUTABLE_NAME}
   ${Boost_FILESYSTEM_LIBRARY}
-  ${Boost_SYSTEM_LIBRARY}
-)
-target_link_libraries(Test${CMAKE_PROJECT_NAME} regex system filesystem)
-if(NOT CMAKE_COMPILER_IS_MSVC)
-	target_link_libraries(Test${CMAKE_PROJECT_NAME} pthread)
+  ${Boost_SYSTEM_LIBRARY})
+
+if(NOT MSVC)
+	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
