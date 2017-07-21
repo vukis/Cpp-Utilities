@@ -9,7 +9,7 @@ set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 
 # Boost
 find_package(Boost REQUIRED)
-set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREAD ON)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
