@@ -8,10 +8,10 @@ os:
 compiler:
     - gcc
     
-addons:
-  apt:
-    sources:
-      - boost-latest
+#addons:
+#  apt:
+#    sources:
+#      - boost-latest
 #      - ubuntu-toolchain-r-test
 #      - nschloe/boost-nightly
 #    packages:
