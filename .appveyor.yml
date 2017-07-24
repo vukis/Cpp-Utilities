@@ -23,7 +23,7 @@ environment:
   matrix:
     TOOLCHAIN: msvc15
 
-	
+
 #environment:
     #matrix:
       #- TOOLCHAIN: msvc15
