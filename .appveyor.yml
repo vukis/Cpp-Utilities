@@ -21,8 +21,8 @@ environment:
     matrix:
       - TOOLCHAIN: msvc15
       - MSVC_DEFAULT_OPTIONS: ON
-      - BOOST_ROOT: C:\Libraries\boost_1_64_0
-      - BOOST_LIBRARYDIR: C:\Libraries\boost_1_64_0\lib32-msvc-15.0
+      - Boost_INCLUDE_DIRS: C:\Libraries\boost_1_64_0
+      - Boost_LIBRARY_DIRS: C:\Libraries\boost_1_64_0\lib32-msvc-15.0
 
 install:
     # скрипт настройки среды и установки зависимостей:
