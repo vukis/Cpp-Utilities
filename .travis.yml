@@ -8,7 +8,7 @@ os:
 
 compiler:
   - gcc
-   
+
 # addons:
 #  apt:
 #    sources:
@@ -26,6 +26,7 @@ env:
  #   - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
 
 before_install:  
+  -uname -a
 
 install:
   if [ "$TARGET_CPU" == "x86" ]; then 
