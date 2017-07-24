@@ -8,11 +8,14 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/bin
 set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 
 # Boost
-find_package(Boost REQUIRED)
-set(Boost_USE_STATIC_LIBS OFF)
+find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
+set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREAD ON)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
+include_directories(... ${Boost_INCLUDE_DIRS})
+link_directories(... ${Boost_LIBRARY_DIRS})
+target_link_libraries(... ${Boost_LIBRARIES})
 
 if(NOT MSVC)
     find_package(Threads REQUIRED)
