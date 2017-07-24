@@ -7,7 +7,7 @@ os:
 
 compiler:
     - gcc
-    
+
 cache:
   directories:
     - ${TRAVIS_BUILD_DIR}/deps/llvm-3.6.2
@@ -20,9 +20,9 @@ cache:
     - ${TRAVIS_BUILD_DIR}/deps/boost-1.62.0
     - ${TRAVIS_BUILD_DIR}/deps/boost-1.63.0
     
-#addons:
-#  apt:
-#    sources:
+addons:
+  apt:
+    sources:
 #      - boost-latest
       - ubuntu-toolchain-r-test
 #      - nschloe/boost-nightly
