@@ -32,7 +32,7 @@ environment:
 #      - BOOST_LIBRARYDIR: C:\Libraries\boost_1_64_0\lib32-msvc-15.0
 
 install:
-  - call CI\AppVeyor\SetEnv.bat %TOOLCHAIN% %PLATFORM%
+  - call CI\AppVeyor\SetEnviroment.bat %TOOLCHAIN% %PLATFORM%
 
 build_script:
     - mkdir build
