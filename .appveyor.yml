@@ -15,7 +15,7 @@ platform:
 configuration:
   - Debug
   - Release
-	
+
 # specify custom environment variables
 environment:
   TOOLCHAIN: msvc15
