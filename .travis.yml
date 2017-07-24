@@ -25,8 +25,7 @@ env:
  #   - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
  #   - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
 
-before_install:  
-  - uname -a
+before_install:
 
 install:
   if [ "$TARGET_CPU" == "x86" ]; then 
