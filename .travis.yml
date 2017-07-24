@@ -9,14 +9,6 @@ os:
 compiler:
   - gcc
 
-# addons:
-#  apt:
-#    sources:
-#      - boost-latest
-#      - ubuntu-toolchain-r-test
-#    packages:
-#      - libboost1.55-all-dev
-
 env:
   - TARGET_CPU=x86 BUILD_CONFIGURATION=debug
   - TARGET_CPU=x86 BUILD_CONFIGURATION=release
@@ -25,6 +17,15 @@ env:
  # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
  # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
 
+# matrix:
+# addons:
+#  apt:
+#    sources:
+#      - boost-latest
+#      - ubuntu-toolchain-r-test
+#    packages:
+#      - libboost1.55-all-dev
+ 
 before_install:
 
 install:
