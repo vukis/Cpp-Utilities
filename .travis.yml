@@ -36,7 +36,7 @@ before_install:
 #  - sudo apt-get install libboost-system1.64-dev
  # - sudo apt-get install libboost-filesystem1.64-dev
   - sudo wget -O boost_1_64_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.gz/download
-  - sudo tar xzvf --qq boost_1_64_0.tar.gz
+  - sudo tar xzvf -qq boost_1_64_0.tar.gz
   - cd boost_1_64_0/
   - sudo ./bootstrap.sh --prefix=/usr/local
   - sudo ./b2
