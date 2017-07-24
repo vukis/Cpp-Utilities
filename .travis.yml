@@ -28,10 +28,10 @@ env:
 before_install:
 
 install:
-  if [ "$TARGET_CPU" == "x86" ]; then
+  #if [ "$TARGET_CPU" == "x86" ]; then
   #  - sudo dpkg --add-architecture i386
   #  - sudo apt-get -qq update
-  fi
+  #fi
 
   - bash CI/Travis/InstallCompilers.sh
   - bash CI/Travis/InstallDependencies.sh
