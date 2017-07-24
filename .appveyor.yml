@@ -3,19 +3,17 @@ image: Visual Studio 2017
 init:
     - git config --global core.autocrlf input
 
-clone_folder: c:\projects\my-prj # выбираем локальную директорию для клонирования
+clone_folder: c:\projects\utilities # выбираем локальную директорию для клонирования
 shallow_clone: true              # копируем только последний коммит, без истории (git clone --depth 1)
 
 matrix:
     fast_finish: false           # не останавливаемся после возникновения ошибки в каком-то из заданий
 
 platform:
-    # будем гонять CI на amd64 и x86...
     - x64
     - x86
 
 configuration:
-    # ... и в дебажной, и в релизной конфигурациях ...
     - Debug
     - Release
 
