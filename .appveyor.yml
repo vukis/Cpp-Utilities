@@ -19,8 +19,8 @@ configuration:
 
 environment:
   MSVC_DEFAULT_OPTIONS: ON
-  BOOST_INCLUDE_DIRS: C:\Libraries\boost_1_64_0
-  BOOST_LIBRARY_DIRS: C:\Libraries\boost_1_64_0\stage\lib
+  BOOST_ROOT: C:\Libraries\boost_1_64_0
+  BOOST_LIBRARYDIR: C:\Libraries\boost_1_64_0\stage\lib
   matrix:
     - TOOLCHAIN: msvc15
 
