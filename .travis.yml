@@ -32,10 +32,8 @@ install:
   - bash CI/Travis/InstallDependencies.sh
   # sudo apt-get install libboost1.55-all-dev
   
-  - uname -a
-  
 script:
   - mkdir build
   - cd build
-  - cmake .. -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
+  - cmake .. -DTARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
   - make
