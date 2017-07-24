@@ -59,9 +59,7 @@ install:
   #- sudo apt-get install --allow-unauthenticated -qq clang++-4.0
   #- export CXX="clang++-4.0"
   
-  - sudo apt-get install -qq g++-7
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-7"; fi
+
   
 #  - sudo apt-get install libboost-all-dev
  # - sudo apt-get install libboost-system1.64-dev
@@ -110,6 +108,9 @@ install:
       export PATH=${DEPS_DIR}/b2/bin:${PATH}
     fi
 
+  - sudo apt-get install -qq g++-7
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-7"; fi
   
 script:
     - mkdir build
