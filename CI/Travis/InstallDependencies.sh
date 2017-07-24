@@ -9,7 +9,7 @@ sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test # gcc
 sudo apt-get update -qq
 sudo apt-get install -qq g++-7
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-# if [ "$CXX" = "g++" ]; then export CXX="g++-7"; fi
+if [ "$CXX" = "g++" ]; then export CXX="g++-7"; fi
   
  #install boost 1.64.0
  sudo wget -O boost_1_64_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.gz/download
