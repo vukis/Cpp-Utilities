@@ -6,29 +6,24 @@ init:
 clone_folder: C:\Projects\Utilities
 shallow_clone: true
 
+matrix:
+  fast_finish: false
+
 platform:
-  - Win32
+  - x86
   - x64
 
 configuration:
   - Debug
   - Release
 
-# specify custom environment variables
 environment:
-  TOOLCHAIN: msvc15
   MSVC_DEFAULT_OPTIONS: ON
-  BOOST_ROOT: C:\Libraries\boost_1_63_0
+  BOOST_ROOT: C:\Libraries\boost_1_64_0
   matrix:
-    - GENERATOR: "Visual Studio 15 2017"
-      os: Visual Studio 2017
-      fast_finish: false
-    - GENERATOR: "Visual Studio 15 2017 Win64"
-      os: Visual Studio 2017
-      fast_finish: false
+    TOOLCHAIN: msvc15
 
-
-
+	
 #environment:
     #matrix:
       #- TOOLCHAIN: msvc15
@@ -37,20 +32,13 @@ environment:
 #      - BOOST_LIBRARYDIR: C:\Libraries\boost_1_64_0\lib32-msvc-15.0
 
 install:
-    # скрипт настройки среды и установки зависимостей:
-    #- call ci\appveyor\set-env.bat %TOOLCHAIN% %PLATFORM%
-
-    #- appveyor DownloadFile <url> -FileName <local-file>
-    #- 7z e -y <local-file> -o<local-dir>
-    #- ...
+  - call CI\AppVeyor\SetEnv.bat %TOOLCHAIN% %PLATFORM%
 
 build_script:
-    # скрипт сборки проекта:
     - mkdir build
     - cd build
     - cmake .. %CMAKE_CONFIGURE_FLAGS%
     - cmake --build . %CMAKE_BUILD_FLAGS%
 
 test_script:
-    # скрипт тестирования проекта:
     #- ctest -C %CONFIGURATION% --output-on-failure
