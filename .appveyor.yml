@@ -30,7 +30,8 @@ install:
 build_script:
     - mkdir build
     - cd build
-    - cmake .. -DBOOST_INCLUDE_DIRS=%BOOST_INCLUDE_DIRS%
+   # - cmake .. %CMAKE_CONFIGURE_FLAGS% -DBOOST_INCLUDE_DIRS=%BOOST_INCLUDE_DIRS% -D
+    - cmake .. %CMAKE_CONFIGURE_FLAGS% -DCMAKE_BUILD_TYPE=%configuration% -DBUILD_SHARED_LIBS=ON -DBOOST_ROOT="%BOOST_ROOT%"
     - cmake --build . 
 #%CMAKE_BUILD_FLAGS%
 
