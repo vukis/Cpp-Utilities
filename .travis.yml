@@ -53,6 +53,7 @@ before_install:
   - sudo ./bootstrap.sh --with-libraries=filesystem,system
   - sudo ./b2 link=shared threading=multi variant=release
   - sudo ./b2 install
+  - cd ..
 
 install: 
   #- sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
@@ -69,7 +70,7 @@ install:
   - if [ "$CXX" = "g++" ]; then export CXX="g++-7"; fi
   
 script:
-    - sudo mkdir build
+    - mkdir build
     - cd build
     - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
     - make
