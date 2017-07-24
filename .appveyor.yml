@@ -19,8 +19,8 @@ configuration:
 
 environment:
     matrix:
-        - TOOLCHAIN: msvc15
-		
+      - TOOLCHAIN: msvc15
+
 environment:
   MSVC_DEFAULT_OPTIONS: ON
   BOOST_ROOT: C:\Libraries\boost_1_64_0
