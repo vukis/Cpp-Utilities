@@ -1,8 +1,8 @@
- # install clang
- #sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
- # sudo apt-get install --allow-unauthenticated -qq clang++-4.0
- # export CXX="clang++-4.0"
- # sudo apt-get install libboost1.55-all-dev
+# install clang
+#sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
+# sudo apt-get install --allow-unauthenticated -qq clang++-4.0
+# export CXX="clang++-4.0"
+# sudo apt-get install libboost1.55-all-dev
   
 # install gcc-7
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test # gcc
