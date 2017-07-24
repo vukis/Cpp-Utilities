@@ -29,15 +29,6 @@ before_install:
   # http://ppa.launchpad.net/banshee-team/ppa/ubuntu/dists/
   - sudo apt-get update -qq
   
-  - sudo wget -O boost_1_64_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.gz/download
-  - sudo tar xzf boost_1_64_0.tar.gz
-  - cd boost_1_64_0/
-  - sudo ./bootstrap.sh --with-libraries=filesystem,system
-  - sudo ./b2 link=shared threading=multi variant=release
-  - sudo ./b2 install
-  - cd ..
-  #- sudo apt-get install libboost1.55-all-dev
-  
 install: 
   #- sudo apt-add-repository "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main"
   #- sudo apt-get install --allow-unauthenticated -qq clang++-4.0
@@ -46,6 +37,15 @@ install:
   - sudo apt-get install -qq g++-7
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   - if [ "$CXX" = "g++" ]; then export CXX="g++-7"; fi
+  
+  - sudo wget -O boost_1_64_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.gz/download
+  - sudo tar xzf boost_1_64_0.tar.gz
+  - cd boost_1_64_0/
+  - sudo ./bootstrap.sh --with-libraries=filesystem,system
+  - sudo ./b2 link=shared threading=multi variant=release
+  - sudo ./b2 install
+  - cd ..
+  #- sudo apt-get install libboost1.55-all-dev
   
 script:
     - mkdir build
