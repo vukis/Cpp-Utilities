@@ -37,7 +37,7 @@ install:
   - bash CI/Travis/InstallDependencies.sh
   # sudo apt-get install libboost1.55-all-dev
   
-  -uname -a
+  - uname -a
   
 script:
   - mkdir build
