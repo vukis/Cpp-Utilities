@@ -37,7 +37,7 @@ install:
 build_script:
     - mkdir build
     - cd build
-    - cmake .. %CMAKE_CONFIGURE_FLAGS% -DBOOST_INCLUDE_DIRS
+    - cmake .. %CMAKE_CONFIGURE_FLAGS% -D%BOOST_INCLUDE_DIRS%
     - cmake --build . 
 #%CMAKE_BUILD_FLAGS%
 
