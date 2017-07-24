@@ -3,15 +3,15 @@ image: Visual Studio 2017
 init:
     - git config --global core.autocrlf input
 
-clone_folder: c:\projects\utilities # выбираем локальную директорию для клонирования
-shallow_clone: true              # копируем только последний коммит, без истории (git clone --depth 1)
+clone_folder: C:\Projects\Utilities
+shallow_clone: true
 
 matrix:
-    fast_finish: false           # не останавливаемся после возникновения ошибки в каком-то из заданий
+    fast_finish: false
 
 platform:
+    - Win32
     - x64
-    - x86
 
 configuration:
     - Debug
@@ -20,6 +20,11 @@ configuration:
 environment:
     matrix:
         - TOOLCHAIN: msvc15
+		
+environment:
+  MSVC_DEFAULT_OPTIONS: ON
+  BOOST_ROOT: C:\Libraries\boost_1_64_0
+  BOOST_LIBRARYDIR: C:\Libraries\boost_1_64_0\lib32-msvc-15.0
 
 install:
     # скрипт настройки среды и установки зависимостей:

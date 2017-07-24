@@ -22,8 +22,8 @@ env:
   - TARGET_CPU=x86 BUILD_CONFIGURATION=release
   - TARGET_CPU=x64 BUILD_CONFIGURATION=debug
   - TARGET_CPU=x64 BUILD_CONFIGURATION=release
- #   - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
- #   - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
+ # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
+ # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
 
 before_install:
 
@@ -36,6 +36,8 @@ install:
   - bash CI/Travis/InstallCompilers.sh
   - bash CI/Travis/InstallDependencies.sh
   # sudo apt-get install libboost1.55-all-dev
+  
+  -uname -a
   
 script:
   - mkdir build
