@@ -3,7 +3,7 @@ sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update -qq
 sudo apt-get install -qq g++-7
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
-if [ "$CXX" = "g++" ]; then 
+if [ "$CXX" == "g++" ]; then 
   export CXX="g++-7"; 
 fi
   
