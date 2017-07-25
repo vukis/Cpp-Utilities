@@ -1,7 +1,7 @@
 # Cpp-Utilities
 
 [![Build Status][travis-badge]][travis-link]
-[![Build Status][appveyor-badge]][ppveyor-link]
+[![Build Status][appveyor-badge]][appveyor-link]
 [![codecov][codecov-badge]][codecov-link]
 
 ### Abstract
