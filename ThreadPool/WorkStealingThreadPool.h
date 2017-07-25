@@ -49,8 +49,10 @@ WorkStealingThreadPool::WorkStealingThreadPool(size_t threadCount)
 
 WorkStealingThreadPool::~WorkStealingThreadPool()
 {
+   cpnst bool finishTasks = false;
+    
     for (auto& queue : m_queues)
-        queue.SetEnabled(false);
+        queue.SetEnabled(finishTasks);
 
     for (auto& thread : m_threads)
         thread.join();
