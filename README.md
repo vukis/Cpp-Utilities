@@ -5,7 +5,7 @@
 
 ### Abstract
 
-Repository with useful C++ utilitiy classes.
+Utilitiy classes useful in daily C++ programing.
 
 # Thread pool
 
