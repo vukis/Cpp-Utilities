@@ -50,11 +50,12 @@ find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREAD ON)
 
+link_directories(${BOOST_LIBRARY_DIRS})
+
 # Create executable
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 
 target_include_directories(${EXECUTABLE_NAME} PUBLIC ${BOOST_INCLUDE_DIRS})
-link_directories(${BOOST_LIBRARY_DIRS})
 
 if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
