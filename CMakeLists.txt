@@ -54,7 +54,7 @@ set(Boost_USE_MULTITHREAD ON)
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
 
 target_include_directories(${EXECUTABLE_NAME} PUBLIC ${Boost_INCLUDE_DIRS})
-target_link_directories(${EXECUTABLE_NAME} PUBLIC ${Boost_LIBRARY_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
 
 if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
