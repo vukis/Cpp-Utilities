@@ -19,10 +19,9 @@ Header only library. Contains following thread pools:
 
 Inspired by Sean Parent's talk ([presentation](http://sean-parent.stlab.cc/presentations/2016-11-16-concurrency/2016-11-16-concurrency.pdf)) and this [lib](https://github.com/topcpporg/thread-pool-cpp).
 
-
 [travis-badge]:     https://travis-ci.org/vukis/Utilities.svg?branch=master
 [travis-link]:      https://travis-ci.org/vukis/Utilities
 [appveyor-badge]:   https://ci.appveyor.com/api/projects/status/1l8srr6wo3ixnc7o?svg=true
 [appveyor-link]:    https://ci.appveyor.com/project/vukis/utilities)
-[codecov-badge]:    https://codecov.io/gh/codecov/vukis/Utilities/branch/master/graph/badge.svg
-[codecov-link]:     https://codecov.io/gh/codecov/vukis/Utilities
+[codecov-badge]:    https://codecov.io/gh/vukis/Utilities/branch/master/graph/badge.svg
+[codecov-link]:     https://codecov.io/gh/vukis/Utilities
