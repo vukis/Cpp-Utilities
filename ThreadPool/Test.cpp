@@ -26,7 +26,9 @@ void SleepForRandomTime()
     // The OS is free to schedule work on the CPU while the thread is
     // sleeping. Hence we do some busy work. Note that volatile keyword
     // is necessary to prevent compiler from removing the below code.
-    srand(0);
+    
+    srand(0); // random sequences should be indentical
+    
     volatile auto delay = rand();
     while (delay != 0) {
         delay--;
