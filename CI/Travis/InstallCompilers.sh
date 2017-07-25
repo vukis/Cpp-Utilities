@@ -1,3 +1,4 @@
+#!/bin/sh
 # install gcc-7
 sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update -qq
