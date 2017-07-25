@@ -5,7 +5,8 @@ Utilities
 .. image:: https://ci.appveyor.com/api/projects/status/1l8srr6wo3ixnc7o?svg=true
 	:target: https://ci.appveyor.com/project/vukis/utilities
 
-
+Abstract
+--------
 Repository with useful utilitiy classes.
 
 # Thread pool
