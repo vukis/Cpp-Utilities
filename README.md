@@ -1,10 +1,14 @@
-# Utilities
+Utilities
+=====
+.. image:: https://travis-ci.org/vukis/Utilities.svg?branch=master
+	:target: https://travis-ci.org/vukis/Utilities
+.. image:: https://ci.appveyor.com/api/projects/status/1l8srr6wo3ixnc7o?svg=true
+	:target: https://ci.appveyor.com/project/vukis/utilities
 
-[![Build Status](https://travis-ci.org/vukis/Utilities.svg?branch=master)](https://travis-ci.org/vukis/Utilities)
 
 Repository with useful utilitiy classes.
 
-## Thread pool
+# Thread pool
 
 Header only library. Contains following thread pools:
 - Thread pool with single task queue
