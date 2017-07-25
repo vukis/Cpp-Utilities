@@ -1,12 +1,10 @@
-Utilities
-=====
-.. image:: https://travis-ci.org/vukis/Utilities.svg?branch=master
-	:target: https://travis-ci.org/vukis/Utilities
-.. image:: https://ci.appveyor.com/api/projects/status/1l8srr6wo3ixnc7o?svg=true
-	:target: https://ci.appveyor.com/project/vukis/utilities
+# Utilities
 
-Abstract
---------
+[![Build Status](https://travis-ci.org/vukis/Utilities.svg?branch=master)](https://travis-ci.org/vukis/Utilities)
+[![Build Status](https://ci.appveyor.com/api/projects/status/1l8srr6wo3ixnc7o?svg=true)](https://ci.appveyor.com/project/vukis/utilities)
+
+### Abstract
+
 Repository with useful utilitiy classes.
 
 # Thread pool
