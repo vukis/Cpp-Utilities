@@ -23,14 +23,13 @@ environment:
     - TOOLCHAIN: msvc15
 
 install:
-  - call CI\AppVeyor\SetEnviroment.bat %TOOLCHAIN% %PLATFORM%
+  - call CI\AppVeyor\SetEnviroment.bat %TOOLCHAIN% %PLATFORM% %configuration%
 
 build_script:
     - mkdir build
     - cd build
-    - cmake .. %CMAKE_CONFIGURE_FLAGS% -DCMAKE_BUILD_TYPE=%configuration%
-    - cmake --build . 
-#%CMAKE_BUILD_FLAGS%
+    - cmake .. %CMAKE_CONFIGURE_FLAGS%
+    - cmake --build . %CMAKE_BUILD_FLAGS%
 
 test_script:
     #- ctest -C %CONFIGURATION% --output-on-failure
