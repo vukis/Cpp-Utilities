@@ -1,7 +1,5 @@
 :loop
 
-dir C:\Libraries\boost_1_64_0\lib32-msvc-14.1
-
 if "%1" == "" goto :finalize
 if /i "%1" == "x86" goto :x86
 if /i "%1" == "x64" goto :x64
