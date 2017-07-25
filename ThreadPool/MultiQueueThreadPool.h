@@ -35,8 +35,10 @@ MultiQueueThreadPool::MultiQueueThreadPool(size_t threadCount)
 
 MultiQueueThreadPool::~MultiQueueThreadPool()
 {
+    const bool finishTasks = false;
+    
     for (auto& queue : m_queues)
-        queue.SetEnabled(false);
+        queue.SetEnabled(finishTasks);
 
     for (auto& thread : m_threads)
         thread.join();
