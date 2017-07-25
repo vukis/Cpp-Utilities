@@ -41,4 +41,5 @@ script:
   
 after_success:
   - coveralls --gcov "gcov-4.9" 
+  - find .build/debug -type f
   #--exclude test --exclude googletest --root . --build-root ".build/debug" --gcov-options '\-lp'
