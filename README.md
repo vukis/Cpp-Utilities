@@ -1,8 +1,8 @@
 # Cpp-Utilities
 
-[![Build Status](https://travis-ci.org/vukis/Utilities.svg?branch=master)](https://travis-ci.org/vukis/Utilities)
-[![Build Status](https://ci.appveyor.com/api/projects/status/1l8srr6wo3ixnc7o?svg=true)](https://ci.appveyor.com/project/vukis/utilities)
-[![Coverage Status](https://coveralls.io/repos/github/vukis/Utilities/badge.svg)](https://coveralls.io/github/vukis/Utilities)
+[![Build Status][travis-badge]][travis-link]
+[![Build Status][appveyor-badge]][ppveyor-link]
+[![codecov][codecov-badge]][codecov-link]
 
 ### Abstract
 
@@ -18,3 +18,10 @@ Header only library. Contains following thread pools:
 - [PPL](https://msdn.microsoft.com/library/dd492418.aspx) based thread pool
 
 Inspired by Sean Parent's talk ([presentation](http://sean-parent.stlab.cc/presentations/2016-11-16-concurrency/2016-11-16-concurrency.pdf)) and this [lib](https://github.com/topcpporg/thread-pool-cpp).
+
+[travis-badge]:    https://travis-ci.org/vukis/Utilities.svg?branch=master
+[travis-link]:     https://travis-ci.org/vukis/Utilities
+[appveyor-badge]:  https://ci.appveyor.com/api/projects/status/1l8srr6wo3ixnc7o?svg=true
+[appveyor-link]:   https://ci.appveyor.com/project/vukis/utilities)
+[codecov-badge]:   https://codecov.io/gh/codecov/vukis/Utilities/branch/master/graph/badge.svg
+[codecov-link]:    https://codecov.io/gh/codecov/vukis/Utilities
