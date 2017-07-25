@@ -32,7 +32,8 @@ SingleQueueThreadPool::SingleQueueThreadPool(size_t threadCount)
 
 SingleQueueThreadPool::~SingleQueueThreadPool()
 {
-    m_queue.SetEnabled(false);
+    const bool finishTasks = false;
+    m_queue.SetEnabled(finishTasks);
 
     for (auto& thread : m_threads)
         thread.join();
