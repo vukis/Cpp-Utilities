@@ -5,7 +5,7 @@
 
 ### Abstract
 
-Utilitiy classes useful in daily C++ programing.
+Utility classes useful in daily C++ programming.
 
 # Thread pool
 
