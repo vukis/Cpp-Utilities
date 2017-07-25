@@ -23,7 +23,7 @@ environment:
     - TOOLCHAIN: msvc15
 
 install:
-  - call CI\AppVeyor\SetEnviroment.bat %TOOLCHAIN% %PLATFORM% "%configuration%"
+  - call CI\AppVeyor\SetEnviroment.bat %TOOLCHAIN% %PLATFORM%
 
 build_script:
     - mkdir build
