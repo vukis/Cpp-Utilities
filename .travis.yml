@@ -38,3 +38,7 @@ script:
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
   - make
+  
+after_success:
+  - coveralls --gcov "gcov-4.9" 
+  #--exclude test --exclude googletest --root . --build-root ".build/debug" --gcov-options '\-lp'
