@@ -27,7 +27,6 @@ env:
 #      - libboost1.55-all-dev
  
 before_install:
-  - sudo uname -a
 
 install:
   - bash CI/Travis/InstallCompilers.sh
