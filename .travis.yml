@@ -24,7 +24,7 @@ addons:
 #      - boost-latest
 #      - ubuntu-toolchain-r-test
     packages:
-      -lcov
+      - lcov
 #      - libboost1.55-all-dev
  
 before_install:
@@ -32,7 +32,6 @@ before_install:
 install:
   - bash CI/Travis/InstallCompilers.sh
   - bash CI/Travis/InstallDependencies.sh
-  # sudo apt-get install libboost1.55-all-dev
   
   # install codecov
   # - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 90
