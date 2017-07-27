@@ -11,7 +11,7 @@ set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
 
 if(NOT MSVC)
-    include(${MAKE_MODULE_PATH}/CodeCoverage)
+    include(${MAKE_MODULE_PATH}/CodeCoverage.cmake)
     setup_target_for_coverage(${CMAKE_PROJECT_NAME}Coverage tests coverage)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -g -O0 -fprofile-arcs -ftest-coverage")
 endif()
