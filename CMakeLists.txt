@@ -7,6 +7,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/lib
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/bin)
 set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 
+# In CMakeModules I include code coverage for c++
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake)
+
 if(NOT MSVC)
     include(CodeCoverage)
     setup_target_for_coverage(${CMAKE_PROJECT_NAME}Coverage tests coverage)
