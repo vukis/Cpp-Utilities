@@ -7,6 +7,12 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/lib
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${CMAKE_PROJECT_NAME}/bin)
 set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 
+if(NOT MSVC)
+    include(CodeCoverage)
+    setup_target_for_coverage(${CMAKE_PROJECT_NAME}Coverage tests coverage)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -g -O0 -fprofile-arcs -ftest-coverage")
+endif()
+
 # C++17
 if(MSVC)
     add_compile_options("/std:c++latest") # C++17
@@ -52,6 +58,9 @@ set(Boost_USE_MULTITHREAD ON)
 
 include_directories(${BOOST_INCLUDE_DIRS})
 link_directories(${BOOST_LIBRARY_DIRS})
+
+include(CTest)
+enable_testing()
 
 # Create executable
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
