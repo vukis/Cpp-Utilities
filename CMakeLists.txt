@@ -58,9 +58,11 @@ endif ()
 
 # Dependencies
 if(NOT MSVC)
+
 ## pthread
     find_package(Threads REQUIRED)
 endif()	
+
 ## Boost
 find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
 set(Boost_USE_STATIC_LIBS OFF)
@@ -85,4 +87,5 @@ if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
 
+add_coverage(${EXECUTABLE_NAME})
 add_test(NAME ExampleTest COMMAND ${EXECUTABLE_NAME})
