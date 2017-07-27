@@ -8,8 +8,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
-
 # In CMakeModules I include code coverage for c++
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 # Load and run *.cmake files
@@ -70,15 +68,20 @@ set(Boost_USE_MULTITHREAD ON)
 
 # Include header files
 include_directories(${BOOST_INCLUDE_DIRS})
-# Static libraries
+# Static libraries directories
 link_directories(${BOOST_LIBRARY_DIRS})
 
 include(CTest)
 enable_testing()
 
+set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
+
 # Create executable
 add_executable(${EXECUTABLE_NAME} ${SOURCE_FILES})
+# Linking up all libraries
+target_link_libraries(${EXECUTABLE_NAME} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
-target_link_libraries(${EXECUTABLE_NAME} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
+
+add_test(NAME example_test COMMAND ${EXECUTABLE_NAME})
