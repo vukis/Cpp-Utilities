@@ -18,12 +18,13 @@ env:
  # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
 
 # matrix:
-# addons:
-#  apt:
+addons:
+  apt:
 #    sources:
 #      - boost-latest
 #      - ubuntu-toolchain-r-test
-#    packages:
+    packages:
+      -lcov
 #      - libboost1.55-all-dev
  
 before_install:

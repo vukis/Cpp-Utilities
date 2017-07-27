@@ -12,26 +12,25 @@ set(SOURCE_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 
 # In CMakeModules I include code coverage for c++
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
+# Load and run *.cmake files
+include(${CMAKE_MODULE_PATH}/CodeCoverage.cmake)
+#
+setup_target_for_coverage(${CMAKE_PROJECT_NAME}Coverage tests coverage)
 
-if(NOT MSVC)
-    include(${CMAKE_MODULE_PATH}/CodeCoverage.cmake)
-    setup_target_for_coverage(${CMAKE_PROJECT_NAME}Coverage tests coverage)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -g -O0 -fprofile-arcs -ftest-coverage")
-endif()
-
-# C++ compile flags
-# -std=c++1z -> for c++ standarts
-# -Wall for WARNING
-# -pedantic -> for warning between c and c++
-# -pthread for portability
-# -g -O0 -fprofile-arcs -ftest-coverage for code coverage
-
-# C++17
+# C++ compiler flags
 if(MSVC)
-    add_compile_options("/std:c++latest") # C++17
-	add_compile_options("-D_WIN32_WINNT=0x0501") # Supress warning
+    # /std:c++latest -> for c++ standarts
+	# "-D_WIN32_WINNT=0x0501 -> supress warning in boost
+    add_compile_options("/std:c++latest")
+	add_compile_options("-D_WIN32_WINNT=0x0501")
 else()
+    # -std=c++1z -> for c++ standarts
+    # -Wall for WARNING
+    # -pedantic -> for warning between c and c++
+    # -pthread for portability
+    # -g -O0 -fprofile-arcs -ftest-coverage for code coverage
     add_compile_options("-std=c++1z")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -g -O0 -fprofile-arcs -ftest-coverage")
 endif()
 
 # Set CPU achitecture specific compiler flags
