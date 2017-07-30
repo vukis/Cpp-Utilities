@@ -12,8 +12,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 # Load and run *.cmake files
 include(${CMAKE_MODULE_PATH}/CodeCoverage.cmake)
-#
-setup_target_for_coverage(${CMAKE_PROJECT_NAME}Coverage tests coverage)
 
 # C++ compiler flags
 if(MSVC)
@@ -87,4 +85,6 @@ if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
 
-add_test(NAME ${EXECUTABLE_NAME} COMMAND tests)
+
+setup_target_for_coverage(${EXECUTABLE_NAME} ${EXECUTABLE_NAME} coverage)
+add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})
