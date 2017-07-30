@@ -34,7 +34,7 @@ install:
   - bash CI/Travis/InstallDependencies.sh
   
 script:
-  - mkdir build
+  - mkdir -p build
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
   - make -j8
