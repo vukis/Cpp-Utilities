@@ -39,7 +39,7 @@ script:
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
   - make -j8
-  - make -j8 ThreadPool_Test
+  - make -j8 Cpp-Utilities-Coverage
   - ctest
  
 after_success:  

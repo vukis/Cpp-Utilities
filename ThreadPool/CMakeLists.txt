@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(EXECUTABLE_NAME ThreadPool_Test)
+set(EXECUTABLE_NAME ThreadPool-Test)
 
 # Test ThreadPool
 set(TEST_FILES Test.cpp)
@@ -13,4 +13,4 @@ if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
 
-add_test(NAME ${EXECUTABLE_NAME} COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME})
+add_test(NAME Cpp-Utilities-Coverage COMMAND ${EXECUTABLE_NAME})
