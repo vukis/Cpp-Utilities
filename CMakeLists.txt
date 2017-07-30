@@ -76,6 +76,9 @@ enable_testing()
 # recurse into subdirectories
 add_subdirectory(ThreadPool)
 
+# evaluate coverage
+coverage_evaluate()
+
 # Test ThreadPool
 #set(TEST_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
 
