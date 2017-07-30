@@ -39,7 +39,7 @@ script:
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
   - make -j8
-#  - make -j8 TestThreadPool
+  - make -j8 Test
   - ctest
  
 after_success:  
