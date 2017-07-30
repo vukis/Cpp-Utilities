@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(EXECUTABLE_NAME Test_${CMAKE_PROJECT_NAME})
+set(EXECUTABLE_NAME Test_ThreadPool)
 
 # Test ThreadPool
-set(TEST_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
+set(TEST_FILES Test.cpp)
 
 add_executable(${EXECUTABLE_NAME} ${TEST_FILES})
 
