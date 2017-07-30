@@ -29,7 +29,7 @@ void SleepForRandomTime()
     
     srand(0); // random sequences should be indentical
     
-    volatile auto delay = rand();
+    volatile auto delay = rand() % static_cast<int>(1e5);
     while (delay != 0) {
         delay--;
     };
