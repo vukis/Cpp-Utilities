@@ -62,8 +62,6 @@ endif()
 find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREAD ON)
-# enable code coverage
-find_package(codecov)
 
 # Include header files directories
 include_directories(${BOOST_INCLUDE_DIRS} ThreadPool)
@@ -75,9 +73,6 @@ enable_testing()
 
 # recurse into subdirectories
 add_subdirectory(ThreadPool)
-
-# evaluate coverage
-coverage_evaluate()
 
 # Test ThreadPool
 #set(TEST_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
