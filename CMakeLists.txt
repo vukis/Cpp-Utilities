@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
-project(ThreadPool)
+project(Cpp-Utilities)
 
-set(EXECUTABLE_NAME Test${CMAKE_PROJECT_NAME})
+# set(EXECUTABLE_NAME Test_${CMAKE_PROJECT_NAME})
 
 # Setting default folders
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -56,35 +56,34 @@ endif ()
 
 # Dependencies
 if(NOT MSVC)
-
-## pthread
     find_package(Threads REQUIRED)
 endif()	
-
 ## Boost
 find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREAD ON)
 
-# Include header files
-include_directories(${BOOST_INCLUDE_DIRS})
+# Include header files directories
+include_directories(${BOOST_INCLUDE_DIRS} ThreadPool)
 # Static libraries directories
 link_directories(${BOOST_LIBRARY_DIRS})
 
 include(CTest)
 enable_testing()
 
-# Test ThreadPool
-set(TEST_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
+# recurse into subdirectories
+add_subdirectory(ThreadPool)
 
-add_executable(${EXECUTABLE_NAME} ${TEST_FILES})
+# Test ThreadPool
+#set(TEST_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
+
+#add_executable(${EXECUTABLE_NAME} ${TEST_FILES})
 
 # Linking up all libraries
-target_link_libraries(${EXECUTABLE_NAME} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
-if(NOT MSVC)
-	target_link_libraries(${EXECUTABLE_NAME} pthread)
-endif()
+#target_link_libraries(${EXECUTABLE_NAME} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
+#if(NOT MSVC)
+#	target_link_libraries(${EXECUTABLE_NAME} pthread)
+#endif()
 
-
-setup_target_for_coverage(${EXECUTABLE_NAME} ${EXECUTABLE_NAME} coverage)
-add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})
+#setup_target_for_coverage(${EXECUTABLE_NAME} ${EXECUTABLE_NAME} coverage)
+#add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})

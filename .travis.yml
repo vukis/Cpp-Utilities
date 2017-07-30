@@ -24,6 +24,7 @@ addons:
       - ubuntu-toolchain-r-test
       # - boost-latest
     packages:
+      - cmake
       - lcov
       # - libboost1.55-all-dev
  
