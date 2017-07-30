@@ -20,12 +20,12 @@ env:
 # matrix:
 addons:
   apt:
-#    sources:
-#      - boost-latest
-#      - ubuntu-toolchain-r-test
+    sources:
+      - ubuntu-toolchain-r-test
+      # - boost-latest
     packages:
       - lcov
-#      - libboost1.55-all-dev
+      # - libboost1.55-all-dev
  
 before_install:
 
@@ -33,16 +33,14 @@ install:
   - bash CI/Travis/InstallCompilers.sh
   - bash CI/Travis/InstallDependencies.sh
   
-  # install codecov
-  # - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 90
-  
 script:
   - mkdir build
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION
-  - make
+  - make -j8
+  - make -j8 ThreadPoolCoverage
   - ctest
-  
+ 
 after_success:  
   # Creating report
   - cd ${TRAVIS_BUILD_DIR}
