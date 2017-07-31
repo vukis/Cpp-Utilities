@@ -44,8 +44,23 @@ test_script:
 #  - codecov -f "MyProject_coverage.xml
 #   - cmake .. %CMAKE_CONFIGURE_FLAGS%
   #- .\bin\%CONFIGURATION%\ThreadPool-Test.exe
-  - ctest -C %CONFIGURATION% --output-on-failure
+#  - ctest -C %CONFIGURATION% --output-on-failure
 
 after_test:
   - bash <(curl -s https://codecov.io/bash)
 #test_script:    #- ctest -C %CONFIGURATION% --output-on-failure
+
+#---------------------------------#
+#     deployment configuration    #
+#---------------------------------#
+
+deploy:
+  release: 'Utilities'
+  description: "Latest successful CI builds of branch 'master'"
+  provider: GitHub
+  auth_token:
+    secure: 80a8d119dd781868aa5ed8167a1e8f3d6293b259
+  prerelease: true
+  on:
+    branch: master
+appveyor_repo_tag: true
