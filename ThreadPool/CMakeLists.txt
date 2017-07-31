@@ -13,4 +13,4 @@ if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
 
-add_test(NAME Cpp-Utilities-Coverage COMMAND ${EXECUTABLE_NAME})
+add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})
