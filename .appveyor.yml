@@ -34,9 +34,16 @@ build_script:
   - cd build
   - cmake .. %CMAKE_CONFIGURE_FLAGS% 
   - cmake --build . --config %CONFIGURATION%
+  
+  
+ environment:
+  GITHUB_TOKEN:
+    secure: MeZRb+x5xfxO5jH93yXs5Tl9MDmH48nmpMF/i5ouAV/frSSonzqDUZmYg8oMMMI8
+  APPVEYOR_API_TOKEN:
+    secure: eXiEH+/7OgWrbLNGD3aeMGOCsUN5MqXxgRMYci+rCMw=
 
 on_finish:
-  - ps: .\ci\appveyor\enable-worker-remote-access.ps1 -check_for_block
+  - ps: .\ci\appveyor\enable-worker-remote-access.ps1 -block
 
 test_script:
 #  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
