@@ -11,8 +11,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # In CMakeModules I include code coverage for c++
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 # Load and run *.cmake files
-include(${CMAKE_MODULE_PATH}/CodeCoverage.cmake)
-setup_target_for_coverage(${PROJECT_NAME}-Coverage ThreadPool-Test ThreadPool-Coverage)
+#include(${CMAKE_MODULE_PATH}/CodeCoverage.cmake)
+#setup_target_for_coverage(${PROJECT_NAME}-Coverage ThreadPool-Test ThreadPool-Coverage)
 
 # C++ compiler flags
 if(MSVC)
@@ -69,11 +69,18 @@ include_directories(${BOOST_INCLUDE_DIRS} ThreadPool)
 # Static libraries directories
 link_directories(${BOOST_LIBRARY_DIRS})
 
+# enable code coverage
+find_package(codecov)
+
 include(CTest)
 enable_testing()
 
 # recurse into subdirectories
 add_subdirectory(ThreadPool)
+
+# evaluate coverage
+coverage_evaluate()
+
 
 # Test ThreadPool
 #set(TEST_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
