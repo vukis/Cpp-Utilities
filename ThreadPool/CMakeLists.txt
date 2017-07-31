@@ -13,7 +13,7 @@ if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
 
-add_test(NAME ${EXECUTABLE_NAME} COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME})
+add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})
 
 find_package(codecov)
 add_coverage(${EXECUTABLE_NAME})
