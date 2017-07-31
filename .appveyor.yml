@@ -40,7 +40,7 @@ build_script:
   - cmake --build . --config %CONFIGURATION%
 
 on_finish:
-  - ps: .\ci\appveyor\enable-worker-remote-access.ps1 -block
+  - ps: CI\AppVeyor\enable-worker-remote-access.ps1 -block
 
 test_script:
 #  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
