@@ -33,7 +33,12 @@ build_script:
     - mkdir build
     - cd build
     - cmake .. %CMAKE_CONFIGURE_FLAGS%
-    - cmake --build . %CMAKE_BUILD_FLAGS%
 
 test_script:
-    #- ctest -C %CONFIGURATION% --output-on-failure
+#  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
+#  - codecov -f "MyProject_coverage.xml
+    - cmake .. %CMAKE_BUILD_FLAGS%
+
+after_test:
+  - bash <(curl -s https://codecov.io/bash)
+#test_script:    #- ctest -C %CONFIGURATION% --output-on-failure

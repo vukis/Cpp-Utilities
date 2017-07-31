@@ -38,12 +38,10 @@ script:
   - mkdir -p build
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=On
-  - make ThreadPool-Test 
-  - ls .
-  - ./bin/ThreadPool-Test 
   - make && make test
   - make gcov
   - make lcov
+  - ./bin/ThreadPool-Test 
   #  - make -j8
 #  - make -j8 Cpp-Utilities-Coverage
 #  - ctest
