@@ -72,7 +72,7 @@ link_directories(${BOOST_LIBRARY_DIRS})
 # enable code coverage
 find_package(codecov)
 
-include(CTest)
+#include(CTest)
 enable_testing()
 
 # recurse into subdirectories
