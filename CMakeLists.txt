@@ -10,9 +10,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # In CMakeModules I include code coverage for c++
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
-# Load and run *.cmake files
-#include(${CMAKE_MODULE_PATH}/CodeCoverage.cmake)
-#setup_target_for_coverage(${PROJECT_NAME}-Coverage ThreadPool-Test ThreadPool-Coverage)
 
 # C++ compiler flags
 if(MSVC)
@@ -55,44 +52,14 @@ elseif ("${TARGET_CPU}" STREQUAL "x64")
 
 endif ()
 
-# Dependencies
-#if(NOT MSVC)
-#    find_package(Threads REQUIRED)
-#endif()	
-## Boost
-#find_package(Boost 1.64.0 REQUIRED COMPONENTS)
-#system filesystem
-#set(Boost_USE_STATIC_LIBS OFF)
-#set(Boost_USE_MULTITHREAD ON)
-
-# Include header files directories
-#include_directories(${BOOST_INCLUDE_DIRS} ThreadPool)
-# Static libraries directories
-#link_directories(${BOOST_LIBRARY_DIRS})
-
 # enable code coverage
 find_package(codecov)
 
 include(CTest)
 enable_testing()
 
-# recurse into subdirectories
+# recurse into subdirectories with cmake projects
 add_subdirectory(ThreadPool)
 
 # evaluate coverage
 coverage_evaluate()
-
-
-# Test ThreadPool
-#set(TEST_FILES ${CMAKE_PROJECT_NAME}/Test.cpp)
-
-#add_executable(${EXECUTABLE_NAME} ${TEST_FILES})
-
-# Linking up all libraries
-#target_link_libraries(${EXECUTABLE_NAME} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
-#if(NOT MSVC)
-#	target_link_libraries(${EXECUTABLE_NAME} pthread)
-#endif()
-
-#setup_target_for_coverage(${EXECUTABLE_NAME} ${EXECUTABLE_NAME} coverage)
-#add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})
