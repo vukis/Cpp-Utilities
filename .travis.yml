@@ -41,10 +41,7 @@ script:
   - make && make test
   - make gcov
   - make lcov
-  - ./bin/ThreadPool-Test 
-  #  - make -j8
-#  - make -j8 Cpp-Utilities-Coverage
-#  - ctest
+  - ./bin/ThreadPool-Test
  
 after_success:  
   # Creating report
