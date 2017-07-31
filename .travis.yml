@@ -44,7 +44,7 @@ script:
   - make ThreadPool-Test
   #  - make -j8
 #  - make -j8 Cpp-Utilities-Coverage
-#  - ctest
+  - ctest
  
 after_success:  
   # Creating report
