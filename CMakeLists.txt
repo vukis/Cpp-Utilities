@@ -56,23 +56,24 @@ elseif ("${TARGET_CPU}" STREQUAL "x64")
 endif ()
 
 # Dependencies
-if(NOT MSVC)
-    find_package(Threads REQUIRED)
-endif()	
+#if(NOT MSVC)
+#    find_package(Threads REQUIRED)
+#endif()	
 ## Boost
-find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREAD ON)
+#find_package(Boost 1.64.0 REQUIRED COMPONENTS)
+#system filesystem
+#set(Boost_USE_STATIC_LIBS OFF)
+#set(Boost_USE_MULTITHREAD ON)
 
 # Include header files directories
-include_directories(${BOOST_INCLUDE_DIRS} ThreadPool)
+#include_directories(${BOOST_INCLUDE_DIRS} ThreadPool)
 # Static libraries directories
-link_directories(${BOOST_LIBRARY_DIRS})
+#link_directories(${BOOST_LIBRARY_DIRS})
 
 # enable code coverage
 find_package(codecov)
 
-#include(CTest)
+include(CTest)
 enable_testing()
 
 # recurse into subdirectories
