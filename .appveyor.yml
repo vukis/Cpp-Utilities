@@ -30,9 +30,10 @@ install:
   - call CI\AppVeyor\SetEnviroment.bat %TOOLCHAIN% %PLATFORM%
 
 build_script:
-    - mkdir build
-    - cd build
-    - cmake .. %CMAKE_CONFIGURE_FLAGS%
+  - mkdir build
+  - cd build
+  - cmake .. %CMAKE_CONFIGURE_FLAGS%
+  - make && make test 
 
 test_script:
 #  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
