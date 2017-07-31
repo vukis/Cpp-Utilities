@@ -33,6 +33,8 @@ build_script:
   - mkdir build
   - cd build
   - cmake .. %CMAKE_CONFIGURE_FLAGS% 
+  - cmake --build . --config %CONFIGURATION%
+  - dir .
   - dir ThreadPool
   
 test_script:
