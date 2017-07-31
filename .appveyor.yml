@@ -55,11 +55,11 @@ after_test:
 #---------------------------------#
 
 deploy:
-  release: 'Utilities'
+  release: 'Cpp-Utilities'
   description: "Latest successful CI builds of branch 'master'"
   provider: GitHub
   auth_token:
-    secure: 80a8d119dd781868aa5ed8167a1e8f3d6293b259
+    secure: fe3099a5c3af572ef4df643e8e59c5c622996e2d
   prerelease: true
   on:
     branch: master
