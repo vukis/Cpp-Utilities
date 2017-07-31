@@ -34,8 +34,7 @@ build_script:
   - cd build
   - cmake .. %CMAKE_CONFIGURE_FLAGS% 
   - cmake --build . --config %CONFIGURATION%
-  - dir .
-  - dir ThreadPool
+  - dir .\bin\%configuration%\
   
 test_script:
 #  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
