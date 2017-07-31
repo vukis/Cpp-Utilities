@@ -142,6 +142,6 @@ int main()
     FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<PplThreadPool>());
 #endif
     std::cout << std::endl;
-
-    return 0;
+	
+    return 1;
 }
