@@ -11,7 +11,7 @@ if(NOT MSVC)
 endif()
 ## Boost
 find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
-set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREAD ON)
 
 # Include header files directories
