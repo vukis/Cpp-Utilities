@@ -21,7 +21,7 @@ environment:
   MSVC_DEFAULT_OPTIONS: ON
   matrix:
     - TOOLCHAIN: msvc15
-	
+
 before_build:
   - choco install opencover.portable
   - choco install codecov
