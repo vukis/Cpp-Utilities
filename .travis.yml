@@ -53,7 +53,7 @@ script:
   #- cppcheck --template "{file}({line}): {severity} ({id}): {message}"
   #- ./bin/ThreadPool-Test
  
-after_success: 
+after_success:
   - 'if [ "${ENABLE_COVERAGE}" = "On" ]; then
        # Creating report
        cd ${TRAVIS_BUILD_DIR};
