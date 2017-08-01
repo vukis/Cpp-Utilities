@@ -37,8 +37,8 @@ install:
 script:
   - mkdir -p build
   - cd build
-  - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=On
-  - make && ctest #make test
+  - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=On # TODO: disable coverage for release
+  - make && make test # ctest
   - make gcov
   - make lcov
   - ./bin/ThreadPool-Test
