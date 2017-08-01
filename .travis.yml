@@ -26,6 +26,7 @@ addons:
     packages:
       - cmake
       - lcov
+      - cppcheck
       # - libboost1.55-all-dev
  
 before_install:
@@ -38,7 +39,7 @@ script:
   - mkdir -p build
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=On # TODO: disable coverage for release
-  - make && make test # ctest
+  - make && make test && make check # ctest
   - make gcov
   - make lcov
   #- ./bin/ThreadPool-Test
