@@ -41,7 +41,7 @@ script:
   - make && make test # ctest
   - make gcov
   - make lcov
-  - ./bin/ThreadPool-Test
+  #- ./bin/ThreadPool-Test
  
 after_success:  
   # Creating report
@@ -50,7 +50,7 @@ after_success:
   - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system
   - lcov --list coverage.info #debug info
   # Uploading report to CodeCov
-  - bash <(curl -s https://codecov.io/bash) -X gcov || echo "Codecov did not collect coverage reports"
+  - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
   
 notifications:
   email: false
