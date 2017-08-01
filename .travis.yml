@@ -42,11 +42,11 @@ script:
   - make && make test
 
   - 'if [ "${ANALYZE}" = "On" ]; then
-    make check;
-  fi'
-  'if [ "${ENABLE_COVERAGE}" = "On" ]; then
-    make gcov && make lcov;
-  'fi
+      make check;
+    fi
+    if [ "${ENABLE_COVERAGE}" = "On" ]; then
+      make gcov && make lcov;
+    fi'
 
   #- cppcheck --help
   #- cppcheck --template "{file}({line}): {severity} ({id}): {message}"
