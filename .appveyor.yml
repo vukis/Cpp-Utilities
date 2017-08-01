@@ -37,14 +37,14 @@ build_script:
   - mkdir build
   - cd build
   - cmake .. %CMAKE_CONFIGURE_FLAGS% 
-  - cmake --build . #--config %CONFIGURATION%
+  - cmake --build . --config %CONFIGURATION%
 
 test_script:
 #  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
 #  - codecov -f "MyProject_coverage.xml
 #   - cmake .. %CMAKE_CONFIGURE_FLAGS%
-  - .\bin\%CONFIGURATION%\ThreadPool-Test.exe
-#  - ctest -C %CONFIGURATION% --output-on-failure
+#  - .\bin\%CONFIGURATION%\ThreadPool-Test.exe
+  - ctest -C %CONFIGURATION% --output-on-failure
 
 after_test:
   - bash <(curl -s https://codecov.io/bash)
