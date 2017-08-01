@@ -10,7 +10,7 @@ compiler:
   - gcc
 
 env:
-  - TARGET_CPU=x86 BUILD_CONFIGURATION=debug   ENABLE_COVERAGE=On  CTEST_OUTPUT_ON_FAILURE=1
+  - TARGET_CPU=x86 BUILD_CONFIGURATION=debug   ENABLE_COVERAGE=On  CTEST_OUTPUT_ON_FAILURE=1 ANALYZE=true
   - TARGET_CPU=x86 BUILD_CONFIGURATION=release ENABLE_COVERAGE=Off CTEST_OUTPUT_ON_FAILURE=1
   - TARGET_CPU=x64 BUILD_CONFIGURATION=debug   ENABLE_COVERAGE=On  CTEST_OUTPUT_ON_FAILURE=1
   - TARGET_CPU=x64 BUILD_CONFIGURATION=release ENABLE_COVERAGE=Off CTEST_OUTPUT_ON_FAILURE=1
@@ -39,9 +39,11 @@ script:
   - mkdir -p build
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$ENABLE_COVERAGE
-  - make && make test -V #&& make check # ctest
+  - make && make test -V 
+  #&& make check # ctest
   - make gcov
   - make lcov
+  - cppcheck --help
   #- ./bin/ThreadPool-Test
  
 after_success:  
