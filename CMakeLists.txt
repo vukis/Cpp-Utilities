@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.2)
-
 project(Cpp-Utilities)
+
+# set(EXECUTABLE_NAME Test_${CMAKE_PROJECT_NAME})
 
 # Setting default folders
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# In CMakeModules included:
-#   - code coverage for c++
+# In CMakeModules I include code coverage for c++
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 # C++ compiler flags
@@ -62,4 +62,4 @@ enable_testing()
 add_subdirectory(ThreadPool)
 
 # evaluate coverage
-#coverage_evaluate()
+coverage_evaluate()
