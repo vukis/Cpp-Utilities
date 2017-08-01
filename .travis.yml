@@ -40,9 +40,16 @@ script:
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$ENABLE_COVERAGE
   - make && make test
+  
+  'if [ ${ANALYZE} = "On" ]; then
+    - make check
+  fi'
   - make check
-  - make gcov
-  - make lcov
+  'if [ ${ENABLE_COVERAGE} = "On" ]; then
+    - make gcov
+    - make lcov
+  fi'
+
   #- cppcheck --help
   #- cppcheck --template "{file}({line}): {severity} ({id}): {message}"
   #- ./bin/ThreadPool-Test
