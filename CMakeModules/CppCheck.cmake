@@ -1,5 +1,5 @@
 add_custom_target(
-        cppcheck
+        check
   #      COMMAND /usr/bin/cppcheck
  #       --enable=warning,performance,portability,information,missingInclude
   #      --std=c++11
