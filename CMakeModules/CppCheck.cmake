@@ -1,6 +1,6 @@
 add_custom_target(
         check
-  #      COMMAND /usr/bin/cppcheck
+        COMMAND /usr/bin/cppcheck
  #       --enable=warning,performance,portability,information,missingInclude
   #      --std=c++11
    #     --library=qt.cfg
