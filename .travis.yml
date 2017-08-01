@@ -41,10 +41,10 @@ script:
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$ENABLE_COVERAGE
   - make && make test
   
-  if [ "${ANALYZE}" = "On" ]; then
+  if [ "$ANALYZE" = "On" ]; then
     make check
   fi
-  if [ "${ENABLE_COVERAGE}" = "On" ]; then
+  if [ "$ENABLE_COVERAGE" = "On" ]; then
     make gcov && make lcov
   fi
 
