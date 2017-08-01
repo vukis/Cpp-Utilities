@@ -11,7 +11,7 @@ set(Boost_USE_MULTITHREAD ON)
 ## Code coverage
 find_package(codecov)
 
-include(cppcheck.cmake)
+include(${CMAKE_MODULE_PATH}/cppcheck.cmake)
 
 # Include header files directories
 include_directories(${Boost_INCLUDE_DIRS})
