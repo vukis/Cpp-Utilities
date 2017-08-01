@@ -39,7 +39,7 @@ script:
   - mkdir -p build
   - cd build
   - cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$ENABLE_COVERAGE
-  - make && make test #&& make check # ctest
+  - make && make test -V #&& make check # ctest
   - make gcov
   - make lcov
   #- ./bin/ThreadPool-Test
