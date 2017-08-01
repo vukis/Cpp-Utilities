@@ -42,8 +42,8 @@ script:
   
   - 'if [ "${ANALYZE}" = "On" ]; then
       make check;
-    fi
-    if [ "${ENABLE_COVERAGE}" = "On" ]; then
+    fi'
+  - 'if [ "${ENABLE_COVERAGE}" = "On" ]; then
       make gcov && make lcov;
     fi'
 
