@@ -64,7 +64,7 @@ add_subdirectory(ThreadPool)
 
 # Add target for cppcheck
 file(GLOB_RECURSE SOURCE_FILES_TO_ANALYZE "ThreadPool/*.cpp" "ThreadPool/*.h" "Common/*.cpp" "Common/*.h")
-include(${CMAKE_MODULE_PATH}/CppCheck.cmake ${SOURCE_FILES_TO_ANALYZE})
+include(${CMAKE_MODULE_PATH}/CppCheck.cmake)
 
 # evaluate coverage
 coverage_evaluate()
