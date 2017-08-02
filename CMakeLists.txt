@@ -60,11 +60,11 @@ enable_testing()
 
 # recurse into subdirectories with cmake projects
 add_subdirectory(ThreadPool)
-add_subdirectory(Common)
+# add_subdirectory(Common)
 
 # Add target for cppcheck
-file(GLOB_RECURSE SOURCE_FILES "ThreadPool/*.cpp" "ThreadPool/*.h" "Common/*.cpp" "Common/*.h")
-include(${CMAKE_MODULE_PATH}/CppCheck.cmake ${SOURCE_FILES})
+file(GLOB_RECURSE SOURCE_FILES_TO_ANALYZE "ThreadPool/*.cpp" "ThreadPool/*.h" "Common/*.cpp" "Common/*.h")
+include(${CMAKE_MODULE_PATH}/CppCheck.cmake ${SOURCE_FILES_TO_ANALYZE})
 
 # evaluate coverage
 coverage_evaluate()
