@@ -16,7 +16,7 @@ if [ $COVERAGE = "On" ]; then
   lcov --remove coverage.info '/usr/*' --output-file coverage.info # Filter out system;
   lcov --list coverage.info #Debug info
   # Uploading report to CodeCov
-  bash <(curl -s https://codecov.io/bash) -X gcov || echo "Codecov did not collect coverage reports"
+  bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 fi
 
 # Static analysis
