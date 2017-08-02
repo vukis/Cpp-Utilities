@@ -6,14 +6,17 @@
 #include <future>
 #include <queue>
 
-class TaskBase {
+class TaskBase
+{
 public:
     virtual ~TaskBase() = default;
     virtual void exec() = 0;
     void operator()() { exec(); }
 };
 
-template <typename T> class Task : public TaskBase {
+template <typename T> 
+class Task : public TaskBase
+{
 public:
     Task(T &&t) : task(std::move(t)) {}
     void exec() override { task(); }
@@ -21,7 +24,8 @@ public:
     T task;
 };
 
-class TaskQueue {
+class TaskQueue
+{
 public:
     using TaskPtrType = std::unique_ptr<TaskBase>;
 
@@ -31,7 +35,8 @@ public:
     TaskQueue(TaskQueue &&) = default;
     TaskQueue &operator=(TaskQueue &&) = default;
 
-    void SetEnabled(bool enabled) {
+    void SetEnabled(bool enabled)
+    {
         {
             LockType lock{ m_mutex };
             m_enabled = enabled;
@@ -41,12 +46,14 @@ public:
             m_ready.notify_all();
     }
 
-    auto IsEnabled() const {
+    auto IsEnabled() const 
+    {
         LockType lock{ m_mutex };
         return m_enabled;
     }
 
-    auto WaitAndPop(TaskPtrType &task) {
+    auto WaitAndPop(TaskPtrType &task) 
+    {
         LockType lock{ m_mutex };
         m_ready.wait(lock, [this] { return !m_enabled || !m_queue.empty(); });
         if (m_enabled && !m_queue.empty()) {
@@ -62,7 +69,7 @@ public:
     {
         using TaskRetType = decltype(task());
         using PkgTask = std::packaged_task<TaskRetType()>;
-        auto job =
+        auto job = 
             std::make_unique<Task<PkgTask>>(PkgTask(std::forward<TaskT>(task)));
         auto future = job->task.get_future();
 
@@ -75,7 +82,8 @@ public:
         return future;
     }
 
-    auto TryPop(TaskPtrType &task) {
+    auto TryPop(TaskPtrType &task) 
+    {
         LockType lock{ m_mutex, std::try_to_lock };
 
         if (!lock || m_enabled || m_queue.empty())
@@ -100,7 +108,7 @@ public:
             using PkgTask = std::packaged_task<TaskRetType()>;
             auto job =
                 std::make_unique<Task<PkgTask>>(PkgTask(std::forward<TaskT>(task)));
-            auto future = job->task.get_future();
+            future = job->task.get_future();
             m_queue.emplace(std::move(job));
         }
 

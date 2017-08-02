@@ -20,11 +20,12 @@ if(MSVC)
 else()
     # -std=c++1z -> for c++ standarts
     # -Wall for WARNING
+	# -Werror -> Make all warnings into errors.
     # -pedantic -> for warning between c and c++
     # -pthread for portability
     # -g -O0 -fprofile-arcs -ftest-coverage for code coverage
     add_compile_options("-std=c++1z")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -pedantic")
 endif()
 
 # Set CPU achitecture specific compiler flags
