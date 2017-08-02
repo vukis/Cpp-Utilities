@@ -2,6 +2,7 @@
 
 # Install gcc-7
 # sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+echo Install GCC-7...
 sudo apt-get update -qq
 sudo apt-get install -qq g++-7
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
