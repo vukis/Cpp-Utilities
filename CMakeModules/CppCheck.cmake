@@ -9,5 +9,6 @@ add_custom_target(
         --template="[{severity}][{id}] {message} {callstack} \(On {file}:{line}\)"
         --verbose
    #     --quiet
+        --error-exitcode=1
         ${ALL_SOURCE_FILES}
 )
