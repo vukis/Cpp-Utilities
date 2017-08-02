@@ -86,7 +86,7 @@ public:
     {
         LockType lock{ m_mutex, std::try_to_lock };
 
-        if (!lock || m_enabled || m_queue.empty())
+        if (!lock || !m_enabled || m_queue.empty())
             return false;
 
         task = std::move(m_queue.front());
