@@ -45,12 +45,12 @@ script:
   - 'if [ "${BUILD_CONFIGURATION}" = "Debug" ]; then
       make cppcheck;
     fi'
+
   - 'if [ "${COVERAGE}" = "On" ]; then
-      make gcov && make lcov;
+      make gcov;
+      make lcov;
     fi'
 
-  #- cppcheck --help
-  #- cppcheck --template "{file}({line}): {severity} ({id}): {message}"
   #- ./bin/ThreadPool-Test
  
 after_success:
