@@ -26,7 +26,8 @@ fi
 # Static analysis
 if [ $BUILD_CONFIGURATION == "debug" ]; then
   echo Run cppcheck...
-  make $BuildDir/cppcheck
+  cd BuildDir
+  make cppcheck
 fi
 
 # Miscellaneous
