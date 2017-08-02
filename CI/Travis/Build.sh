@@ -4,7 +4,6 @@
 echo Run build...
 mkdir -p build
 cd build
-BuildDir=$PWD
 cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$COVERAGE
 make
 echo Run tests...
@@ -21,7 +20,6 @@ if [ $COVERAGE == "On" ]; then
   lcov --list coverage.info #Debug info
   echo Uploading report to CodeCov.io...
   bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
-  cd $BuildDir
 fi
 
 # Static analysis
@@ -32,7 +30,4 @@ fi
 
 # Miscellaneous
 echo Run ThreadPool-Test...
-ls
-echo $PWD
-echo $TRAVIS_BUILD_DIR 
-.build/bin/ThreadPool-Test
+./build/bin/ThreadPool-Test
