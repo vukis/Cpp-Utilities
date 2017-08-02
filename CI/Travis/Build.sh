@@ -29,5 +29,6 @@ if [ $COVERAGE == "On" ]; then
 fi
 
 # Miscellaneous
+echo $TRAVIS_BUILD_DIR 
 echo Run ThreadPool-Test...
 ./bin/ThreadPool-Test
