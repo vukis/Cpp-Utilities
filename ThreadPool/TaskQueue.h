@@ -18,7 +18,7 @@ template <typename T>
 class Task : public TaskBase
 {
 public:
-    Task(T &&t) : task(std::move(t)) {}
+    Task(T&& t) : task(std::move(t)) {}
     void exec() override { task(); }
 
     T task;
