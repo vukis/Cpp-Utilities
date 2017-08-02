@@ -29,4 +29,4 @@ if [ $COVERAGE == "On" ]; then
 fi
 
 # Miscellaneous
-#- ./bin/ThreadPool-Test
+./bin/ThreadPool-Test

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Install boost 1.64.0
-echo Install Boost 1.64.0
+echo Install Boost 1.64.0...
 sudo wget -O boost_1_64_0.tar.gz http://sourceforge.net/projects/boost/files/boost/1.64.0/boost_1_64_0.tar.gz/download
 sudo tar xzf boost_1_64_0.tar.gz
 cd boost_1_64_0/
