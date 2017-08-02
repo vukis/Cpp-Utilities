@@ -10,5 +10,7 @@ add_custom_target(
         --verbose
    #     --quiet
   #      --error-exitcode=1
+        -DDEBUG=1
+		--check-config
         ${ALL_SOURCE_FILES}
 )
