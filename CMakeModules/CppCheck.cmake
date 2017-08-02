@@ -1,5 +1,5 @@
 # Hack
-file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
+#file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
 
 add_custom_target(
         cppcheck
@@ -14,5 +14,5 @@ add_custom_target(
 		# -- I [dir] // to include STL/Boost/Windows headers
         # --quiet
         # --library=qt.cfg
-        ${ALL_SOURCE_FILES}
+        ${SOURCE_FILES}
 )
