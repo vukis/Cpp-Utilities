@@ -15,25 +15,27 @@ public:
     template<typename TaskT>
     auto ExecuteAsync(TaskT&& task)
     {
-        using TaskReturnType = decltype(task());
+        using TaskRetType = decltype(task());
+        using PkgTask = std::packaged_task<TaskRetType()>;
 
         // std::packaged_task<> is move only type.
-        // We need to wrap it in a shared_ptr:
-        auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TaskT>(task));
-        auto future = packagedTask->get_future();
+        // We need to wrap it in a shared_ptr to use in lambda.
+        auto job =
+            std::make_shared<PkgTask>(std::forward<TaskT>(task));
+        auto future = job->get_future();
 
-        m_tasks.emplace_back([packagedTask] { (*packagedTask)(); });
+        m_tasks.run([job = std::move(job)] { (*job)(); });
 
         return future;
     }
 
 private:
 
-    std::vector<concurrency::task<void>> m_tasks;
+    concurrency::task_group m_tasks;
 };
 
 PplThreadPool::~PplThreadPool()
 {
-    concurrency::when_all(m_tasks.begin(), m_tasks.end()).wait();
+    m_tasks.wait();
 }
 #endif
