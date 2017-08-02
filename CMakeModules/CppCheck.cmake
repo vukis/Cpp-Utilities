@@ -14,5 +14,5 @@ add_custom_target(
 		# -- I [dir] // to include STL/Boost/Windows headers
         # --quiet
         # --library=qt.cfg
-        ${SOURCE_FILES}
+        ${SOURCE_FILES_TO_ANALYZE}
 )
