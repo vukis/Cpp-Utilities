@@ -32,6 +32,7 @@ fi
 
 # Miscellaneous
 echo Run ThreadPool-Test...
+ls
 echo $PWD
 echo $TRAVIS_BUILD_DIR 
-./bin/ThreadPool-Test
+.build/bin/ThreadPool-Test
