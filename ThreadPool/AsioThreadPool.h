@@ -1,8 +1,6 @@
 #pragma once
 
 #include <boost/asio.hpp>
-
-#include <functional>
 #include <future>
 #include <vector>
 #include <memory>
@@ -16,14 +14,17 @@ public:
     template <typename TaskT>
     auto ExecuteAsync(TaskT&& task) // TODO: Rename: Post
     {
-        using TaskReturnType = decltype(task());
+        using TaskRetType = decltype(task());
+        using PkgTask = std::packaged_task<TaskRetType()>;
 
         // std::packaged_task<> is move only type.
-        // We need to wrap it in a shared_ptr:
-        auto packagedTask = std::make_shared<std::packaged_task<TaskReturnType()>>(std::forward<TaskT>(task));
-        auto future = packagedTask->get_future();
+        // We need to wrap it in a shared_ptr to use in lambda.
+        auto job =
+            std::make_shared<PkgTask>(std::forward<TaskT>(task));
+        auto future = job->get_future();
 
-        m_ioService.post([packagedTask] { (*packagedTask)(); });
+        m_ioService.post([job = std::move(job)]{ (*job)(); });
+
         return future;
     }
 
