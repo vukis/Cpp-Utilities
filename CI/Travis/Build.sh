@@ -18,14 +18,18 @@ if [ $COVERAGE == "On" ]; then
   lcov --directory . --capture --output-file coverage.info # Capture coverage info;
   lcov --remove coverage.info '/usr/*' --output-file coverage.info # Filter out system;
   lcov --list coverage.info #Debug info
-  # Uploading report to CodeCov
-  bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 fi
 
 # Static analysis
-if [ $BUILD_CONFIGURATION == "Debug" ]; then
+#if [ $BUILD_CONFIGURATION == "Debug" ]; then
   echo Run cppcheck...
+  echo $BUILD_CONFIGURATION
   make cppcheck
+#fi
+
+if [ $COVERAGE == "On" ]; then
+  echo Uploading report to CodeCov.io...
+  bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 fi
 
 # Miscellaneous
