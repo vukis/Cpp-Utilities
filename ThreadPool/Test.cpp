@@ -35,10 +35,22 @@ void SleepForRandomTime()
     };
 }
 
+template<class TaskSystemT, class TaskT>
+void RepeatTask(TaskSystemT&& taskSystem, TaskT&& task, size_t times)
+{
+    std::vector<std::future<void>> results;
+
+    for (size_t i = 0; i < times; ++i)
+        results.push_back(std::forward<TaskSystemT>(taskSystem).ExecuteAsync(std::forward<TaskT>(task)));
+
+    for (auto& result : results)
+        result.wait();
+}
+
 template<class TaskSystemT>
 void TestWithRandomTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    const size_t taskCount = 1000;
+    constexpr size_t taskCount = 1000;
 
     std::vector<std::future<void>> results;
 
@@ -52,7 +64,7 @@ void TestWithRandomTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 template<class TaskSystemT>
 void TestWithEmptyTask(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    const size_t taskCount = 100000;
+    constexpr size_t taskCount = 100000;
 
     std::vector<std::future<void>> results;
 
@@ -66,7 +78,7 @@ void TestWithEmptyTask(TaskSystemT&& taskSystem = TaskSystemT{})
 template<class TaskSystemT>
 void TestAllocateDeallocateLightWeightData(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    const size_t taskCount = 100000;
+    constexpr size_t taskCount = 100000;
 
     std::vector<std::future<void>> results;
 
@@ -80,7 +92,7 @@ void TestAllocateDeallocateLightWeightData(TaskSystemT&& taskSystem = TaskSystem
 template<class TaskSystemT>
 void TestAllocateDeallocateHeavyData(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    const size_t taskCount = 100000;
+    constexpr size_t taskCount = 100000;
 
     std::vector<std::future<void>> results;
 
@@ -91,9 +103,38 @@ void TestAllocateDeallocateHeavyData(TaskSystemT&& taskSystem = TaskSystemT{})
         result.wait();
 }
 
+template<class TaskSystemT>
+void Test_MultipleTaskProducers(TaskSystemT&& taskSystem = TaskSystemT{})
+{
+    constexpr size_t taskCount = 10000;
+
+    std::vector<std::thread> taskProducers{ std::max(1u, std::thread::hardware_concurrency()) };
+
+    for (auto& producer : taskProducers)
+        producer = std::thread([&] { RepeatTask(taskSystem, &SleepForRandomTime, taskCount); });
+
+    for (auto& producer : taskProducers)
+    {
+        if (producer.joinable())
+            producer.join();
+    }
+}
+
 int main()
 {
     constexpr size_t NumOfRuns = 20;
+
+    std::cout << "=====================================================================" << std::endl;
+    std::cout << "Benchmark with multiple task producers and random task execution time" << std::endl;
+    std::cout << "=====================================================================" << std::endl;
+    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, Test_MultipleTaskProducers<SingleQueueThreadPool>());
+    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, Test_MultipleTaskProducers<MultiQueueThreadPool>());
+    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, Test_MultipleTaskProducers<WorkStealingThreadPool>());
+    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, Test_MultipleTaskProducers<AsioThreadPool>());
+#ifdef _MSC_VER
+    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, Test_MultipleTaskProducers<PplThreadPool>());
+#endif
+    std::cout << std::endl;
 
     std::cout << "=========================================" << std::endl;
     std::cout << "Benchmark with random task execution time" << std::endl;
