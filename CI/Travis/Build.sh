@@ -8,7 +8,7 @@ make
 ctest -C %BUILD_CONFIGURATION% --output-on-failure
 
 # Code covarage
-if [ $COVERAGE = "On" ]; then
+if [ $COVERAGE == "On" ]; then
   make gcov && make lcov
   # Creating report
   cd $TRAVIS_BUILD_DIR 
@@ -20,8 +20,8 @@ if [ $COVERAGE = "On" ]; then
 fi
 
 # Static analysis
-if [ $BUILD_CONFIGURATION = "Debug" ]; then
-  make cppcheck;
+if [ $BUILD_CONFIGURATION == "Debug" ]; then
+  make cppcheck
 fi
 
 # Miscellaneous
