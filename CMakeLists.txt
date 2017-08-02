@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 project(Cpp-Utilities)
 
-# set(EXECUTABLE_NAME Test_${CMAKE_PROJECT_NAME})
-
 # Setting default folders
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -54,13 +52,13 @@ elseif ("${TARGET_CPU}" STREQUAL "x64")
 
 endif ()
 
-# enable code coverage
+# Enable code coverage
 find_package(codecov)
 
 include(CTest)
 enable_testing()
 
-# recurse into subdirectories with cmake projects
+# Recurse into subdirectories with cmake projects
 add_subdirectory(ThreadPool)
 # add_subdirectory(Common)
 
@@ -71,5 +69,4 @@ file(GLOB_RECURSE
      "ThreadPool/*.cpp" "ThreadPool/*.h")
 include(${CMAKE_MODULE_PATH}/CppCheck.cmake)
 
-# evaluate coverage
 coverage_evaluate()

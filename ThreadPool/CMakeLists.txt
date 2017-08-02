@@ -8,8 +8,6 @@ endif()
 find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREAD ON)
-## Code coverage
-find_package(codecov)
 
 # Include header files directories
 include_directories(${Boost_INCLUDE_DIRS})
@@ -29,4 +27,6 @@ endif()
 
 add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})
 
+# Code coverage
+find_package(codecov)
 add_coverage(${EXECUTABLE_NAME})
