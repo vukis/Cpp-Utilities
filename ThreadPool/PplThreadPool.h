@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef _MSC_VER
 #include <ppltasks.h>
 #include <future>
 #include <ppl.h>
@@ -36,3 +36,4 @@ PplThreadPool::~PplThreadPool()
 {
     concurrency::when_all(m_tasks.begin(), m_tasks.end()).wait();
 }
+#endif
