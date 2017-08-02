@@ -4,16 +4,11 @@
 echo Run build...
 mkdir -p build
 cd build
+BuildDir=$PWD
 cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$COVERAGE
 make
 echo Run tests...
 ctest -C $BUILD_CONFIGURATION --output-on-failure
-
-# Static analysis
-if [ $BUILD_CONFIGURATION == "debug" ]; then
-  echo Run cppcheck...
-  make cppcheck
-fi
 
 # Code covarage
 if [ $COVERAGE == "On" ]; then
@@ -26,9 +21,16 @@ if [ $COVERAGE == "On" ]; then
   lcov --list coverage.info #Debug info
   echo Uploading report to CodeCov.io...
   bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  cd $BuildDir
+fi
+
+# Static analysis
+if [ $BUILD_CONFIGURATION == "debug" ]; then
+  echo Run cppcheck...
+  make cppcheck
 fi
 
 # Miscellaneous
-echo $TRAVIS_BUILD_DIR 
+echo $TRAVIS_BUILD_DIR
 echo Run ThreadPool-Test...
 ./bin/ThreadPool-Test
