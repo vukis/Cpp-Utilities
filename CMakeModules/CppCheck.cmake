@@ -8,7 +8,7 @@ add_custom_target(
         --std=c++11
         --template="[{severity}][{id}] {message} {callstack} \(On {file}:{line}\)"
         --verbose
-		--check-config
+		# --check-config
 	    # --error-exitcode=1
 		# -- I [dir] // to include STL/Boost/Windows headers
         # --quiet
