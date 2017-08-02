@@ -40,8 +40,12 @@ void RepeatTask(TaskSystemT&& taskSystem, TaskT&& task, size_t times)
 {
     std::vector<std::future<void>> results;
 
+    // Here we need not to std::forward just copy task.
+    // Because if the universal reference of task has bound to an r-value reference 
+    // then std::forward will have the same effect as std::move and thus task is not required to contain a valid task. 
+    // Universal reference must only be std::forward'ed a exactly zero or one times.
     for (size_t i = 0; i < times; ++i)
-        results.push_back(std::forward<TaskSystemT>(taskSystem).ExecuteAsync(std::forward<TaskT>(task)));
+        results.push_back(std::forward<TaskSystemT>(taskSystem).ExecuteAsync(task));
 
     for (auto& result : results)
         result.wait();
@@ -106,7 +110,7 @@ void TestAllocateDeallocateHeavyData(TaskSystemT&& taskSystem = TaskSystemT{})
 template<class TaskSystemT>
 void Test_MultipleTaskProducers(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    constexpr size_t taskCount = 10000;
+    constexpr size_t taskCount = 1000;
 
     std::vector<std::thread> taskProducers{ std::max(1u, std::thread::hardware_concurrency()) };
 
@@ -123,6 +127,8 @@ void Test_MultipleTaskProducers(TaskSystemT&& taskSystem = TaskSystemT{})
 int main()
 {
     constexpr size_t NumOfRuns = 20;
+
+    std::cout << "Number of CPUs: " << std::thread::hardware_concurrency() << std::endl;
 
     std::cout << "=====================================================================" << std::endl;
     std::cout << "Benchmark with multiple task producers and random task execution time" << std::endl;
