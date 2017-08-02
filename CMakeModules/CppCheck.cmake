@@ -1,8 +1,9 @@
 file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
 
 add_custom_target(
-        check
+        cppcheck
         COMMAND /usr/bin/cppcheck
+		--enable=all
  #       --enable=warning,performance,portability,information,missingInclude
   #      --std=c++11
    #     --library=qt.cfg
