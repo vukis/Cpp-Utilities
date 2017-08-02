@@ -11,8 +11,6 @@ set(Boost_USE_MULTITHREAD ON)
 ## Code coverage
 find_package(codecov)
 
-include(${CMAKE_MODULE_PATH}/CppCheck.cmake)
-
 # Include header files directories
 include_directories(${Boost_INCLUDE_DIRS})
 # Static libraries directories

@@ -61,5 +61,8 @@ enable_testing()
 # recurse into subdirectories with cmake projects
 add_subdirectory(ThreadPool)
 
+# Add target for cppcheck
+include(${CMAKE_MODULE_PATH}/CppCheck.cmake)
+
 # evaluate coverage
 coverage_evaluate()
