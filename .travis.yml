@@ -10,10 +10,10 @@ compiler:
   - gcc
 
 env:
-  - TARGET_CPU=x86 BUILD_CONFIGURATION=debug   ENABLE_COVERAGE=On  ANALYZE=On  CTEST_OUTPUT_ON_FAILURE=1 
-  - TARGET_CPU=x86 BUILD_CONFIGURATION=release ENABLE_COVERAGE=Off ANALYZE=Off CTEST_OUTPUT_ON_FAILURE=1 
-  - TARGET_CPU=x64 BUILD_CONFIGURATION=debug   ENABLE_COVERAGE=On  ANALYZE=On  CTEST_OUTPUT_ON_FAILURE=1 
-  - TARGET_CPU=x64 BUILD_CONFIGURATION=release ENABLE_COVERAGE=Off ANALYZE=Off CTEST_OUTPUT_ON_FAILURE=1 
+  - TARGET_CPU=x86 BUILD_CONFIGURATION=debug   ENABLE_COVERAGE=On ANALYZE=On  CTEST_OUTPUT_ON_FAILURE=1 
+  - TARGET_CPU=x86 BUILD_CONFIGURATION=release ENABLE_COVERAGE=On ANALYZE=Off CTEST_OUTPUT_ON_FAILURE=1 
+  - TARGET_CPU=x64 BUILD_CONFIGURATION=debug   ENABLE_COVERAGE=On ANALYZE=On  CTEST_OUTPUT_ON_FAILURE=1 
+  - TARGET_CPU=x64 BUILD_CONFIGURATION=release ENABLE_COVERAGE=On ANALYZE=Off CTEST_OUTPUT_ON_FAILURE=1 
  # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
  # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
 
@@ -47,20 +47,21 @@ script:
       make gcov && make lcov;
     fi'
 
-  - make && make test
+  - make
+  - ctest -C %BUILD_CONFIGURATION% --output-on-failure
 
   #- cppcheck --help
   #- cppcheck --template "{file}({line}): {severity} ({id}): {message}"
   #- ./bin/ThreadPool-Test
  
 after_success:
-  - 'if [ "${ENABLE_COVERAGE}" = "On" ]; then
-       cd ${TRAVIS_BUILD_DIR}; # Creating report
-       lcov --directory . --capture --output-file coverage.info # capture coverage info;
-       lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system;
-       lcov --list coverage.info #debug info;
-       bash <(curl -s https://codecov.io/bash) -X gcov || echo "Codecov did not collect coverage reports"; # Uploading report to CodeCov
-    fi'
+#  - 'if [ "${ENABLE_COVERAGE}" = "On" ]; then
+   - cd ${TRAVIS_BUILD_DIR}; # Creating report
+   - lcov --directory . --capture --output-file coverage.info # capture coverage info;
+   - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system;
+   - lcov --list coverage.info #debug info;
+   - bash <(curl -s https://codecov.io/bash) -X gcov || echo "Codecov did not collect coverage reports"; # Uploading report to CodeCov
+#    fi'
   
 notifications:
   email: false
