@@ -35,7 +35,7 @@ private:
 
     std::vector<TaskQueue> m_queues;
     std::atomic<size_t>    m_queueIndex{ 0 };
-    const size_t m_tryoutCount{ 1 };
+    const size_t m_tryoutCount{ 5 };
 
     std::vector<std::thread> m_threads;
 };
