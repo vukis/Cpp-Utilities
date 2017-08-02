@@ -43,7 +43,7 @@ script:
   - ctest -C %BUILD_CONFIGURATION% --output-on-failure
   
  # - 'if [ "${ANALYZE}" = "On" ]; then
-      make cppcheck;
+  -  make cppcheck
  #   fi'
   - 'if [ "${COVERAGE}" = "On" ]; then
       make gcov && make lcov;
