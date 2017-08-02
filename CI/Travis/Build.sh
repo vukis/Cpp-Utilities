@@ -1,9 +1,13 @@
+#!/bin/sh
+
+# Build & test
 mkdir -p build
 cd build
 cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$COVERAGE
 make
 ctest -C %BUILD_CONFIGURATION% --output-on-failure
 
+# Code covarage
 if [ $COVERAGE = "On" ]; then
   make gcov && make lcov
   # Creating report
@@ -15,8 +19,10 @@ if [ $COVERAGE = "On" ]; then
   bash <(curl -s https://codecov.io/bash) -X gcov || echo "Codecov did not collect coverage reports"
 fi
 
+# Static analysis
 if [ $BUILD_CONFIGURATION = "Debug" ]; then
   make cppcheck;
 fi
-  
+
+# Miscellaneous
 #- ./bin/ThreadPool-Test

@@ -11,9 +11,9 @@ compiler:
 
 env:
   - TARGET_CPU=x86 BUILD_CONFIGURATION=debug   COVERAGE=On
-  - TARGET_CPU=x86 BUILD_CONFIGURATION=release COVERAGE=On
+  - TARGET_CPU=x86 BUILD_CONFIGURATION=release COVERAGE=Off
   - TARGET_CPU=x64 BUILD_CONFIGURATION=debug   COVERAGE=On
-  - TARGET_CPU=x64 BUILD_CONFIGURATION=release COVERAGE=On
+  - TARGET_CPU=x64 BUILD_CONFIGURATION=release COVERAGE=Off
  # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Debug
  # - TARGET_CPU=amd64 BUILD_CONFIGURATION=Release
 
@@ -22,12 +22,10 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      # - boost-latest
     packages:
       - cmake
       - lcov
       - cppcheck
-      # - libboost1.55-all-dev
  
 before_install:
 
