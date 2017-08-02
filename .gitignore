@@ -55,3 +55,6 @@ Temporary Items
 *.db
 *.suo
 *.opendb
+*.db-shm
+.vs/Utilities/v15/Solution.VC.db-wal
+*.pdf
