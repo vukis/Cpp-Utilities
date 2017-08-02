@@ -1,14 +1,17 @@
 #!/bin/sh
 
 # Build & test
+echo Run build...
 mkdir -p build
 cd build
 cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$COVERAGE
 make
+echo Run tests...
 ctest -C %BUILD_CONFIGURATION% --output-on-failure
 
 # Code covarage
 if [ $COVERAGE == "On" ]; then
+  echo Run code coverage...
   make gcov && make lcov
   # Creating report
   cd $TRAVIS_BUILD_DIR 
@@ -21,6 +24,7 @@ fi
 
 # Static analysis
 if [ $BUILD_CONFIGURATION == "Debug" ]; then
+  echo Run cppcheck...
   make cppcheck
 fi
 
