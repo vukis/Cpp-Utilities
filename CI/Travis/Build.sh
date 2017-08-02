@@ -4,6 +4,7 @@
 echo Run build...
 mkdir -p build
 cd build
+BuildDir=$PWD
 cmake .. -DTARGET_CPU=$TARGET_CPU -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION -DENABLE_COVERAGE=$COVERAGE
 make
 echo Run tests...
@@ -30,4 +31,4 @@ fi
 
 # Miscellaneous
 echo Run ThreadPool-Test...
-./build/bin/ThreadPool-Test
+$BuildDir/bin/ThreadPool-Test
