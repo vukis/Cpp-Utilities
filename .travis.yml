@@ -47,8 +47,12 @@ script:
     fi'
 
   - 'if [ "${COVERAGE}" = "On" ]; then
-      make gcov;
-      make lcov;
+      make gcov && make lcov;
+      cd ${TRAVIS_BUILD_DIR}; # Creating report
+      lcov --directory . --capture --output-file coverage.info # Capture coverage info;
+      lcov --remove coverage.info '/usr/*' --output-file coverage.info # Filter out system;
+      lcov --list coverage.info #Debug info;
+      bash <(curl -s https://codecov.io/bash) -X gcov || echo "Codecov did not collect coverage reports"; # Uploading report to CodeCov
     fi'
 
   #- ./bin/ThreadPool-Test
