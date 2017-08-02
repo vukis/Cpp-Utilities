@@ -31,6 +31,7 @@ if [ $BUILD_CONFIGURATION == "debug" ]; then
 fi
 
 # Miscellaneous
-echo $TRAVIS_BUILD_DIR
 echo Run ThreadPool-Test...
+echo $PWD
+echo $TRAVIS_BUILD_DIR 
 ./bin/ThreadPool-Test
