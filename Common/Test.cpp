@@ -5,7 +5,7 @@
 inline std::string CreateString(const char* str)
 {
     using namespace std::chrono_literals;
-    LoadCPUFor(10ms);
+    LoadCPUFor(1ms);
     return str;
 }
 
@@ -13,7 +13,7 @@ template<typename StringT = std::string>
 inline auto ConcatenateStrings(const StringT& str1, const StringT& str2)
 {
     using namespace std::chrono_literals;
-    LoadCPUFor(10ms);
+    LoadCPUFor(1ms);
     return str1 + str2;
 }
 
