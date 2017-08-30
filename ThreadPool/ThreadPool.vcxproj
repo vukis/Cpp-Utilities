@@ -70,20 +70,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(INCLUDE);$(IncludePath)</IncludePath>
+    <IncludePath>..;$(INCLUDE);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
+    <TargetName>Test$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(INCLUDE);$(IncludePath)</IncludePath>
+    <IncludePath>..;$(INCLUDE);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
+    <TargetName>Test$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(INCLUDE);$(IncludePath)</IncludePath>
+    <IncludePath>..;$(INCLUDE);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
+    <TargetName>Test$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(INCLUDE);$(IncludePath)</IncludePath>
+    <IncludePath>..;$(INCLUDE);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
+    <TargetName>Test$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,7 +153,6 @@
     <ClInclude Include="PplThreadPool.h" />
     <ClInclude Include="SingleQueueThreadPool.h" />
     <ClInclude Include="TaskQueue.h" />
-    <ClInclude Include="TestUtilities.h" />
     <ClInclude Include="WorkStealingThreadPool.h" />
   </ItemGroup>
   <ItemGroup>

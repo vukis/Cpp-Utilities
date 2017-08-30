@@ -2,37 +2,69 @@
 #include "MultiQueueThreadPool.h"
 #include "WorkStealingThreadPool.h"
 #include "AsioThreadPool.h"
-#include "TestUtilities.h"
 #ifdef _MSC_VER
 #include "PplThreadPool.h"
 #endif
+#include "Common/TestUtilities.h"
 
-void AllocateDeallocateLightWeightData()
+template<class TaskSystemT>
+void Test_RandomTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    const double* tmp = new double[10];
-    delete[] tmp;
+    constexpr size_t taskCount = 100000;
+
+    std::vector<std::future<void>> results;
+
+    for (size_t i = 0; i < taskCount; ++i)
+        results.push_back(taskSystem.ExecuteAsync(LoadCPUForRandomTime));
+
+    for (auto& result : results)
+        result.wait();
 }
 
-void AllocateDeallocateHeavyData()
+template<class TaskSystemT>
+void Test_1nsTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    const double* tmp = new double[500000];
-    delete [] tmp;
+    using namespace std::chrono_literals;
+
+    constexpr size_t taskCount = 100000;
+
+    std::vector<std::future<void>> results;
+
+    for (size_t i = 0; i < taskCount; ++i)
+        results.push_back(taskSystem.ExecuteAsync([] { LoadCPUFor(1ns); }));
+
+    for (auto& result : results)
+        result.wait();
 }
 
-void SleepForRandomTime()
+template<class TaskSystemT>
+void Test_10msTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    // Sleeping the thread isn't good as it doesn't tie up the
-    // CPU resource in the same way as actual work on a thread would do,
-    // The OS is free to schedule work on the CPU while the thread is
-    // sleeping. Hence we do some busy work. Note that volatile keyword
-    // is necessary to prevent compiler from removing the below code.
-    
-    srand(0); // random sequences should be indentical
-    
-    volatile auto delay = rand() % static_cast<int>(1e5);
-    while (delay != 0) {
-        delay--;
-    };
+    using namespace std::chrono_literals;
+
+    constexpr size_t taskCount = 100;
+
+    std::vector<std::future<void>> results;
+
+    for (size_t i = 0; i < taskCount; ++i)
+        results.push_back(taskSystem.ExecuteAsync([] { LoadCPUFor(10ms); }));
+
+    for (auto& result : results)
+        result.wait();
+}
+
+template<class TaskSystemT>
+void Test_EmptyTask(TaskSystemT&& taskSystem = TaskSystemT{})
+{
+    constexpr size_t taskCount = 100000;
+
+    std::vector<std::future<void>> results;
+
+    for (size_t i = 0; i < taskCount; ++i)
+        results.push_back(taskSystem.ExecuteAsync([] {}));
+
+    for (auto& result : results)
+        result.wait();
 }
 
 template<class TaskSystemT, class TaskT>
@@ -45,63 +77,7 @@ void RepeatTask(TaskSystemT&& taskSystem, TaskT&& task, size_t times)
     // then std::forward will have the same effect as std::move and thus task is not required to contain a valid task. 
     // Universal reference must only be std::forward'ed a exactly zero or one times.
     for (size_t i = 0; i < times; ++i)
-        results.push_back(std::forward<TaskSystemT>(taskSystem).ExecuteAsync(task));
-
-    for (auto& result : results)
-        result.wait();
-}
-
-template<class TaskSystemT>
-void TestWithRandomTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
-{
-    constexpr size_t taskCount = 1000;
-
-    std::vector<std::future<void>> results;
-
-    for (size_t i = 0; i < taskCount; ++i)
-        results.push_back(std::forward<TaskSystemT>(taskSystem).ExecuteAsync(SleepForRandomTime));
-
-    for (auto& result : results)
-        result.wait();
-}
-
-template<class TaskSystemT>
-void TestWithEmptyTask(TaskSystemT&& taskSystem = TaskSystemT{})
-{
-    constexpr size_t taskCount = 100000;
-
-    std::vector<std::future<void>> results;
-
-    for (size_t i = 0; i < taskCount; ++i)
-        results.push_back(std::forward<TaskSystemT>(taskSystem).ExecuteAsync([] {}));
-
-    for (auto& result : results)
-        result.wait();
-}
-
-template<class TaskSystemT>
-void TestAllocateDeallocateLightWeightData(TaskSystemT&& taskSystem = TaskSystemT{})
-{
-    constexpr size_t taskCount = 100000;
-
-    std::vector<std::future<void>> results;
-
-    for (size_t i = 0; i < taskCount; ++i)
-        results.push_back(std::forward<TaskSystemT>(taskSystem).ExecuteAsync(AllocateDeallocateLightWeightData));
-
-    for (auto& result : results)
-        result.wait();
-}
-
-template<class TaskSystemT>
-void TestAllocateDeallocateHeavyData(TaskSystemT&& taskSystem = TaskSystemT{})
-{
-    constexpr size_t taskCount = 100000;
-
-    std::vector<std::future<void>> results;
-
-    for (size_t i = 0; i < taskCount; ++i)
-        results.push_back(std::forward<TaskSystemT>(taskSystem).ExecuteAsync(AllocateDeallocateHeavyData));
+        results.push_back(taskSystem.ExecuteAsync(task));
 
     for (auto& result : results)
         result.wait();
@@ -110,12 +86,12 @@ void TestAllocateDeallocateHeavyData(TaskSystemT&& taskSystem = TaskSystemT{})
 template<class TaskSystemT>
 void Test_MultipleTaskProducers(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    constexpr size_t taskCount = 1000;
+    constexpr size_t taskCount = 100000;
 
     std::vector<std::thread> taskProducers{ std::max(1u, std::thread::hardware_concurrency()) };
 
     for (auto& producer : taskProducers)
-        producer = std::thread([&] { RepeatTask(taskSystem, &SleepForRandomTime, taskCount); });
+        producer = std::thread([&] { RepeatTask(taskSystem, &LoadCPUForRandomTime, taskCount); });
 
     for (auto& producer : taskProducers)
     {
@@ -130,6 +106,54 @@ int main()
 
     std::cout << "Number of CPUs: " << std::thread::hardware_concurrency() << std::endl;
 
+    std::cout << "=========================================" << std::endl;
+    std::cout << "Benchmark with random task execution time" << std::endl;
+    std::cout << "=========================================" << std::endl;
+    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, Test_RandomTaskExecutionTime<SingleQueueThreadPool>());
+    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, Test_RandomTaskExecutionTime<MultiQueueThreadPool>());
+    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, Test_RandomTaskExecutionTime<WorkStealingThreadPool>());
+    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, Test_RandomTaskExecutionTime<AsioThreadPool>());
+#ifdef _MSC_VER
+    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, Test_RandomTaskExecutionTime<PplThreadPool>());
+#endif
+    std::cout << std::endl;
+
+    std::cout << "=========================================" << std::endl;
+    std::cout << "Benchmark with 1 ns task execution time" << std::endl;
+    std::cout << "=========================================" << std::endl;
+    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, Test_1nsTaskExecutionTime<SingleQueueThreadPool>());
+    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, Test_1nsTaskExecutionTime<MultiQueueThreadPool>());
+    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, Test_1nsTaskExecutionTime<WorkStealingThreadPool>());
+    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, Test_1nsTaskExecutionTime<AsioThreadPool>());
+#ifdef _MSC_VER
+    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, Test_1nsTaskExecutionTime<PplThreadPool>());
+#endif
+    std::cout << std::endl;
+
+    std::cout << "=========================================" << std::endl;
+    std::cout << "Benchmark with 10 ms task execution time" << std::endl;
+    std::cout << "=========================================" << std::endl;
+    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, Test_10msTaskExecutionTime<SingleQueueThreadPool>());
+    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, Test_10msTaskExecutionTime<MultiQueueThreadPool>());
+    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, Test_10msTaskExecutionTime<WorkStealingThreadPool>());
+    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, Test_10msTaskExecutionTime<AsioThreadPool>());
+#ifdef _MSC_VER
+    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, Test_10msTaskExecutionTime<PplThreadPool>());
+#endif
+    std::cout << std::endl;
+
+    std::cout << "=========================================" << std::endl;
+    std::cout << "Benchmark with empty task" << std::endl;
+    std::cout << "=========================================" << std::endl;
+    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, Test_EmptyTask<SingleQueueThreadPool>());
+    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, Test_EmptyTask<MultiQueueThreadPool>());
+    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, Test_EmptyTask<WorkStealingThreadPool>());
+    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, Test_EmptyTask<AsioThreadPool>());
+#ifdef _MSC_VER
+    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, Test_EmptyTask<PplThreadPool>());
+#endif
+    std::cout << std::endl;
+
     std::cout << "=====================================================================" << std::endl;
     std::cout << "Benchmark with multiple task producers and random task execution time" << std::endl;
     std::cout << "=====================================================================" << std::endl;
@@ -139,54 +163,6 @@ int main()
     FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, Test_MultipleTaskProducers<AsioThreadPool>());
 #ifdef _MSC_VER
     FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, Test_MultipleTaskProducers<PplThreadPool>());
-#endif
-    std::cout << std::endl;
-
-    std::cout << "=========================================" << std::endl;
-    std::cout << "Benchmark with random task execution time" << std::endl;
-    std::cout << "=========================================" << std::endl;
-    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<SingleQueueThreadPool>());
-    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<MultiQueueThreadPool>());
-    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<WorkStealingThreadPool>());
-    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<AsioThreadPool>());
-#ifdef _MSC_VER
-    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestWithRandomTaskExecutionTime<PplThreadPool>());
-#endif
-    std::cout << std::endl;
-
-    std::cout << "=========================================" << std::endl;
-    std::cout << "Benchmark with empty task" << std::endl;
-    std::cout << "=========================================" << std::endl;
-    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, TestWithEmptyTask<SingleQueueThreadPool>());
-    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, TestWithEmptyTask<MultiQueueThreadPool>());
-    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, TestWithEmptyTask<WorkStealingThreadPool>());
-    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, TestWithEmptyTask<AsioThreadPool>());
-#ifdef _MSC_VER
-    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestWithEmptyTask<PplThreadPool>());
-#endif
-    std::cout << std::endl;
-
-    std::cout << "=========================================" << std::endl;
-    std::cout << "Benchmark with light weight data" << std::endl;
-    std::cout << "=========================================" << std::endl;
-    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<SingleQueueThreadPool>());
-    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<MultiQueueThreadPool>());
-    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<WorkStealingThreadPool>());
-    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<AsioThreadPool>());
-#ifdef _MSC_VER
-    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestAllocateDeallocateLightWeightData<PplThreadPool>());
-#endif
-    std::cout << std::endl;
-
-    std::cout << "=========================================" << std::endl;
-    std::cout << "Benchmark with heavy data" << std::endl;
-    std::cout << "=========================================" << std::endl;
-    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<SingleQueueThreadPool>());
-    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<MultiQueueThreadPool>());
-    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<WorkStealingThreadPool>());
-    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<AsioThreadPool>());
-#ifdef _MSC_VER
-    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, TestAllocateDeallocateHeavyData<PplThreadPool>());
 #endif
     std::cout << std::endl;
 
