@@ -8,7 +8,7 @@
 template<typename FunctionT>
 auto Asynchronize(FunctionT&& function)
 {
-    return [function](auto&&... args) {
+    return [&function](auto&&... args) {
         return [&function, &args...]() {
             return std::async(std::launch::async, function, args...);
         };
