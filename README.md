@@ -6,11 +6,11 @@
 
 ### Abstract
 
-Utility classes useful in daily C++ programming.
+Header only utility classes useful in daily C++ programming.
 
 # Thread pool
 
-Header only library. Contains following thread pools:
+Contains following thread pools:
 - Thread pool with single task queue
 - Thread pool with task queue per each thread
 - Thread pool with work stealing task queue
