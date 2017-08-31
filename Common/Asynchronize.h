@@ -9,7 +9,7 @@ template<typename FunctionT>
 auto Asynchronize(FunctionT&& function)
 {
     return [function](auto&&... args) {
-        return [&function, &args]() {
+        return [&function, &args...]() {
             return std::async(std::launch::async, function, args...);
         };
     };
@@ -27,7 +27,7 @@ template<typename FunctionT>
 auto AsyncAdapter(FunctionT&& function)
 {
     return [&function](auto&&... callables) {
-        return [&function, &callables]() {
+        return [&function, &callables...]() {
             return std::async(std::launch::async, UnwrapFutures(function), callables()...);
         };
     };
