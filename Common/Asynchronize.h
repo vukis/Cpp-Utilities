@@ -1,9 +1,12 @@
 #pragma once
 
+
 #include <future>
+#include <iostream>
+#include <string>
 
 template<typename FunctionT>
-inline auto Asynchronize(FunctionT&& function)
+auto Asynchronize(FunctionT&& function)
 {
     return [function](auto&&... args) {
         return [&function, &args]() {
@@ -13,7 +16,7 @@ inline auto Asynchronize(FunctionT&& function)
 }
 
 template<typename FunctionT>
-inline auto UnwrapFutures(FunctionT&& function)
+auto UnwrapFutures(FunctionT&& function)
 {
     return [&function](auto&&... futures) {
         return function(futures.get()...);
@@ -21,7 +24,7 @@ inline auto UnwrapFutures(FunctionT&& function)
 }
 
 template<typename FunctionT>
-inline auto AsyncAdapter(FunctionT&& function)
+auto AsyncAdapter(FunctionT&& function)
 {
     return [&function](auto&&... callables) {
         return [&function, &callables]() {
