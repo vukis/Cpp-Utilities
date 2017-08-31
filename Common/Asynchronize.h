@@ -1,9 +1,6 @@
 #pragma once
 
-
 #include <future>
-#include <iostream>
-#include <string>
 
 template<typename FunctionT>
 inline auto Asynchronize(FunctionT&& function)
