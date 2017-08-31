@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <numeric>
 
-void LoadCPUForRandomTime()
+inline void LoadCPUForRandomTime()
 {
     // Sleeping the thread isn't good as it doesn't tie up the
     // CPU resource in the same way as actual work on a thread would do,
