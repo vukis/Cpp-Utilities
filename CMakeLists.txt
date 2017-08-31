@@ -60,8 +60,8 @@ include(CTest)
 enable_testing()
 
 # Recurse into subdirectories with cmake projects
+add_subdirectory(Common)
 add_subdirectory(ThreadPool)
-# add_subdirectory(Common)
 
 # Add make target for cppcheck
 file(GLOB_RECURSE 
