@@ -23,7 +23,7 @@ Inspired by Sean Parent's talk ([presentation](http://sean-parent.stlab.cc/prese
 
 # Asynchronize
 
-[Adapters](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Asynchronize.h) that allow to create acyclic graph of parallel computing. [Test code](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Test.cpp).
+[Adapters](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Asynchronize.h) that allow to create [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) for parallel computing. [Test code](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Test.cpp).
 
 Inspired by concurrency examples from [this](http://www.bfilipek.com/2017/08/cpp17stl-review.html) book. Better alternative is to implement own `std::future` like [this](https://github.com/FelixPetriconi/future_proposal/blob/master/proposal.md) one. 
 
