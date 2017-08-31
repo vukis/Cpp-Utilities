@@ -25,3 +25,7 @@ Inspired by Sean Parent's talk ([presentation](http://sean-parent.stlab.cc/prese
 [appveyor-link]:     https://ci.appveyor.com/project/vukis/utilities
 [codecov-badge]:     https://codecov.io/gh/vukis/Utilities/branch/master/graph/badge.svg
 [codecov-link]:      https://codecov.io/gh/vukis/Utilities
+
+# Asynchronize
+
+Inspired by concurrency examples from [this](http://www.bfilipek.com/2017/08/cpp17stl-review.html) book.
