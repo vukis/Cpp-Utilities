@@ -10,7 +10,7 @@
 template<class TaskSystemT>
 void Test_RandomTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    constexpr size_t taskCount = 100000;
+    constexpr size_t taskCount = 10000;
 
     std::vector<std::future<void>> results;
 
@@ -26,7 +26,7 @@ void Test_1nsTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
     using namespace std::chrono_literals;
 
-    constexpr size_t taskCount = 100000;
+    constexpr size_t taskCount = 10000;
 
     std::vector<std::future<void>> results;
 
@@ -42,7 +42,7 @@ void Test_10msTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
     using namespace std::chrono_literals;
 
-    constexpr size_t taskCount = 100;
+    constexpr size_t taskCount = 10;
 
     std::vector<std::future<void>> results;
 
@@ -56,7 +56,7 @@ void Test_10msTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 template<class TaskSystemT>
 void Test_EmptyTask(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    constexpr size_t taskCount = 100000;
+    constexpr size_t taskCount = 10000;
 
     std::vector<std::future<void>> results;
 
@@ -86,7 +86,7 @@ void RepeatTask(TaskSystemT&& taskSystem, TaskT&& task, size_t times)
 template<class TaskSystemT>
 void Test_MultipleTaskProducers(TaskSystemT&& taskSystem = TaskSystemT{})
 {
-    constexpr size_t taskCount = 100000;
+    constexpr size_t taskCount = 10000;
 
     std::vector<std::thread> taskProducers{ std::max(1u, std::thread::hardware_concurrency()) };
 
@@ -102,7 +102,7 @@ void Test_MultipleTaskProducers(TaskSystemT&& taskSystem = TaskSystemT{})
 
 int main()
 {
-    constexpr size_t NumOfRuns = 20;
+    constexpr size_t NumOfRuns = 10;
 
     std::cout << "Number of CPUs: " << std::thread::hardware_concurrency() << std::endl;
 
