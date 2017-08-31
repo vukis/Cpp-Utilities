@@ -1,5 +1,5 @@
 #include "Asynchronize.h"
-#include "TestUtils.h"
+#include "TestUtilities.h"
 #include <string>
 
 inline std::string CreateString(const char* str)
