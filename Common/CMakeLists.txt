@@ -4,16 +4,6 @@ cmake_minimum_required(VERSION 3.2)
 if(NOT MSVC)
     find_package(Threads REQUIRED)
 endif()
-## Boost
-# find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
-find_package(Boost 1.64.0 REQUIRED)
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREAD ON)
-
-# Include header files directories
-include_directories(${Boost_INCLUDE_DIRS})
-# Static libraries directories
-link_directories(${Boost_LIBRARY_DIRS})
 
 # Create executable
 set(EXECUTABLE_NAME TestCommon)
