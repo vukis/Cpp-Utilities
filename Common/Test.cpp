@@ -1,5 +1,5 @@
 #include "Asynchronize.h"
-#include "TestUtilities.h"
+#include "TestUtils.h"
 #include <string>
 
 inline std::string CreateString(const char* str)
@@ -9,8 +9,7 @@ inline std::string CreateString(const char* str)
     return str;
 }
 
-template<typename StringT = std::string>
-inline auto ConcatenateStrings(const StringT& str1, const StringT& str2)
+inline auto ConcatenateStrings(const std::string& str1, const std::string& str2)
 {
     using namespace std::chrono_literals;
     LoadCPUFor(1s);
@@ -25,7 +24,7 @@ void Test_StringConcatenation()
 void Test_ParallelStringConcatenation()
 {
     const auto ParallelCreateString(Asynchronize(CreateString));
-    const auto ParallelConcatenateStrings(AsyncAdapter(ConcatenateStrings<std::string>));
+    const auto ParallelConcatenateStrings(AsyncAdapter(ConcatenateStrings));
 
     ParallelConcatenateStrings(ParallelCreateString("Hello"), ParallelCreateString("World"))().get();
 }
