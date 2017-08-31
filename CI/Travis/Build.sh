@@ -31,5 +31,8 @@ if [ $BUILD_CONFIGURATION == "debug" ]; then
 fi
 
 # Miscellaneous
-echo Run ThreadPool-Test...
-$BuildDir/bin/ThreadPool-Test
+echo Run TestCommon...
+$BuildDir/bin/TestCommon
+
+echo Run TestThreadPool...
+$BuildDir/bin/TestThreadPool
