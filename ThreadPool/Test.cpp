@@ -8,6 +8,20 @@
 #include "Common/TestUtilities.h"
 
 template<class TaskSystemT>
+void Test_TaskResultIsAsExpected(TaskSystemT&& taskSystem = TaskSystemT{})
+{
+    constexpr size_t taskCount = 10000;
+
+    std::vector<std::future<size_t>> results;
+
+    for (size_t i = 0; i < taskCount; ++i)
+        results.push_back(taskSystem.ExecuteAsync([i] { return i*i; }));
+
+    for (size_t i = 0; i < taskCount; ++i)
+        TEST_ASSERT(i*i == results[i].get());
+}
+
+template<class TaskSystemT>
 void Test_RandomTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
     constexpr size_t taskCount = 10000;
@@ -38,7 +52,7 @@ void Test_1nsTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 }
 
 template<class TaskSystemT>
-void Test_10msTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
+void Test_100msTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
 {
     using namespace std::chrono_literals;
 
@@ -47,7 +61,7 @@ void Test_10msTaskExecutionTime(TaskSystemT&& taskSystem = TaskSystemT{})
     std::vector<std::future<void>> results;
 
     for (size_t i = 0; i < taskCount; ++i)
-        results.push_back(taskSystem.ExecuteAsync([] { LoadCPUFor(10ms); }));
+        results.push_back(taskSystem.ExecuteAsync([] { LoadCPUFor(100ms); }));
 
     for (auto& result : results)
         result.wait();
@@ -102,10 +116,24 @@ void Test_MultipleTaskProducers(TaskSystemT&& taskSystem = TaskSystemT{})
 
 int main()
 {
-    constexpr size_t NumOfRuns = 10;
+    std::cout << "==========================================" << std::endl;
+    std::cout << "             FUNCTIONAL TESTS             " << std::endl;
+    std::cout << "==========================================" << std::endl;
+    std::cout << "- Test task result is as expected" << std::endl;
+    DO_TEST("Single queue thread pool", Test_TaskResultIsAsExpected<SingleQueueThreadPool>());
+    DO_TEST("Multi queue thread pool", Test_TaskResultIsAsExpected<MultiQueueThreadPool>());
+    DO_TEST("Work stealing queue thread poo", Test_TaskResultIsAsExpected<WorkStealingThreadPool>());
+    DO_TEST("Boost asio based thread pool", Test_TaskResultIsAsExpected<AsioThreadPool>());
+#ifdef _MSC_VER
+    DO_TEST("PPL based thread pool", Test_TaskResultIsAsExpected<PplThreadPool>());
+#endif
+    std::cout << std::endl;
 
+    std::cout << "==========================================" << std::endl;
+    std::cout << "            PERFORMANCE TESTS             " << std::endl;
+    std::cout << "==========================================" << std::endl;
     std::cout << "Number of CPUs: " << std::thread::hardware_concurrency() << std::endl;
-
+    constexpr size_t NumOfRuns = 10;
     std::cout << "=========================================" << std::endl;
     std::cout << "Benchmark with random task execution time" << std::endl;
     std::cout << "=========================================" << std::endl;
@@ -131,14 +159,14 @@ int main()
     std::cout << std::endl;
 
     std::cout << "=========================================" << std::endl;
-    std::cout << "Benchmark with 10 ms task execution time" << std::endl;
+    std::cout << "Benchmark with 100 ms task execution time" << std::endl;
     std::cout << "=========================================" << std::endl;
-    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, Test_10msTaskExecutionTime<SingleQueueThreadPool>());
-    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, Test_10msTaskExecutionTime<MultiQueueThreadPool>());
-    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, Test_10msTaskExecutionTime<WorkStealingThreadPool>());
-    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, Test_10msTaskExecutionTime<AsioThreadPool>());
+    FUNCTION_BENCHMARK("Single queue thread pool", NumOfRuns, Test_100msTaskExecutionTime<SingleQueueThreadPool>());
+    FUNCTION_BENCHMARK("Multi queue thread pool", NumOfRuns, Test_100msTaskExecutionTime<MultiQueueThreadPool>());
+    FUNCTION_BENCHMARK("Work stealing queue thread pool", NumOfRuns, Test_100msTaskExecutionTime<WorkStealingThreadPool>());
+    FUNCTION_BENCHMARK("Boost asio based thread pool", NumOfRuns, Test_100msTaskExecutionTime<AsioThreadPool>());
 #ifdef _MSC_VER
-    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, Test_10msTaskExecutionTime<PplThreadPool>());
+    FUNCTION_BENCHMARK("PPL based thread pool", NumOfRuns, Test_100msTaskExecutionTime<PplThreadPool>());
 #endif
     std::cout << std::endl;
 

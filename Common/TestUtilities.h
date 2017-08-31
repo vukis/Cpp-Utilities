@@ -4,6 +4,7 @@
 #include <vector>
 #include <chrono>
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <numeric>
 
@@ -93,4 +94,25 @@ for (size_t n = 0; n < repeatTimes; ++n) { \
 } \
 const auto history = stopWatch.GetHistory(); \
 std::cout << std::setw(35) << std::left <<  name << ": " << (std::accumulate(history.begin(), history.end(), StopWatchMs::TimeRep{}) / repeatTimes).count() << " ms" << std::endl; \
+}
+
+#define TEST_ASSERT(expr) \
+if (!(expr)) { \
+    std::ostringstream ss; \
+    ss << __FILE__ << ":" <<__LINE__ << " " << #expr; \
+    throw std::runtime_error(ss.str()); \
+}
+
+#define DO_TEST(name, test) { \
+std::cout << " - Test ( " << name; \
+try \
+{ \
+    test; \
+} \
+catch (const std::exception& e) \
+{ \
+    std::cout << " => failed with: " << e.what() << " )" << std::endl; \
+    throw; \
+} \
+std::cout << " => succeed )" << std::endl; \
 }

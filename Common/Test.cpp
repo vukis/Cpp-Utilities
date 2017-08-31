@@ -18,7 +18,8 @@ inline auto ConcatenateStrings(const std::string& str1, const std::string& str2)
 
 void Test_StringConcatenation()
 {
-    ConcatenateStrings(CreateString("Hello"), CreateString("World"));
+    const auto concatenated = ConcatenateStrings(CreateString("Hello"), CreateString("World"));
+    TEST_ASSERT("HelloWorld" == concatenated);
 }
 
 void Test_ParallelStringConcatenation()
@@ -26,13 +27,24 @@ void Test_ParallelStringConcatenation()
     const auto ParallelCreateString(Asynchronize(CreateString));
     const auto ParallelConcatenateStrings(AsyncAdapter(ConcatenateStrings));
 
-    ParallelConcatenateStrings(ParallelCreateString("Hello"), ParallelCreateString("World"))().get();
+    const auto concatenated = ParallelConcatenateStrings(ParallelCreateString("Hello"), ParallelCreateString("World"))().get();
+    TEST_ASSERT("HelloWorld" == concatenated);
 }
 
 int main()
 {
-    constexpr size_t NumOfRuns = 1;
 
+    std::cout << "==========================================" << std::endl;
+    std::cout << "             FUNCTIONAL TESTS             " << std::endl;
+    std::cout << "==========================================" << std::endl;
+    DO_TEST("Test_StringConcatenation", Test_StringConcatenation());
+    DO_TEST("Test_ParallelStringConcatenation", Test_ParallelStringConcatenation());
+    std::cout << std::endl;
+
+    std::cout << "==========================================" << std::endl;
+    std::cout << "            PERFORMANCE TESTS             " << std::endl;
+    std::cout << "==========================================" << std::endl;
+    constexpr size_t NumOfRuns = 1;
     std::cout << "==========================================" << std::endl;
     std::cout << "      Benchmark string concatenation      " << std::endl;
     std::cout << "==========================================" << std::endl;
