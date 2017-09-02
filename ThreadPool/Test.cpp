@@ -119,13 +119,12 @@ int main()
     std::cout << "==========================================" << std::endl;
     std::cout << "             FUNCTIONAL TESTS             " << std::endl;
     std::cout << "==========================================" << std::endl;
-    std::cout << "- Test task result is as expected" << std::endl;
-    DO_TEST("Single queue thread pool", Test_TaskResultIsAsExpected<SingleQueueThreadPool>());
-    DO_TEST("Multi queue thread pool", Test_TaskResultIsAsExpected<MultiQueueThreadPool>());
-    DO_TEST("Work stealing queue thread poo", Test_TaskResultIsAsExpected<WorkStealingThreadPool>());
-    DO_TEST("Boost asio based thread pool", Test_TaskResultIsAsExpected<AsioThreadPool>());
+    DO_TEST(Test_TaskResultIsAsExpected<SingleQueueThreadPool>);
+    DO_TEST(Test_TaskResultIsAsExpected<MultiQueueThreadPool>);
+    DO_TEST(Test_TaskResultIsAsExpected<WorkStealingThreadPool>);
+    DO_TEST(Test_TaskResultIsAsExpected<AsioThreadPool>);
 #ifdef _MSC_VER
-    DO_TEST("PPL based thread pool", Test_TaskResultIsAsExpected<PplThreadPool>());
+    DO_TEST(Test_TaskResultIsAsExpected<PplThreadPool>);
 #endif
     std::cout << std::endl;
 

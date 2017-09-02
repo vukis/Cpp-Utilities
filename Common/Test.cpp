@@ -37,8 +37,8 @@ int main()
     std::cout << "==========================================" << std::endl;
     std::cout << "             FUNCTIONAL TESTS             " << std::endl;
     std::cout << "==========================================" << std::endl;
-    DO_TEST("Test_StringConcatenation", Test_StringConcatenation());
-    DO_TEST("Test_ParallelStringConcatenation", Test_ParallelStringConcatenation());
+    DO_TEST(Test_StringConcatenation);
+    DO_TEST(Test_ParallelStringConcatenation);
     std::cout << std::endl;
 
     std::cout << "==========================================" << std::endl;
