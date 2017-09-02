@@ -1,5 +1,6 @@
 #include "TestUtilities.h"
 #include "Asynchronize.h"
+#include "FixedFunction.h"
 #include <string>
 
 inline std::string CreateString(const char* str)
@@ -58,23 +59,78 @@ void Test_ParallelStringConcatenation()
     TEST_ASSERT("Hello World!" == concatenated);
 }
 
+void Test_FixedFunctionResultIsAsExpected()
+{
+    FixedFunction<int()> function{ [] { return 42; } };
+    TEST_ASSERT(42 == function());
+}
+
+void Test_FixedFunctionWithMoveOlnlyTypes()
+{
+    class Test
+    {
+    public:
+
+        Test(int value) : m_pValue{ std::make_unique<int>(value) }
+        {}
+
+        auto operator()()
+        {
+            return *m_pValue;
+        }
+
+    private:
+        std::unique_ptr<int> m_pValue;
+    };
+
+    // std::function<int()> function = Test{ 42 }; // doesn't compile since Test is non-copyable 
+    // (because it contains move-only type std::unique_ptr).
+    FixedFunction<int()> function = Test{ 42 };
+    TEST_ASSERT(42 == function());
+}
+
+void Test_FixedFunctionWithCpuTimeRequiringTask()
+{
+    FixedFunction<int()> function{ [] { LoadCPUFor(std::chrono::milliseconds(1000)); return 42; } };
+    TEST_ASSERT(42 == function());
+}
+
+void Test_StdFunctionWithCpuTimeRequiringTask()
+{
+    std::function<int()> function{ [] { LoadCPUFor(std::chrono::milliseconds(1000)); return 42; } };
+    TEST_ASSERT(42 == function());
+}
+
 int main()
 {
     std::cout << "==========================================" << std::endl;
     std::cout << "             FUNCTIONAL TESTS             " << std::endl;
     std::cout << "==========================================" << std::endl;
+    std::cout << "=           Test FixedFunction           =" << std::endl;
+    DO_TEST(Test_FixedFunctionResultIsAsExpected);
+    DO_TEST(Test_FixedFunctionWithMoveOlnlyTypes);
+    std::cout << std::endl;
+
+    std::cout << "=           Test Asyncronize             =" << std::endl;
     DO_TEST(Test_StringConcatenation);
     DO_TEST(Test_ParallelStringConcatenation_UsingStdAsyncStaightforward);
     DO_TEST(Test_ParallelStringConcatenation);
     std::cout << std::endl;
-
+    
     std::cout << "==========================================" << std::endl;
     std::cout << "            PERFORMANCE TESTS             " << std::endl;
     std::cout << "==========================================" << std::endl;
-    constexpr size_t NumOfRuns = 1;
-    DO_BENCHMARK_TEST(NumOfRuns, Test_StringConcatenation);
-    DO_BENCHMARK_TEST( NumOfRuns, Test_ParallelStringConcatenation_UsingStdAsyncStaightforward);
-    DO_BENCHMARK_TEST(NumOfRuns, Test_ParallelStringConcatenation);
+    constexpr size_t NumOfRuns = 10;
+    std::cout << "= Test FixedFunction against std::function =" << std::endl;
+    DO_BENCHMARK_TEST(NumOfRuns, Test_FixedFunctionWithCpuTimeRequiringTask);
+    DO_BENCHMARK_TEST(NumOfRuns, Test_StdFunctionWithCpuTimeRequiringTask);
+    std::cout << std::endl;
+
+    std::cout << "=           Test Asyncronize             =" << std::endl;
+    DO_BENCHMARK_TEST(1, Test_StringConcatenation);
+    DO_BENCHMARK_TEST(1, Test_ParallelStringConcatenation_UsingStdAsyncStaightforward);
+    DO_BENCHMARK_TEST(1, Test_ParallelStringConcatenation);
+    std::cout << std::endl;
 
     return 0;
 }

@@ -5,7 +5,7 @@
 /** The FixedFunction<RetValueType(Args...), StorageSize> class implements functional object.
 * This function is analog of 'std::function' with limited capabilities:
 * - It supports only move semantics.
-* - The size of functional objects is limited to storage size.
+* - The size of functional objects is limited to storage size (can be perferctly fitted in CPU cache line).
 * Due to limitations above it is much faster on creation and copying than std::function.
 */
 template <typename FuncSignarture, size_t StorageSize = 64>
