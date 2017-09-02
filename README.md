@@ -29,7 +29,7 @@ Inspired by concurrency examples from [this](http://www.bfilipek.com/2017/08/cpp
 
 # Iterator adapters
 
-TODO
+TODO 
 
 
 [travis-badge]:      https://travis-ci.org/vukis/Utilities.svg?branch=master
