@@ -85,7 +85,7 @@ private:
 
 using StopWatchMs = StopWatch<>;
 
-#define FUNCTION_BENCHMARK(name, repeatTimes, function) { \
+#define DO_BENCHMARK_TEST(name, repeatTimes, function) { \
 StopWatchMs stopWatch; \
 for (size_t n = 0; n < repeatTimes; ++n) { \
     stopWatch.Start(); \
@@ -103,7 +103,7 @@ if (!(expr)) { \
     throw std::runtime_error(ss.str()); \
 }
 
-#define DO_TEST(test) \
+#define DO_TEST(test)  { \
 std::cout << " - Test ( " << #test; \
 try \
 { \
@@ -114,4 +114,5 @@ catch (const std::exception& e) \
     std::cout << " => failed with: " << e.what() << " )" << std::endl; \
     throw; \
 } \
-std::cout << " => succeed )" << std::endl;
+std::cout << " => succeed )" << std::endl; \
+}
