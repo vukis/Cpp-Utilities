@@ -85,15 +85,28 @@ private:
 
 using StopWatchMs = StopWatch<>;
 
-#define DO_BENCHMARK_TEST(name, repeatTimes, function) { \
+#define DO_BENCHMARK_TEST(repeatTimes, test) { \
+std::cout << " - Benchmark test ( " << #test; \
 StopWatchMs stopWatch; \
 for (size_t n = 0; n < repeatTimes; ++n) { \
     stopWatch.Start(); \
-    function; \
+    test(); \
     stopWatch.Stop(); \
 } \
 const auto history = stopWatch.GetHistory(); \
-std::cout << std::setw(35) << std::left <<  name << ": " << (std::accumulate(history.begin(), history.end(), StopWatchMs::TimeRep{}) / repeatTimes).count() << " ms" << std::endl; \
+std::cout << " ) => " << (std::accumulate(history.begin(), history.end(), StopWatchMs::TimeRep{}) / repeatTimes).count() << " ms" << std::endl; \
+}
+
+#define DO_BENCHMARK_TEST_WITH_DESCRIPTION(description, repeatTimes, test) { \
+std::cout << " - Benchmark test ( " << std::setw(40) << std::right << #test << ", description: " << description; \
+StopWatchMs stopWatch; \
+for (size_t n = 0; n < repeatTimes; ++n) { \
+    stopWatch.Start(); \
+    test(); \
+    stopWatch.Stop(); \
+} \
+const auto history = stopWatch.GetHistory(); \
+std::cout << " ) => " << (std::accumulate(history.begin(), history.end(), StopWatchMs::TimeRep{}) / repeatTimes).count() << " ms" << std::endl; \
 }
 
 #define TEST_ASSERT(expr) \
