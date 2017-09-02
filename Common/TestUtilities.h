@@ -103,7 +103,7 @@ if (!(expr)) { \
     throw std::runtime_error(ss.str()); \
 }
 
-#define DO_TEST(name, test) { \
+#define DO_TEST(name, test) \
 std::cout << " - Test ( " << name; \
 try \
 { \
@@ -114,5 +114,4 @@ catch (const std::exception& e) \
     std::cout << " => failed with: " << e.what() << " )" << std::endl; \
     throw; \
 } \
-std::cout << " => succeed )" << std::endl; \
-}
+std::cout << " => succeed )" << std::endl;
