@@ -14,8 +14,10 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 # C++ compiler flags
 if(MSVC)
     # /std:c++latest -> for c++ standarts
+	# /W4 - warning level
+	# /WX - treat warnings as errors
+    add_compile_options("/std:c++latest" "/W4" "/WX")
 	# "-D_WIN32_WINNT=0x0501 -> supress warning in boost
-    add_compile_options("/std:c++latest")
 	add_compile_options("-D_WIN32_WINNT=0x0501")
 else()
     # -std=c++1z -> for c++ standarts
