@@ -5,6 +5,16 @@ if(NOT MSVC)
     find_package(Threads REQUIRED)
 endif()
 
+## Boost
+find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
+set(Boost_USE_STATIC_LIBS OFF)
+set(Boost_USE_MULTITHREAD ON)
+# Include header files directories
+include_directories(${Boost_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/../)
+# Static libraries directories
+link_directories(${Boost_LIBRARY_DIRS})
+
+
 # Create executable
 set(EXECUTABLE_NAME TestCommon)
 set(TEST_FILES Test.cpp)
