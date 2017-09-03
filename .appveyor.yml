@@ -44,6 +44,7 @@ test_script:
 #  - codecov -f "MyProject_coverage.xml
 #   - cmake .. %CMAKE_CONFIGURE_FLAGS%
   - .\bin\%CONFIGURATION%\TestCommon.exe
+  - .\bin\%CONFIGURATION%\TestThreadPool.exe
   - ctest -C %CONFIGURATION% --output-on-failure
 
 after_test:
