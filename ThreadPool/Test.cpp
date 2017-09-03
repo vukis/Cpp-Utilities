@@ -116,68 +116,68 @@ void Test_MultipleTaskProducers(TaskSystemT&& taskSystem = TaskSystemT{})
 
 int main()
 {
-//    std::cout << "==========================================" << std::endl;
-//    std::cout << "             FUNCTIONAL TESTS             " << std::endl;
-//    std::cout << "==========================================" << std::endl;
-//    DO_TEST(Test_TaskResultIsAsExpected<SingleQueueThreadPool>);
-//    DO_TEST(Test_TaskResultIsAsExpected<MultiQueueThreadPool>);
-//    DO_TEST(Test_TaskResultIsAsExpected<WorkStealingThreadPool>);
-//    DO_TEST(Test_TaskResultIsAsExpected<AsioThreadPool>);
-//#ifdef _MSC_VER
-//    DO_TEST(Test_TaskResultIsAsExpected<PplThreadPool>);
-//#endif
-//    std::cout << std::endl;
-//
-//    std::cout << "==========================================" << std::endl;
-//    std::cout << "            PERFORMANCE TESTS             " << std::endl;
-//    std::cout << "==========================================" << std::endl;
-//    std::cout << "Number of CPUs: " << std::thread::hardware_concurrency() << std::endl;
-//    constexpr size_t NumOfRuns = 10;
-//    std::cout << std::endl;
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_RandomTaskExecutionTime<SingleQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_RandomTaskExecutionTime<MultiQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_RandomTaskExecutionTime<WorkStealingThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_RandomTaskExecutionTime<AsioThreadPool>);
-//#ifdef _MSC_VER
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_RandomTaskExecutionTime<PplThreadPool>);
-//#endif
-//    std::cout << std::endl;
-//
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_1nsTaskExecutionTime<SingleQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_1nsTaskExecutionTime<MultiQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_1nsTaskExecutionTime<WorkStealingThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_1nsTaskExecutionTime<AsioThreadPool>);
-//#ifdef _MSC_VER
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_1nsTaskExecutionTime<PplThreadPool>);
-//#endif
-//    std::cout << std::endl;
-//
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_100msTaskExecutionTime<SingleQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_100msTaskExecutionTime<MultiQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_100msTaskExecutionTime<WorkStealingThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_100msTaskExecutionTime<AsioThreadPool>);
-//#ifdef _MSC_VER
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_100msTaskExecutionTime<PplThreadPool>);
-//#endif
-//    std::cout << std::endl;
-//
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_EmptyTask<SingleQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_EmptyTask<MultiQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_EmptyTask<WorkStealingThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_EmptyTask<AsioThreadPool>);
-//#ifdef _MSC_VER
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_EmptyTask<PplThreadPool>);
-//#endif
-//    std::cout << std::endl;
-//
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_MultipleTaskProducers<SingleQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_MultipleTaskProducers<MultiQueueThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_MultipleTaskProducers<WorkStealingThreadPool>);
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_MultipleTaskProducers<AsioThreadPool>);
-//#ifdef _MSC_VER
-//    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_MultipleTaskProducers<PplThreadPool>);
-//#endif
-//    std::cout << std::endl;
-// 
+    std::cout << "==========================================" << std::endl;
+    std::cout << "             FUNCTIONAL TESTS             " << std::endl;
+    std::cout << "==========================================" << std::endl;
+    DO_TEST(Test_TaskResultIsAsExpected<SingleQueueThreadPool>);
+    DO_TEST(Test_TaskResultIsAsExpected<MultiQueueThreadPool>);
+    DO_TEST(Test_TaskResultIsAsExpected<WorkStealingThreadPool>);
+    DO_TEST(Test_TaskResultIsAsExpected<AsioThreadPool>);
+#ifdef _MSC_VER
+    DO_TEST(Test_TaskResultIsAsExpected<PplThreadPool>);
+#endif
+    std::cout << std::endl;
+
+    std::cout << "==========================================" << std::endl;
+    std::cout << "            PERFORMANCE TESTS             " << std::endl;
+    std::cout << "==========================================" << std::endl;
+    std::cout << "Number of CPUs: " << std::thread::hardware_concurrency() << std::endl;
+    constexpr size_t NumOfRuns = 10;
+    std::cout << std::endl;
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_RandomTaskExecutionTime<SingleQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_RandomTaskExecutionTime<MultiQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_RandomTaskExecutionTime<WorkStealingThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_RandomTaskExecutionTime<AsioThreadPool>);
+#ifdef _MSC_VER
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_RandomTaskExecutionTime<PplThreadPool>);
+#endif
+    std::cout << std::endl;
+
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_1nsTaskExecutionTime<SingleQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_1nsTaskExecutionTime<MultiQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_1nsTaskExecutionTime<WorkStealingThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_1nsTaskExecutionTime<AsioThreadPool>);
+#ifdef _MSC_VER
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_1nsTaskExecutionTime<PplThreadPool>);
+#endif
+    std::cout << std::endl;
+
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_100msTaskExecutionTime<SingleQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_100msTaskExecutionTime<MultiQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_100msTaskExecutionTime<WorkStealingThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_100msTaskExecutionTime<AsioThreadPool>);
+#ifdef _MSC_VER
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_100msTaskExecutionTime<PplThreadPool>);
+#endif
+    std::cout << std::endl;
+
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_EmptyTask<SingleQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_EmptyTask<MultiQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_EmptyTask<WorkStealingThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_EmptyTask<AsioThreadPool>);
+#ifdef _MSC_VER
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_EmptyTask<PplThreadPool>);
+#endif
+    std::cout << std::endl;
+
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_MultipleTaskProducers<SingleQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on multiple task queues", NumOfRuns, Test_MultipleTaskProducers<MultiQueueThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on work stealing queue ", NumOfRuns, Test_MultipleTaskProducers<WorkStealingThreadPool>);
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on boost::asio", NumOfRuns, Test_MultipleTaskProducers<AsioThreadPool>);
+#ifdef _MSC_VER
+    DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on PPL", NumOfRuns, Test_MultipleTaskProducers<PplThreadPool>);
+#endif
+    std::cout << std::endl;
+
     return 0;
 }
