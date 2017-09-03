@@ -61,3 +61,4 @@ Temporary Items
 .vs/ProjectSettings.json
 *.sqlite
 .vs/VSWorkspaceState.json
+*.db-wal
