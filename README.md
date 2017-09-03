@@ -32,9 +32,9 @@ Inspired by concurrency examples from [this](http://www.bfilipek.com/2017/08/cpp
 TODO 
 
 
-[travis-badge]:      https://travis-ci.org/vukis/Utilities.svg?branch=master
-[travis-link]:       https://travis-ci.org/vukis/Utilities
-[appveyor-badge]:    https://ci.appveyor.com/api/projects/status/1l8srr6wo3ixnc7o?svg=true
-[appveyor-link]:     https://ci.appveyor.com/project/vukis/utilities
-[codecov-badge]:     https://codecov.io/gh/vukis/Utilities/branch/master/graph/badge.svg
-[codecov-link]:      https://codecov.io/gh/vukis/Utilities
+[travis-badge]:      https://travis-ci.org/vukis/Cpp-Utilities.svg?branch=master
+[travis-link]:       https://travis-ci.org/vukis/Cpp-Utilities
+[appveyor-badge]:    https://ci.appveyor.com/api/projects/status/9d4xuhavsc8grbe5?svg=true
+[appveyor-link]:     https://ci.appveyor.com/project/vukis/cpp-utilities
+[codecov-badge]:     https://codecov.io/gh/vukis/Cpp-Utilities/branch/master/graph/badge.svg
+[codecov-link]:      https://codecov.io/gh/vukis/Cpp-Utilities
