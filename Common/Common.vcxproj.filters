@@ -20,6 +20,9 @@
     <ClInclude Include="TestUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IteratorAdaptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp">
