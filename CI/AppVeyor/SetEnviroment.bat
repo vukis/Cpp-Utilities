@@ -16,7 +16,7 @@ exit -1
 set TARGET_CPU=x86
 set CMAKE_GENERATOR_SUFFIX=
 set BOOST_ROOT=C:\Libraries\boost_1_64_0
-set BOOST_LIBRARYDIR=C:\Libraries\boost_1_64_0\lib32-msvc-14
+set BOOST_LIBRARYDIR=C:\Libraries\boost_1_64_0\lib32-msvc-14.1
 shift
 goto :loop
 
@@ -24,7 +24,7 @@ goto :loop
 set TARGET_CPU=x64
 set CMAKE_GENERATOR_SUFFIX= Win64
 set BOOST_ROOT=C:\Libraries\boost_1_64_0
-set BOOST_LIBRARYDIR=C:\Libraries\boost_1_64_0\lib64-msvc-14
+set BOOST_LIBRARYDIR=C:\Libraries\boost_1_64_0\lib64-msvc-14.1
 shift
 goto :loop
 
