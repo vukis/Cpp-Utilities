@@ -50,9 +50,9 @@ if "%CONFIGURATION%" == "" (set CONFIGURATION=Release)
 
 set CMAKE_CONFIGURE_FLAGS=-G "%CMAKE_GENERATOR%%CMAKE_GENERATOR_SUFFIX%" -DBoost_INCLUDE_DIRS="%BOOST_ROOT%" -DBoost_LIBRARY_DIRS="%BOOST_LIBRARYDIR%" 
 REM -DBUILD_SHARED_LIBS=ON
-set CMAKE_BUILD_FLAGS= ^
-	--config %CONFIGURATION% ^
-	-- ^
-	/nologo ^
-	/verbosity:minimal ^
-/consoleloggerparameters:Summary
+set CMAKE_BUILD_FLAGS= --config %CONFIGURATION% 
+REM ^
+REM	-- ^
+REM	/nologo ^
+REM	/verbosity:minimal ^
+REM /consoleloggerparameters:Summary
