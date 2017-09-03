@@ -98,7 +98,7 @@ std::cout << " ) => " << (std::accumulate(history.begin(), history.end(), StopWa
 }
 
 #define DO_BENCHMARK_TEST_WITH_DESCRIPTION(description, repeatTimes, test) { \
-std::cout << " - Benchmark test ( " << std::setw(40) << std::right << #test << ", description: " << description; \
+std::cout << " - Benchmark test ( " << #test << ", description: " << description; \
 StopWatchMs stopWatch; \
 for (size_t n = 0; n < repeatTimes; ++n) { \
     stopWatch.Start(); \
