@@ -58,3 +58,6 @@ Temporary Items
 *.db-shm
 .vs/Utilities/v15/Solution.VC.db-wal
 *.pdf
+.vs/ProjectSettings.json
+*.sqlite
+.vs/VSWorkspaceState.json
