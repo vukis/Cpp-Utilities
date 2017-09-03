@@ -16,7 +16,7 @@ exit -1
 set TARGET_CPU=x86
 set CMAKE_GENERATOR_SUFFIX=
 set BOOST_ROOT=C:\Libraries\boost_1_64_0
-set BOOST_LIBRARYDIR=C:\Libraries\boost_1_64_0\lib32-msvc-14.1
+set BOOST_LIBRARYDIR=C:\Libraries\boost_1_64_0\lib32-msvc-14
 shift
 goto :loop
 
@@ -24,7 +24,7 @@ goto :loop
 set TARGET_CPU=x64
 set CMAKE_GENERATOR_SUFFIX= Win64
 set BOOST_ROOT=C:\Libraries\boost_1_64_0
-set BOOST_LIBRARYDIR=C:\Libraries\boost_1_64_0\lib64-msvc-14.1
+set BOOST_LIBRARYDIR=C:\Libraries\boost_1_64_0\lib64-msvc-14
 shift
 goto :loop
 
@@ -48,11 +48,10 @@ if "%TOOLCHAIN%" == "" goto :msvc15
 if "%TARGET_CPU%" == "" goto :x86
 if "%CONFIGURATION%" == "" (set CONFIGURATION=Release)
 
-set CMAKE_CONFIGURE_FLAGS=-G "%CMAKE_GENERATOR%%CMAKE_GENERATOR_SUFFIX%" -DBoost_INCLUDE_DIRS="%BOOST_ROOT%" -DBoost_LIBRARY_DIRS="%BOOST_LIBRARYDIR%" 
-REM -DBUILD_SHARED_LIBS=ON
-set CMAKE_BUILD_FLAGS= --config %CONFIGURATION% 
-REM ^
-REM	-- ^
-REM	/nologo ^
-REM	/verbosity:minimal ^
-REM /consoleloggerparameters:Summary
+set CMAKE_CONFIGURE_FLAGS=-G "%CMAKE_GENERATOR%%CMAKE_GENERATOR_SUFFIX%" -DBoost_INCLUDE_DIRS="%BOOST_ROOT%" -DBoost_LIBRARY_DIRS="%BOOST_LIBRARYDIR%" -DBUILD_SHARED_LIBS=ON
+set CMAKE_BUILD_FLAGS= ^
+	--config %CONFIGURATION% ^
+	-- ^
+	/nologo ^
+	/verbosity:minimal ^
+/consoleloggerparameters:Summary
