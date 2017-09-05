@@ -39,7 +39,8 @@ Inspired by this [lib](https://github.com/topcpporg/thread-pool-cpp).
 
 # Iterator adapters
 
-TODO 
+- Zip iterator
+- TBD
 
 
 [travis-badge]:      https://travis-ci.org/vukis/Cpp-Utilities.svg?branch=master
