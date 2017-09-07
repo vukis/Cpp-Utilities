@@ -39,7 +39,7 @@ Inspired by this [lib](https://github.com/topcpporg/thread-pool-cpp).
 
 # Iterator adapters
 
-- Zip iterator
+- [Zip iterator](https://github.com/vukis/Cpp-Utilities/blob/master/Common/ZipIterartor.h)
 - TBD
 
 
