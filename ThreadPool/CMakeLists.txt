@@ -5,7 +5,7 @@ if(NOT MSVC)
     find_package(Threads REQUIRED)
 endif()
 ## Boost
-find_package(Boost 1.64.0 REQUIRED COMPONENTS system filesystem)
+find_package(Boost 1.64.0 REQUIRED) # COMPONENTS system filesystem)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREAD ON)
 
