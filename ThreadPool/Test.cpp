@@ -131,7 +131,7 @@ int main()
     std::cout << "==========================================" << std::endl;
     std::cout << "            PERFORMANCE TESTS             " << std::endl;
     std::cout << "==========================================" << std::endl;
-    std::cout << "Number of CPUs: " << std::thread::hardware_concurrency() << std::endl;
+    std::cout << "Number of cores: " << std::thread::hardware_concurrency() << std::endl;
     constexpr size_t NumOfRuns = 10;
     std::cout << std::endl;
     DO_BENCHMARK_TEST_WITH_DESCRIPTION("thread pool based on single task queue ", NumOfRuns, Test_RandomTaskExecutionTime<SingleQueueThreadPool>);
