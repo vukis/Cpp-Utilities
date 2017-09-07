@@ -14,7 +14,7 @@ Contains following thread pools:
 - [Thread pool](https://github.com/vukis/Cpp-Utilities/blob/master/ThreadPool/SingleQueueThreadPool.h) based on single task queue
 - [Thread pool](https://github.com/vukis/Cpp-Utilities/blob/master/ThreadPool/MultiQueueThreadPool.h) based on task queue per each thread
 - [Thread pool](https://github.com/vukis/Cpp-Utilities/blob/master/ThreadPool/WorkStealingThreadPool.h) based on work stealing task queue
-- [Thread pool](https://github.com/vukis/Cpp-Utilities/blob/master/ThreadPool/AsioThreadPool.h) based on boost::asio
+- [Thread pool](https://github.com/vukis/Cpp-Utilities/blob/master/ThreadPool/AsioThreadPool.h) based on [`boost::asio`](http://www.boost.org/doc/libs/1_64_0/doc/html/boost_asio/reference/io_service.html)
 - [Thread pool](https://github.com/vukis/Cpp-Utilities/blob/master/ThreadPool/PplThreadPool.h) based on [PPL](https://msdn.microsoft.com/library/dd492418.aspx)
 
 [Test code](https://github.com/vukis/Cpp-Utilities/blob/master/ThreadPool/Test.cpp).
