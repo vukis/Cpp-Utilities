@@ -4,8 +4,14 @@ cmake_minimum_required(VERSION 3.2)
 if(NOT MSVC)
     find_package(Threads REQUIRED)
 endif()
+
 ## Boost
-find_package(Boost 1.64.0) # COMPONENTS system filesystem) # REQUIRED)
+if(NOT MSVC)
+    find_package(Boost 1.64.0 COMPONENTS system filesystem REQUIRED)
+else()
+    find_package(Boost 1.64.0)
+endif()
+
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREAD ON)
 
