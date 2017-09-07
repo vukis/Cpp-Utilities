@@ -5,7 +5,7 @@ if(NOT MSVC)
     find_package(Threads REQUIRED)
 endif()
 ## Boost
-find_package(Boost 1.64.0 REQUIRED) # COMPONENTS system filesystem)
+find_package(Boost 1.64.0 COMPONENTS system filesystem REQUIRED)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREAD ON)
 
@@ -19,7 +19,7 @@ set(TEST_FILES Test.cpp)
 add_executable(${EXECUTABLE_NAME} ${TEST_FILES})
 
 ## Linking up all libraries
-target_link_libraries(${EXECUTABLE_NAME} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
+target_link_libraries(${EXECUTABLE_NAME} LINK_PUBLIC ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
 endif()
