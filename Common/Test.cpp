@@ -1,7 +1,7 @@
 #include "TestUtilities.h"
 #include "Asynchronize.h"
 #include "FixedFunction.h"
-#include "ZipIterartor.h"
+#include "ZipIterator.h"
 #include <string>
 
 inline std::string CreateString(const char* str)
@@ -96,18 +96,27 @@ void Test_StdFunctionWithCpuTimeRequiringTask()
 void Test_CreateZip()
 {
     const std::vector<char> input1 = { 'A', 'B', 'C', 'D', 'E' };
-    const std::vector<int> input2 = { 1, 2, 3, 4, 5 };
-    //std::vector<std::tuple<char, int>> expected = { std::tuple<char, int>"A1", "B2", "C3", "D4", "E5" };
-    //std::vector<std::string> result;
+    const std::vector<int>  input2 = { 1, 2, 3, 4, 5 };
 
     const auto zipped = MakeZipContainer(input1, input2);
-
-    // TEST_ASSERT(result == expected);
+    for (size_t idx = 0; idx < zipped.size(); ++idx)
+    {
+        TEST_ASSERT(zipped[idx] == std::make_tuple(input1[idx], input2[idx]));
+    }
 }
 
 void Test_StlSortZip()
 {
+    const std::vector<char> input1 = { 'B', 'C', 'A', 'E', 'D' };
+    const std::vector<int>  input2 = {  2, 3, 1, 5, 4 };
+    const std::vector<std::tuple<char, int>> expected = { {'A',1}, {'B',2}, {'C',3}, {'D',4},{'E',5} };
 
+    auto zipped = MakeZipContainer(input1, input2);
+    std::sort(zipped.begin(), zipped.end());
+    for (size_t idx = 0; idx < zipped.size(); ++idx)
+    {
+        TEST_ASSERT(zipped[idx] == std::make_tuple(input1[idx], input2[idx]));
+    }
 }
 
 void Test_StlAccumulateZip()

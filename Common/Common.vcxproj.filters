@@ -20,7 +20,7 @@
     <ClInclude Include="TestUtilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ZipIterartor.h">
+    <ClInclude Include="ZipIterator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
