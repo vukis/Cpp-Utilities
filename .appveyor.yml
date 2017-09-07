@@ -38,12 +38,10 @@ build_script:
   - cd build
   - cmake .. %CMAKE_CONFIGURE_FLAGS% 
   - cmake --build . %CMAKE_BUILD_FLAGS%
-  # --config %CONFIGURATION%
 
 test_script:
-#  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\MyUnitTests\bin\Debug\MyUnitTests.dll -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
-#  - codecov -f "MyProject_coverage.xml
-#   - cmake .. %CMAKE_CONFIGURE_FLAGS%
+  - OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:".\ThreadPool\bin\%CONFIGURATION\TestThreadPool.exe -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
+  - codecov -f "MyProject_coverage.xml
   - ctest -C %CONFIGURATION% --output-on-failure
   - .\bin\%CONFIGURATION%\TestCommon.exe
   - .\bin\%CONFIGURATION%\TestThreadPool.exe
