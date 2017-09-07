@@ -59,7 +59,7 @@ class ZipIterator
 {
 public:
 	
-	// TODO: deduce common types (see https://github.com/matheuspf/ZipIter/tree/master/include/ZipIter)
+    // TODO: deduce common types (see https://github.com/matheuspf/ZipIter/tree/master/include/ZipIter)
     using difference_type = typename std::iterator_traits<get_type_t<0, UnderlyingIterators...>>::difference_type;
     using value_type = std::tuple<typename std::iterator_traits<UnderlyingIterators>::value_type...>;
     using pointer = std::tuple<typename std::iterator_traits<UnderlyingIterators>::pointer...>;
@@ -222,4 +222,104 @@ template<typename... Iterators>
 ZipIterator<Iterators...> MakeZipIterator(Iterators&&... underlyingIterators)
 {
 	return ZipIterator<Iterators...>{ std::forward<Iterators>(underlyingIterators)... };
+}
+
+template <typename... Containers>
+class Zip
+{
+public:
+
+	using value_type        = std::tuple<Containers...>;
+	using iterator          = ZipIterator<typename std::remove_reference_t<Containers>::iterator...>;
+	using const_iterator    = iterator;
+	using iterator_category = typename iterator::iterator_category;
+
+	explicit Zip(Containers&&... containers) : m_containers(std::forward<Containers>(containers)...)
+	{}
+
+	iterator begin() 
+	{ 
+		return begin(std::make_index_sequence<sizeof...(Containers)>());
+	}
+
+	const_iterator begin() const 
+	{
+		return begin(std::make_index_sequence<sizeof...(Containers)>());
+	}
+
+	iterator end() 
+	{ 
+		return end(std::make_index_sequence<sizeof...(Containers)>());
+	}
+
+	const_iterator end() const 
+	{
+		return end(std::make_index_sequence<sizeof...(Containers)>());
+	}
+
+    // TODO: enable if iterator_category is random_access iterator (and add static_assert)
+	auto operator[](std::size_t pos)
+	{
+		return at(pos, std::make_index_sequence<sizeof...(Containers)>());
+	}
+
+	// TODO: enable if iterator_category is random_access iterator (and add static_assert)
+	auto operator[](std::size_t pos) const
+	{
+		return at(pos, std::make_index_sequence<sizeof...(Containers)>());
+	}
+
+	std::size_t size() const
+	{
+		return std::get<0>(m_containers).size();
+	}
+
+private:
+
+	template <std::size_t... Indexes>
+	iterator begin(std::index_sequence<Indexes...>)
+	{
+		return iterator{ std::begin(std::get<Indexes>(m_containers))... };
+	}
+
+	template <std::size_t... Indexes>
+	const_iterator begin(std::index_sequence<Indexes...>) const
+	{
+		return const_iterator{ std::begin(std::get<Indexes>(m_containers))... };
+	}
+
+	template <std::size_t... Indexes>
+	iterator end(std::index_sequence<Indexes...>)
+	{
+		return iterator{ std::end(std::get<Indexes>(m_containers))... } ;
+	}
+
+	template <std::size_t... Indexes>
+	const_iterator end(std::index_sequence<Indexes...>) const
+	{
+		return const_iterator{ std::end(std::get<Indexes>(m_containers))... };
+	}
+
+	// TODO: enable if iterator_category is random_access iterator (and add static_assert)
+	template <std::size_t... Indexes>
+	auto at(std::size_t pos, std::index_sequence<Indexes...>)
+	{
+		return std::forward_as_tuple(std::get<Indexes>(m_containers).at(pos)...);
+	}
+
+	// TODO: enable if iterator_category is random_access iterator (and add static_assert)
+	template <std::size_t... Indexes>
+	auto at(std::size_t pos, std::index_sequence<Indexes...>) const
+	{
+		return std::forward_as_tuple(std::get<Indexes>(m_containers).at(pos)...);
+	}
+
+	value_type m_containers;
+};
+
+template <typename... Containers>
+Zip<Containers...> MakeZipContainer(Containers&&... underlyingContainers)
+{
+	// TODO: check if containers are same size
+	return Zip<Containers...>{ std::forward<Containers>(underlyingContainers)... };
 }
