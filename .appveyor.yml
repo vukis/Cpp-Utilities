@@ -44,11 +44,13 @@ test_script:
   #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestCommon.exe" -output:".\TestCommon_coverage.xml"
   #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestThreadPool.exe"
   #"%xunit20%\xunit.console.x86.exe" -targetargs:".\ThreadPool\bin\%CONFIGURATION\TestThreadPool.exe -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
+after_test:  
+  - pip install codecov
   - codecov -f ".\TestCommon_coverage.xml
   - ctest -C %CONFIGURATION% --output-on-failure
  # - .\bin\%CONFIGURATION%\TestCommon.exe
  # - .\bin\%CONFIGURATION%\TestThreadPool.exe
 
-after_test:
+#after_test:
 #  - bash <(curl -s https://codecov.io/bash)
 #test_script:    #- ctest -C %CONFIGURATION% --output-on-failure
