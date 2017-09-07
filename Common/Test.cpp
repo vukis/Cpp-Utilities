@@ -1,6 +1,7 @@
 #include "TestUtilities.h"
 #include "Asynchronize.h"
 #include "FixedFunction.h"
+#include "ZipIterartor.h"
 #include <string>
 
 inline std::string CreateString(const char* str)
@@ -67,18 +68,9 @@ void Test_FixedFunctionResultIsAsExpected()
 
 void Test_FixedFunctionWithMoveOlnlyTypes()
 {
-    class Test
-    {
-    public:
-
-        Test(int value) : m_pValue{ std::make_unique<int>(value) }
-        {}
-
-        auto operator()()
-        {
-            return *m_pValue;
-        }
-
+    struct Test {
+        explicit Test(int value) : m_pValue{ std::make_unique<int>(value) } {}
+        auto operator()() { return *m_pValue; }
     private:
         std::unique_ptr<int> m_pValue;
     };
@@ -101,6 +93,33 @@ void Test_StdFunctionWithCpuTimeRequiringTask()
     TEST_ASSERT(42 == function());
 }
 
+void Test_CreateZip()
+{
+    const std::vector<char> input1 = { 'A', 'B', 'C', 'D', 'E' };
+    const std::vector<int> input2 = { 1, 2, 3, 4, 5 };
+    //std::vector<std::tuple<char, int>> expected = { std::tuple<char, int>"A1", "B2", "C3", "D4", "E5" };
+    //std::vector<std::string> result;
+
+    const auto zipped = MakeZipContainer(input1, input2);
+
+    // TEST_ASSERT(result == expected);
+}
+
+void Test_StlSortZip()
+{
+
+}
+
+void Test_StlAccumulateZip()
+{
+
+}
+
+void Test_StlTransfromZip()
+{
+
+}
+
 int main()
 {
     std::cout << "==========================================" << std::endl;
@@ -116,7 +135,11 @@ int main()
     DO_TEST(Test_ParallelStringConcatenation_UsingStdAsyncStaightforward);
     DO_TEST(Test_ParallelStringConcatenation);
     std::cout << std::endl;
-    
+
+    std::cout << "=          Test Zip container            =" << std::endl;
+    DO_TEST(Test_CreateZip);
+    std::cout << std::endl;
+
     std::cout << "==========================================" << std::endl;
     std::cout << "            PERFORMANCE TESTS             " << std::endl;
     std::cout << "==========================================" << std::endl;

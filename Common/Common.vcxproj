@@ -136,7 +136,7 @@
   <ItemGroup>
     <ClInclude Include="Asynchronize.h" />
     <ClInclude Include="FixedFunction.h" />
-    <ClInclude Include="ZipIterator.h" />
+    <ClInclude Include="ZipIterartor.h" />
     <ClInclude Include="TestUtilities.h" />
   </ItemGroup>
   <ItemGroup>
