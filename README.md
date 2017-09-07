@@ -39,7 +39,7 @@ Inspired by this [lib](https://github.com/topcpporg/thread-pool-cpp).
 
 # Iterator adapters
 
-- [Zip iterator](https://github.com/vukis/Cpp-Utilities/blob/master/Common/ZipIterartor.h). STL-like iterator provides the ability to iterate through multiple containers simultaneously. Works with STL algorithms. [Test code]().
+- [Zip iterator](https://github.com/vukis/Cpp-Utilities/blob/master/Common/ZipIterartor.h). STL-like iterator provides the ability to iterate through multiple containers simultaneously. Works with STL algorithms. Inspired by [`boost::zip_iterator`](http://www.boost.org/doc/libs/1_64_0/libs/iterator/doc/zip_iterator.html). [Test code]().
 - TBD
 
 
