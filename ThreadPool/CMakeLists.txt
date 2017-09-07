@@ -26,6 +26,6 @@ endif()
 
 add_test(NAME ${EXECUTABLE_NAME} COMMAND ${EXECUTABLE_NAME})
 
-# Code coverage
+# Code coverage 
 find_package(codecov)
 add_coverage(${EXECUTABLE_NAME})
