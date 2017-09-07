@@ -2,20 +2,20 @@
 
 #include <tuple>
 
-template<size_t N, typename T1, typename... Ts>
+template<size_t N, typename Type1, typename... Types>
 struct get_type
 {
-	using type = typename get_type<N - 1, Ts...>::type;
+	using type = typename get_type<N - 1, Types...>::type;
 };
 
-template<typename T1, typename... Ts>
-struct get_type<0, T1, Ts...>
+template<typename Type1, typename... Types>
+struct get_type<0, Type1, Types...>
 {
-	using type = T1;
+	using type = Type1;
 };
 
-template<size_t N, typename... Ts>
-using get_type_t = typename get_type<N, Ts...>::type;
+template<size_t N, typename... Types>
+using get_type_t = typename get_type<N, Types...>::type;
 
 namespace detail
 {
@@ -82,12 +82,14 @@ public:
 		return tmp;
 	}
 
+	// TODO: enable if bidirectional iterator (and add static_assert)
 	ZipIterator& operator--()
 	{
 		for_each_tuple(m_iterators, [](auto& it) { --it; });
 		return *this;
 	}
 
+	// TODO: enable if iterator_category is bidirectional iterator (and add static_assert)
 	ZipIterator operator--(int)
 	{
 		auto tmp = *this;
@@ -95,13 +97,15 @@ public:
 		return tmp;
 	}
 
-	ZipIterator& operator+(int n)
+	// TODO: enable if iterator_category is random_access iterator (and add static_assert)
+	ZipIterator& operator+=(int n)
 	{
 		for_each_tuple(m_iterators, [n](auto& it) { it += n; });
 		return *this;
 	}
 
-	ZipIterator& operator-(int n)
+	// TODO: enable if iterator_category is random_access iterator (and add static_assert)
+	ZipIterator& operator-=(int n)
 	{
 		for_each_tuple(m_iterators, [n](auto& it) { it -= n; });
 		return *this;
@@ -133,9 +137,6 @@ public:
 	friend bool operator==(const ZipIterator<Iterators...>&, const ZipIterator<Iterators...>&);
 
 	template <typename... Iterators>
-	friend bool operator!=(const ZipIterator<Iterators...>&, const ZipIterator<Iterators...>&);
-
-	template <typename... Iterators>
 	friend bool operator<(const ZipIterator<Iterators...>&, const ZipIterator<Iterators...>&);
 
 private:
@@ -156,9 +157,17 @@ private:
 };
 
 template<typename... Iterators>
-ZipIterator<Iterators...> MakeZipIterator(Iterators... underlyingIterators)
+decltype(auto) operator+(ZipIterator<Iterators...>& iter, int inc)
 {
-	return ZipIterator<Iterators...>{ std::forward<Iterators>(underlyingIterators)... };
+	iter += inc;
+	return iter;
+}
+
+template<typename... Iterators>
+decltype(auto) operator-(ZipIterator<Iterators...>& iter, int inc)
+{
+	iter -= inc;
+	return iter;
 }
 
 template <typename... Iterators>
@@ -182,11 +191,35 @@ bool operator==(const ZipIterator<Iterators...>& rhs, const ZipIterator<Iterator
 template <typename... Iterators>
 bool operator!=(const ZipIterator<Iterators...>& rhs, const ZipIterator<Iterators...>& lhs)
 {
-	return !(rhs.m_iterators == lhs.m_iterators);
+	return !(rhs == lhs);
 }
 
 template <typename... Iterators>
 bool operator<(const ZipIterator<Iterators...>& rhs, const ZipIterator<Iterators...>& lhs)
 {
 	return std::get<0>(rhs.m_iterators) < std::get<0>(lhs.m_iterators);
+}
+
+template <typename... Iterators>
+bool operator>(const ZipIterator<Iterators...>& rhs, const ZipIterator<Iterators...>& lhs)
+{
+	return operator<(lhs, rhs);
+}
+
+template <typename... Iterators>
+bool operator<=(const ZipIterator<Iterators...>& rhs, const ZipIterator<Iterators...>& lhs)
+{
+	return !operator>(lhs, rhs);
+}
+
+template <typename... Iterators>
+bool operator>=(const ZipIterator<Iterators...>& rhs, const ZipIterator<Iterators...>& lhs)
+{
+	return !operator<(lhs, rhs);
+}
+
+template<typename... Iterators>
+ZipIterator<Iterators...> MakeZipIterator(Iterators&&... underlyingIterators)
+{
+	return ZipIterator<Iterators...>{ std::forward<Iterators>(underlyingIterators)... };
 }
