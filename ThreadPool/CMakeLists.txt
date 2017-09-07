@@ -19,7 +19,7 @@ set(TEST_FILES Test.cpp)
 add_executable(${EXECUTABLE_NAME} ${TEST_FILES})
 
 ## Linking up all libraries
-target_link_libraries(${EXECUTABLE_NAME} LINK_PUBLIC ${Boost_LIBRARIES})
+target_link_libraries(${EXECUTABLE_NAME} ${Boost_LIBRARIES})
 # ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 if(NOT MSVC)
 	target_link_libraries(${EXECUTABLE_NAME} pthread)
