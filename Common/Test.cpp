@@ -2,7 +2,9 @@
 #include "Asynchronize.h"
 #include "FixedFunction.h"
 #include "ZipIterator.h"
+
 #include <string>
+#include <numeric>
 
 inline std::string CreateString(const char* str)
 {
@@ -105,28 +107,27 @@ void Test_CreateZip()
     }
 }
 
-void Test_StlSortZip()
-{
-    const std::vector<char> input1 = { 'B', 'C', 'A', 'E', 'D' };
-    const std::vector<int>  input2 = {  2, 3, 1, 5, 4 };
-    const std::vector<std::tuple<char, int>> expected = { {'A',1}, {'B',2}, {'C',3}, {'D',4},{'E',5} };
-
-    auto zipped = MakeZipContainer(input1, input2);
-    std::sort(zipped.begin(), zipped.end());
-    for (size_t idx = 0; idx < zipped.size(); ++idx)
-    {
-        TEST_ASSERT(zipped[idx] == std::make_tuple(input1[idx], input2[idx]));
-    }
-}
-
 void Test_StlAccumulateZip()
 {
+    const auto sumZipped = [](const auto& tuple1, const auto& tuple2) {
+        return std::make_tuple(
+            std::get<0>(tuple1) + std::get<0>(tuple2),
+            std::get<1>(tuple1) + std::get<1>(tuple2));
+    };
 
+    const std::vector<std::string> input1 = { "A","B","C" };
+    const std::vector<int>         input2 = { 1,2,3 };
+    
+    const auto zipped = MakeZipContainer(input1, input2);
+    const auto result = std::accumulate(zipped.begin(), zipped.end(), std::make_tuple(std::string{}, 0), sumZipped);
+
+    const auto expected = std::make_tuple("ABC", 6);
+    TEST_ASSERT(result == expected)
 }
 
 void Test_StlTransfromZip()
 {
-
+     // TODO
 }
 
 int main()
@@ -147,6 +148,7 @@ int main()
 
     std::cout << "=          Test Zip container            =" << std::endl;
     DO_TEST(Test_CreateZip);
+    DO_TEST(Test_StlAccumulateZip);
     std::cout << std::endl;
 
     std::cout << "==========================================" << std::endl;
