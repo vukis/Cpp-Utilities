@@ -41,7 +41,7 @@ build_script:
 
 test_script:
   - ctest -C %CONFIGURATION% --output-on-failure
-  - OpenCover.Console.exe -target:".\bin\%CONFIGURATION%\TestCommon.exe" -filter:"*" -output:".\TestCommon_coverage.xml"
+  - OpenCover.Console.exe -register:path32 -target:".\bin\%CONFIGURATION%\TestCommon.exe" -filter:"*" -output:".\TestCommon_coverage.xml"
   #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestCommon.exe" -output:".\TestCommon_coverage.xml"  
   #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestThreadPool.exe"
   #"%xunit20%\xunit.console.x86.exe" -targetargs:".\ThreadPool\bin\%CONFIGURATION\TestThreadPool.exe -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
