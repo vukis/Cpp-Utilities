@@ -23,7 +23,7 @@ Inspired by Sean Parent's talk ([presentation](http://sean-parent.stlab.cc/prese
 
 # Asynchronize
 
-[Adapters](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Asynchronize.h) that allow to create [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) for parallel computing. [Test code](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Test.cpp).
+[Adapters](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Asynchronize.h) that allow to create [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) for parallel computing. [Test code](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Test.cpp#L143).
 
 Inspired by concurrency examples from [this](http://www.bfilipek.com/2017/08/cpp17stl-review.html) book. Better alternative is to implement own `std::future` like [this](https://github.com/FelixPetriconi/future_proposal/blob/master/proposal.md) one. 
 
@@ -35,13 +35,13 @@ This function is analog of `std::function` with limited capabilities:
   - The size of functional objects is limited to storage size (can be perferctly fitted in CPU cache line).
 Due to limitations above it is faster on creation and copying than `std::function`.
 
-[Test code](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Test.cpp).
+[Test code](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Test.cpp#L138).
 
 Inspired by this [lib](https://github.com/topcpporg/thread-pool-cpp).
 
 # Iterator adapters
 
-- [Zip iterator](https://github.com/vukis/Cpp-Utilities/blob/master/Common/ZipIterartor.h). STL-like iterator provides the ability to iterate through multiple containers simultaneously. Works with STL algorithms. Inspired by [`boost::zip_iterator`](http://www.boost.org/doc/libs/1_64_0/libs/iterator/doc/zip_iterator.html). [Test code]().
+- [Zip iterator](https://github.com/vukis/Cpp-Utilities/blob/master/Common/ZipIterartor.h). STL-like iterator provides the ability to iterate through multiple containers simultaneously. Works with STL algorithms. Inspired by [`boost::zip_iterator`](http://www.boost.org/doc/libs/1_64_0/libs/iterator/doc/zip_iterator.html). [Test code](https://github.com/vukis/Cpp-Utilities/blob/master/Common/Test.cpp#L149).
 - TBD
 
 
