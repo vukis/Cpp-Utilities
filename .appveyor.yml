@@ -41,6 +41,7 @@ build_script:
 
 test_script:
   - ctest -C %CONFIGURATION% --output-on-failure
+  - regsvr32 /n /i:user x86\OpenCover.Profiler.dll"
   - OpenCover.Console.exe -register:path32 -target:".\bin\%CONFIGURATION%\TestCommon.exe" -filter:"*" -output:".\TestCommon_coverage.xml"
   #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestCommon.exe" -output:".\TestCommon_coverage.xml"  
   #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestThreadPool.exe"
