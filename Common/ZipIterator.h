@@ -35,9 +35,10 @@ namespace detail
 } // namespace detail
 
 template<typename FunctionT, typename... TupleElementsT>
-auto transform_tuple(const std::tuple<TupleElementsT...>& tuple, FunctionT function)
+auto transform_tuple(const std::tuple<TupleElementsT...>& tuple, FunctionT&& function)
 {
-	return detail::transform_tuple_impl(tuple, function, std::make_index_sequence<sizeof...(TupleElementsT)>());
+	return detail::transform_tuple_impl(tuple, std::forward<FunctionT>(function), 
+        std::make_index_sequence<sizeof...(TupleElementsT)>());
 }
 
 template <class FunctionT, class TupleT>
@@ -63,7 +64,9 @@ public:
     using difference_type = typename std::iterator_traits<get_type_t<0, UnderlyingIterators...>>::difference_type;
     using value_type = std::tuple<typename std::iterator_traits<UnderlyingIterators>::value_type...>;
     using pointer = std::tuple<typename std::iterator_traits<UnderlyingIterators>::pointer...>;
+    using const_pointer = pointer;
     using reference = std::tuple<typename std::iterator_traits<UnderlyingIterators>::reference...>;
+    using const_reference = const reference;
     using iterator_category = typename std::iterator_traits<get_type_t<0, UnderlyingIterators...>>::iterator_category;
 
     explicit ZipIterator(UnderlyingIterators&&... iterators) : m_iterators(std::make_tuple(std::forward<UnderlyingIterators>(iterators)...))
@@ -116,7 +119,7 @@ public:
 		return Dereference(std::make_index_sequence<sizeof...(UnderlyingIterators)>());
     }
 
-	const reference operator*() const
+	const_reference operator*() const
 	{
 		return Dereference(std::make_index_sequence<sizeof...(UnderlyingIterators)>());
 	}
@@ -124,6 +127,11 @@ public:
     pointer operator->()
     {
 		return &m_iterators;
+    }
+
+    const_pointer operator->() const
+    {
+        return &m_iterators;
     }
 
 	// Non-member interface functions
@@ -231,7 +239,7 @@ public:
 
 	using value_type        = std::tuple<Containers...>;
 	using iterator          = ZipIterator<typename std::remove_reference_t<Containers>::iterator...>;
-	using const_iterator    = iterator;
+	using const_iterator    = ZipIterator<typename std::remove_reference_t<Containers>::const_iterator...>;
 	using iterator_category = typename iterator::iterator_category;
 
 	explicit Zip(Containers&&... containers) : m_containers(std::forward<Containers>(containers)...)
@@ -279,25 +287,25 @@ private:
 	template <std::size_t... Indexes>
 	iterator begin(std::index_sequence<Indexes...>)
 	{
-		return iterator{ std::begin(std::get<Indexes>(m_containers))... };
+		return MakeZipIterator(std::begin(std::get<Indexes>(m_containers))...);
 	}
-
+ 
 	template <std::size_t... Indexes>
 	const_iterator begin(std::index_sequence<Indexes...>) const
 	{
-		return const_iterator{ std::begin(std::get<Indexes>(m_containers))... };
+		return MakeZipIterator(std::begin(std::get<Indexes>(m_containers))...);
 	}
 
 	template <std::size_t... Indexes>
 	iterator end(std::index_sequence<Indexes...>)
 	{
-		return iterator{ std::end(std::get<Indexes>(m_containers))... } ;
+		return MakeZipIterator(std::end(std::get<Indexes>(m_containers))...) ;
 	}
 
 	template <std::size_t... Indexes>
 	const_iterator end(std::index_sequence<Indexes...>) const
 	{
-		return const_iterator{ std::end(std::get<Indexes>(m_containers))... };
+		return MakeZipIterator(std::end(std::get<Indexes>(m_containers))...);
 	}
 
 	// TODO: enable if iterator_category is random_access iterator (and add static_assert)
