@@ -41,12 +41,12 @@ build_script:
 
 test_script:
   - ctest -C %CONFIGURATION% --output-on-failure
-  - cd ..\Common\
+  - cd .\bin\%CONFIGURATION%\
   - dir
-  - OpenCover.Console.exe -register:user -target:"..\build\bin\%CONFIGURATION%\TestCommon.exe" -output:".\TestCommon_coverage.xml"
+  - OpenCover.Console.exe -register:path32 -target:"TestCommon.exe" -filter:"*" -output:".\TestCommon_coverage.xml"
   #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestCommon.exe" -output:".\TestCommon_coverage.xml"  
   #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestThreadPool.exe"
-  # "%xunit20%\xunit.console.x86.exe" -targetargs:".\ThreadPool\bin\%CONFIGURATION\TestThreadPool.exe -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
+  #"%xunit20%\xunit.console.x86.exe" -targetargs:".\ThreadPool\bin\%CONFIGURATION\TestThreadPool.exe -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
 after_test:  
 #  - pip install codecov
   - codecov -f ".\TestCommon_coverage.xml
