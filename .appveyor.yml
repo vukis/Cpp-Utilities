@@ -18,17 +18,10 @@ configuration:
   - Release
 
 environment:
-  MSVC_DEFAULT_OPTIONS: ON
   matrix:
-    - TOOLCHAIN: msvc15
-  GITHUB_TOKEN:
-    secure: MeZRb+x5xfxO5jH93yXs5Tl9MDmH48nmpMF/i5ouAV/frSSonzqDUZmYg8oMMMI8
-  APPVEYOR_API_TOKEN:
-    secure: eXiEH+/7OgWrbLNGD3aeMGOCsUN5MqXxgRMYci+rCMw=	
+    - toolchain: msvc15
 
 before_build:
-  - choco install opencover.portable
-  - choco install codecov
 
 install:
   - call CI\AppVeyor\SetEnviroment.bat %TOOLCHAIN% %PLATFORM%
@@ -41,17 +34,8 @@ build_script:
 
 test_script:
   - ctest -C %CONFIGURATION% --output-on-failure
-  - OpenCover.Console.exe -register:path32 -target:".\bin\%CONFIGURATION%\TestCommon.exe" -filter:"+[*]*" -output:".\TestCommon_coverage.xml"
-  #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestCommon.exe" -output:".\TestCommon_coverage.xml"  
-  #- OpenCover.Console.exe -register:user -target:".\bin\%CONFIGURATION%\TestThreadPool.exe"
-  #"%xunit20%\xunit.console.x86.exe" -targetargs:".\ThreadPool\bin\%CONFIGURATION\TestThreadPool.exe -noshadow" -filter:"+[UnitTestTargetProject*]* -[MyUnitTests*]*" -output:".\MyProject_coverage.xml"
+  
 after_test:  
-#  - pip install codecov
-  - codecov -f ".\TestCommon_coverage.xml
-
- # - .\bin\%CONFIGURATION%\TestCommon.exe
- # - .\bin\%CONFIGURATION%\TestThreadPool.exe
-
-#after_test:
-#  - bash <(curl -s https://codecov.io/bash)
-#test_script:    #- ctest -C %CONFIGURATION% --output-on-failure
+  - .\bin\%CONFIGURATION%\TestCommon.exe
+  - .\bin\%CONFIGURATION%\TestThreadPool.exe
+  
