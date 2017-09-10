@@ -64,7 +64,7 @@ public:
     using difference_type = typename std::iterator_traits<get_type_t<0, UnderlyingIterators...>>::difference_type;
     using value_type = std::tuple<typename std::iterator_traits<UnderlyingIterators>::value_type...>;
     using pointer = std::tuple<typename std::iterator_traits<UnderlyingIterators>::pointer...>;
-    using const_pointer = pointer;
+    using const_pointer = const pointer;
     using reference = std::tuple<typename std::iterator_traits<UnderlyingIterators>::reference...>;
     using const_reference = const reference;
     using iterator_category = typename std::iterator_traits<get_type_t<0, UnderlyingIterators...>>::iterator_category;
