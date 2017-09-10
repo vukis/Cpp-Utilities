@@ -22,7 +22,7 @@ namespace detail
     template<typename TupleT, typename FunctionT, size_t... Indexes>
     auto transform_tuple_impl(const TupleT& tuple, FunctionT&& function, std::index_sequence<Indexes...>)
     {
-        return std::forward_as_tuple(std::forward<FunctionT>(function)(std::get<Indexes>(tuple))...);
+        return std::forward_as_tuple(std::forward<FunctionT>(function)(std::get<Indexes>(std::forward<TupleT>(tuple)))...);
     }
 
 	// copy-pasted from http://en.cppreference.com/w/cpp/utility/apply
@@ -37,15 +37,15 @@ namespace detail
 template<typename FunctionT, typename... TupleElementsT>
 auto transform_tuple(const std::tuple<TupleElementsT...>& tuple, FunctionT&& function)
 {
-	return detail::transform_tuple_impl(tuple, std::forward<FunctionT>(function), 
-        std::make_index_sequence<sizeof...(TupleElementsT)>());
+    auto indexes = std::make_index_sequence<sizeof...(TupleElementsT)>();
+	return detail::transform_tuple_impl(tuple, std::forward<FunctionT>(function), std::move(indexes));
 }
 
 template <class FunctionT, class TupleT>
 constexpr decltype(auto) apply_tuple(TupleT&& tuple, FunctionT&& function) // std::apply is C++17 feature not yet supported by compilers
 {
 	auto indexes = std::make_index_sequence<std::tuple_size_v<std::decay_t<TupleT>>>{};
-    return detail::apply_tuple_impl(std::forward<TupleT>(tuple), std::forward<FunctionT>(function), indexes);
+    return detail::apply_tuple_impl(std::forward<TupleT>(tuple), std::forward<FunctionT>(function), std::move(indexes));
 }
 
 template <typename TupleT, typename FunctionT>
